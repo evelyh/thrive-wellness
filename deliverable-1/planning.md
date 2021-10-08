@@ -50,11 +50,13 @@ My role on a software level will be to work on frontend and help out with backen
 In terms of technical strengths, I have experience with React/React Native and CSS, and experience programming in Python and Javascript. I also have experience with databases (PostgreSQL, SQLite). For technical weaknesses, I lack experience in CI/CD, lack experience with Django framework, and lack experience with hosting apps/servers for deployment.
 
 Rui Miao(Amy):
-Role: Working on the daily notifications, 
+Role: Working on the daily notifications,
+
 Strengths: 
 1) Have experience building the backend of a web app using spring boot
 2) Have experience on working on database using MySQL and SQLite
 3) Have experience on basic machine learning skills
+
 Weaknesses:
 1) Lack of experience of react-native and frontend
 2) Lack of experience of implementing CI/CD 
@@ -66,10 +68,12 @@ My strengths include having experience from my internship and personal project o
 
 Grace Li: 
 Roles: Implementing automatic login, writing and organizing meeting agendas and minutes
+
 Strengths: 
 1) Have experience with Django REST framework
 2) Have experience with designing schemas for databases and implementing
 3) Have experience with writing tests (mostly manual and some automated)
+
 Weaknesses: 
 1) Lack experience in JavaScript
 2) Lack experience in using CI/CD solutions
@@ -77,10 +81,12 @@ Weaknesses:
 
 Yunhan Lei (Eve):
 Role: Implementing a quest playground and chat features for the technical side, promoting communication within group and setting up meeting time
+
 Strengths: 
 1) Have worked full-stack for multiple projects
 2) Familiarity with JavaScript and experience with React
 3) Experience with databases like Firebase, PostgresSQL, SQLite, etc.
+
 Weaknesses: 
 1) Lack of experience in styling the application using CSS and Style Sheet language
 2) Lack of experience of writing tests and implementing DevOps environment
@@ -88,10 +94,12 @@ Weaknesses:
 
 Xinpeng Shan(Joy)
 Role: Implementing Quest playground and chat features, will help with UI design and any problems other team members run into
+
 Strengths: 
 1) Some experience in backend development in Java using Spring Boot
 2) Some experience in frontend development using JavaScript, html, css in building web applications using Vue framework. UI design experience in a personal project
 3) Have data science background in Python
+
 Weaknesses:
 1) Lack of experience in react native
 2) Lack of experience in testing
