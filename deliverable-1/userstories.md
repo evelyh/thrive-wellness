@@ -75,7 +75,14 @@ The broken down user stories were then ordered generally by priority, but some l
   - The user can join another group directly
   - The user can join another group while not being in any group, by the same options/process used for sign up
 
-9. **(Prereq to priority 4): As a user I want to have a Quest Playground where I am able to do other exercises grouped into "Buckets" that are not part of my Journey, in order for me to do any exercises that I feel is best for me at that moment**
+14. **(Priority 3): As a user, I want to be able to give an encouraging nudge to my buddy if they haven’t done an exercise in a little while to remind them.**
+
+- _Acceptance Criteria:_
+  - Users will receive in-app and push notifications: Your buddy hasn’t done an exercise in a little while. Give them an encouraging nudge.
+  - Users will receive push notifications: Your buddy nudged you! Come complete a happiness exercise towards your Journey.
+  - If they haven’t done an exercise in 4 days nudge the specific person
+
+10. **(Prereq to priority 4): As a user I want to have a Quest Playground where I am able to do other exercises grouped into "Buckets" that are not part of my Journey, in order for me to do any exercises that I feel is best for me at that moment**
 
 - _Acceptance Criteria:_
   - Verify the app has a clear “Quest Playground” option on the question selection screen
@@ -83,7 +90,7 @@ The broken down user stories were then ordered generally by priority, but some l
   - Verify users can do and finish the quests from playground but is not counted towards any journey 
   - Quests in the playground should be grouped into “Buckets” by category
 
-10. **(Priority 4): As a user, I want to be able to submit a Quest or Journey of my own design to share with other users**
+11. **(Priority 4): As a user, I want to be able to submit a Quest or Journey of my own design to share with other users**
 
 - _Acceptance Criteria:_
   - Users can upload Quests to be reviewed by a moderator/admin, notified by email
@@ -92,7 +99,7 @@ The broken down user stories were then ordered generally by priority, but some l
   - Individual Quests can be tagged with a “Bucket”, admin should be able to change such category
   - Submitted Quests/Journeys can contain photos or videos
 
-11. **(Priority 5): As a user, I want to have my feedback affect what Quests I am offered in order to tailor the experience to my own needs**
+12. **(Priority 5): As a user, I want to have my feedback affect what Quests I am offered in order to tailor the experience to my own needs**
 
 - _Acceptance Criteria:_
   - Given the questions already implemented in the existing app of "How do you feel today" and "How helpful was the exercise":
@@ -101,7 +108,7 @@ The broken down user stories were then ordered generally by priority, but some l
   - Quests can be repeated in a journey
   - Quests with similar categories/methodologies (in the same Buckets) can be offered more often to a user who likes that type of quest
 
-12. **(Priority 6): As a user, I want to be able to have a clear UI that follows design principles in order to make my experience with the app smooth**
+13. **(Priority 6): As a user, I want to be able to have a clear UI that follows design principles in order to make my experience with the app smooth**
 
 - _Acceptance Criteria:_
   - Make basic UI improvements to the app 
@@ -109,20 +116,13 @@ The broken down user stories were then ordered generally by priority, but some l
   - Clear interface for viewing Quests and Journeys with images
   - Clear button to submit Quests and Journeys for users
 
-13. **(Priority 6): As a user of the app, I want to change when I receive my daily notification from the app to do my exercise in order for me to increase my likelihood of forming a daily habit of using the app.**
+14. **(Priority 6): As a user of the app, I want to change when I receive my daily notification from the app to do my exercise in order for me to increase my likelihood of forming a daily habit of using the app.**
 
 - _Acceptance Criteria:_
   - Verify there is a clear settings button/option that is visible to the user to click in the application
   - Verify there is a clear option for changing notification setting under the setting page
   - Verify user can change when to exercise notification from the notification setting 
   - Verify the application will follow the instruction set by the user and push notification for exercise at the correct time
-
-14. **(Priority 3): As a user, I want to be able to give an encouraging nudge to my buddy if they haven’t done an exercise in a little while to remind them.**
-
-- _Acceptance Criteria:_
-  - Users will receive in-app and push notifications: Your buddy hasn’t done an exercise in a little while. Give them an encouraging nudge.
-  - Users will receive push notifications: Your buddy nudged you! Come complete a happiness exercise towards your Journey.
-  - If they haven’t done an exercise in 4 days nudge the specific person
 
 15. **(Priority 6): As a user I want to have the choice to do an exercise out of options provided by the Journey I am on**
 
@@ -149,7 +149,7 @@ The broken down user stories were then ordered generally by priority, but some l
   - An alarm can be set for a specific time and must go off even if the app is closed
   - The alarm has the same options as a standard alarm app
 
-18. **(Priority 6): As a user, I want to be able to keep my responses private in order to keep information I don’t want others to know private.
+18. **(Priority 6): As a user, I want to be able to keep my responses private in order to keep information I don’t want others to know private.**
 
 - _Acceptance Criteria:_
   - Checkbox on response form to keep private from administrators
