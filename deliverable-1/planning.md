@@ -67,17 +67,7 @@ I will mainly be responsible for the backend of the application. Main features t
 My strengths include having experience from my internship and personal project of working with Django framework, react.js, node.js and implementing data structure and algorithms to solve problems concerning an application. My Weaknesses include lack of experience in style sheet language that are used to describe the presentation of the application, setting up CI/CD pipeline and testing with react native and node.js.
 
 Grace Li: 
-Roles: Implementing automatic login, writing and organizing meeting agendas and minutes
-
-Strengths: 
-1) Have experience with Django REST framework
-2) Have experience with designing schemas for databases and implementing
-3) Have experience with writing tests (mostly manual and some automated)
-
-Weaknesses: 
-1) Lack experience in JavaScript
-2) Lack experience in using CI/CD solutions
-3) Lack experience in style sheet languages
+Software wise, I will be working on the admin portal, which include functionalities such as providing app usage statistics, generating reports on a particular journey or quest, and introducing the ability to attach images or videos to quests and journeys. I will be designing the database schema as well as working on setting it up, while at the same time provide help with other parts of the project when needed. Non-software wise, I am responsible for meeting agendas and a simple minutes for meetings. My strengths include having experience with the Django REST framework, multiple relational databases including PostgreSQL, MSSQL and SQLite, as well as writing and designing extensive tests. However, I lack experience in JavaScript, designing CI/CD pipelines, and any front-end frameworks.
 
 Yunhan Lei (Eve):
 Role: Implementing a quest playground and chat features for the technical side, promoting communication within group and setting up meeting time
