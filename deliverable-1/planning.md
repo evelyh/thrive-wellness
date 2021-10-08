@@ -74,17 +74,7 @@ I will be mostly responsible for the backend of the application as well. The mai
 In terms of technical strength, I have worked full-stack for multiple projects, and are pretty familiar with JavaScript and experienced with React which will help me get started on React Native. I also have experience with databases like Firebase, PostgresSQL, SQLite, etc. My weakness include lack of experience in styling the application using CSS and Style Sheet language, writing tests and implementing DevOps environment, and working with a large group of 6 people.
 
 Xinpeng Shan(Joy)
-Role: Implementing Quest playground and chat features, will help with UI design and any problems other team members run into
-
-Strengths: 
-1) Some experience in backend development in Java using Spring Boot
-2) Some experience in frontend development using JavaScript, html, css in building web applications using Vue framework. UI design experience in a personal project
-3) Have data science background in Python
-
-Weaknesses:
-1) Lack of experience in react native
-2) Lack of experience in testing
-3) Have little experience in database like SQL
+I will work on user-designed Quests / Journeys, the algorithm for displaying Quests to individual users, and improve the whole UI design for the project. I will also help my team members if needed. My technical strengths are the following, I had experience in backend development in Java using Spring Boot, some experience in frontend development using JavaScript, html, css in building web applications using Vue framework and I have UI design experience in my personal project. Also, as a data science student, I have data science background in Python. My weaknesses are the following: I have lack of experience in react native, lack of experience in testing and I am currently taking CSC343, so I have little experience in databases.
 
 ----
 ### Team operations (meetings)
