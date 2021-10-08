@@ -73,7 +73,7 @@ Yunhan Lei (Eve):
 I will be mostly responsible for the backend of the application as well. The main features I'll implement is to allow user upload their own quests and admin to review them and release them to the quest playground. As for the group admin side, I will mostly promote communication within group and set up meeting time. 
 In terms of technical strength, I have worked full-stack for multiple projects, and are pretty familiar with JavaScript and experienced with React which will help me get started on React Native. I also have experience with databases like Firebase, PostgresSQL, SQLite, etc. My weakness include lack of experience in styling the application using CSS and Style Sheet language, writing tests and implementing DevOps environment, and working with a large group of 6 people.
 
-Xinpeng Shan(Joy)
+Xinpeng Shan(Joy):
 I will work on user-designed Quests / Journeys, the algorithm for displaying Quests to individual users, and improve the whole UI design for the project. I will also help my team members if needed. My technical strengths are the following, I had experience in backend development in Java using Spring Boot, some experience in frontend development using JavaScript, html, css in building web applications using Vue framework and I have UI design experience in my personal project. Also, as a data science student, I have data science background in Python. My weaknesses are the following: I have lack of experience in react native, lack of experience in testing and I am currently taking CSC343, so I have little experience in databases.
 
 ----
