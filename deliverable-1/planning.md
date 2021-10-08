@@ -77,10 +77,12 @@ Lack experience in style sheet languages
 
 Yunhan Lei (Eve):
 Role: Implementing a quest playground and chat features for the technical side, promoting communication within group and setting up meeting time
+
 Strengths: 
 1) Have worked full-stack for multiple projects
 2) Familiarity with JavaScript and experience with React
 3) Experience with databases like Firebase, PostgresSQL, SQLite, etc.
+
 Weaknesses: 
 1) Lack of experience in styling the application using CSS and Style Sheet language
 2) Lack of experience of writing tests and implementing DevOps environment
@@ -88,14 +90,16 @@ Weaknesses:
 
 Xinpeng Shan(Joy)
 Role: Implementing Quest playground and chat features, will help with UI design and any problems other team members run into
+
 Strengths: 
-Some experience in backend development in Java using Spring Boot
-Some experience in frontend development using JavaScript, html, css in building web applications using Vue framework. UI design experience in a personal project
-Have data science background in Python
+1) Some experience in backend development in Java using Spring Boot
+2) Some experience in frontend development using JavaScript, html, css in building web applications using Vue framework. UI design experience in a personal project
+3) Have data science background in Python
+
 Weaknesses:
-Lack of experience in react native
-Lack of experience in testing
-Have little experience in database like SQL
+1) Lack of experience in react native
+2) Lack of experience in testing
+3) Have little experience in database like SQL
 
 ----
 ### Team operations (meetings)
