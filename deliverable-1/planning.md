@@ -118,16 +118,21 @@ Possible team conflicts:
 ## Highlights
 
 Key Decision 1: (Project-level)
+
 We decided to start implementing the most-needed features first like auto login, forgot password, and admin portal. The alternative is to firstly expand the content-related features of the application like improving UI and the alogorithm to push different quests to users based on their behaviour. The list of features that our partner wants us to implement is relatively long compared to the time we have in this course, so we asked our partner to decide the priority of every feature and made an ordered list for us to start from. This way, instead of possibly running out of time due to the difficulty of implementing extended features, we can be sure to improve the user experience with exsiting application first and keep them using the app.
 
 Key Decision 2: (Project-level)
+
 We decided to work on the base of the combination of two finished MVPs that our partner from last time he partnered with this course. The alternative is to choose either of them. They both used React Native as frontend, but App A used Django and App B used Firebase as backend. Also, App B with Firebase has a better interface. Since Firebase has some limitation with operating on the backend as admin for our partner, we will use Django as our backend. Consequently, we will continue the work on the base of the frontend of App B and the backend of App A. This way we believe we can deliever our partner's needs the best.
 
 Key Decision 3: (Product-level) 
+
 Users can choose to ignore quests from current journey will go pick quests from playground. The alternative to this decision will be users must only be given the option of doing the quests in the current journey. The argument for this alternative is that the user will be more engaged in the journey and it will be harder for them to completely ignore the journey function and miss out on the whole journey progression. However, we made the decision that we made because we realize users might at that exact moment feel like there are more suitable quests in playground and we don’t want to discourage users to abandon the app/exercises because the given quests options are not appealing to them. 
 
 Key Decision 4: (Product-level) 
+
 Users are given the option to be paired with an anonymous user they don’t know randomly in a group. The alternative to this decision will be users cannot be paired with an anonymous user. The argument for this alternative is users will be less engaged if their accountability buddy is anonymous and the chance of their communication and interaction is a lot slimmer which defeats the purpose of the accountability buddy. However, we chose the reverse option as we believe at the end of the day having a buddy is better than not having one and it might drive users to meet new friends through the app.
 
 Key Decision 5: (Product-level) 
+
 Users able to give an encouraging nudge to an accountability buddy if they haven’t done an exercise in 4 days. The alternative to this decision will be users are unable to nudge an accountability buddy. The argument for this alternative is users might feel the app is intrusive if users can receive a notification through the app from an accountability buddy if they haven’t done an exercise and it might annoy users and make them feel their action in the app is being monitored too closely. We decided to give the users an nudge option because we feel like there should be a tool to make each other accountable or else it would defeat the purpose of the accountability buddy system, however, we set it to 4 days of no exercise before an user can nudge as we feel this is a reasonable time interval that would be effective but not too intrusive. 
