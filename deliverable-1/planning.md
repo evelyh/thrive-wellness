@@ -74,6 +74,7 @@ Weaknesses:
 Lack experience in JavaScript
 Lack experience in using CI/CD solutions
 Lack experience in style sheet languages
+
 Yunhan Lei (Eve):
 	Role: Implementing a quest playground and chat features for the technical side, promoting communication within group and setting up meeting time
 	Strengths: 
@@ -84,6 +85,7 @@ Yunhan Lei (Eve):
 1) Lack of experience in styling the application using CSS and Style Sheet language
 2) Lack of experience of writing tests and implementing DevOps environment
 3) Lack of experience of working with a large group
+
 Xinpeng Shan(Joy)
 	Role: Implementing Quest playground and chat features, will help with UI design and any problems other team members run into
 	Strengths: 
