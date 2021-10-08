@@ -70,17 +70,8 @@ Grace Li:
 Software wise, I will be working on the admin portal, which include functionalities such as providing app usage statistics, generating reports on a particular journey or quest, and introducing the ability to attach images or videos to quests and journeys. I will be designing the database schema as well as working on setting it up, while at the same time provide help with other parts of the project when needed. Non-software wise, I am responsible for meeting agendas and a simple minutes for meetings. My strengths include having experience with the Django REST framework, multiple relational databases including PostgreSQL, MSSQL and SQLite, as well as writing and designing extensive tests. However, I lack experience in JavaScript, designing CI/CD pipelines, and any front-end frameworks.
 
 Yunhan Lei (Eve):
-Role: Implementing a quest playground and chat features for the technical side, promoting communication within group and setting up meeting time
-
-Strengths: 
-1) Have worked full-stack for multiple projects
-2) Familiarity with JavaScript and experience with React
-3) Experience with databases like Firebase, PostgresSQL, SQLite, etc.
-
-Weaknesses: 
-1) Lack of experience in styling the application using CSS and Style Sheet language
-2) Lack of experience of writing tests and implementing DevOps environment
-3) Lack of experience of working with a large group
+I will be mostly responsible for the backend of the application as well. The main features I'll implement is to allow user upload their own quests and admin to review them and release them to the quest playground. As for the group admin side, I will mostly promote communication within group and set up meeting time. 
+In terms of technical strength, I have worked full-stack for multiple projects, and are pretty familiar with JavaScript and experienced with React which will help me get started on React Native. I also have experience with databases like Firebase, PostgresSQL, SQLite, etc. My weakness include lack of experience in styling the application using CSS and Style Sheet language, writing tests and implementing DevOps environment, and working with a large group of 6 people.
 
 Xinpeng Shan(Joy)
 Role: Implementing Quest playground and chat features, will help with UI design and any problems other team members run into
@@ -135,6 +126,9 @@ Possible team conflicts:
 
 ----
 ## Highlights
+
+1. The list of features that our partner wants us to implement is relatively long compared to the time we have in this course, so we asked our partner to decide the priority of each feature and made an ordered list for us to start from. This way we can avoid the possibility of running out of time and be sure we'll finish the most important features our partner desires by the end of this course.
+2. Our partner has two finished MVPs, from last time he partnered with this course, for us to choose which one we'd like to continue working on. They both used React Native as frontend, but App A used Django and App B used Firebase as backend. Also, App B with Firebase has a better interface. Since Firebase has some limitation with operating on the backend as admin for our partner, we will use Django as our backend. Consequently, we decided to combine these two MVPs and work on the base of the frontend of App B and the backend of App A. This way we believe we can deliever our partner's needs the best.
 
 Specify 3 - 5 key decisions and/or insights that came up during your meetings
 and/or collaborative process.
