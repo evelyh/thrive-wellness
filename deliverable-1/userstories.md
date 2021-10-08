@@ -75,7 +75,7 @@ The broken down user stories were then ordered generally by priority, but some l
   - The user can join another group directly
   - The user can join another group while not being in any group, by the same options/process used for sign up
 
-14. **(Priority 3): As a user, I want to be able to give an encouraging nudge to my buddy if they haven’t done an exercise in a little while to remind them.**
+9. **(Priority 3): As a user, I want to be able to give an encouraging nudge to my buddy if they haven’t done an exercise in a little while to remind them.**
 
 - _Acceptance Criteria:_
   - Users will receive in-app and push notifications: Your buddy hasn’t done an exercise in a little while. Give them an encouraging nudge.
