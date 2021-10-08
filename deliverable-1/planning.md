@@ -1,120 +1,133 @@
-# YOUR PRODUCT/TEAM NAME
-> _Note:_ This document is meant to evolve throughout the planning phase of your project.   That is, it makes sense for you commit regularly to this file while working on the project (especially edits/additions/deletions to the _Highlights_ section). Most importantly, it is a reflection of all the planning you work you've done in the first iteration. 
- > **This document will serve as a master plan between your team, your partner and your TA.**
+# ACG.EXE
+
 
 ## Product Details
+
+### About the product
+
+We are planning to build a mobile application for iOS and Android that will help users live happier lives and grow closer to achieving their goals by providing exercises known as "Quests", towards an objective known as a "Journey" for the user to complete. This will build off of the existing MVP application created by previous CSC301 students, to add extra features such as an enhanced admin portal, a social aspect with accountability groups, and allowing users to submit their own Quests and Journeys. 
+
+By giving users daily exercises to help make them happier or push them closer to their chosen goals, the happiness exercises promote gratitude, forgiveness, mindfulness, greater physical movement, reduced time on social media, and an improved social life. These are aspects of life that when improved can greatly improve an individual's life. Some examples of exercises: Write 3 good things that happened to you today. Pay for the person behind you in line at the coffee shop. Call a friend you haven't spoken to in a month. 
+
+### About the users
+
+Our target users are people of all ages (most likely adults), who are looking to improve their level of happiness and satisfaction with their lives. This may include individuals such as:
+* A university student struggling with self-care while dealing with a hectic schedule
+* A working young adult who is adjusting to work life or works a stressful job
+* A new parent who finds they don't have enough time for themselves
+* An older adult who has a fairly stable life and is looking for ways to make it even better
+etc.
+
+It would help any individuals who would benefit from a reminder to take some time to spread kindness to themselves or to others. Since we are also planning to implement a social group aspect, users might be encouraged to sign up with their friends or with a group to use the app.
+
+### Why users would choose this app
+
+A lot of stress of people nowadays comes from uncertainty and anxiety about their situation. This app does not provide the solution, but a buffer to help you find back calmness and sureness of the moment. A benefit of this app over others would be the capability to chat with other users as well as for users to contribute their own choices of exercise. By creating a community that seeks to improve their lives together the app will become a platform for people to connect with people who may be going through similar experiences as them. 
+
+An example of an existing app that may solve this problem is Habitica, a habit tracking app that gamifies keeping good habits. However, Habitica takes a more structured approach to habit forming that may be intimidating, whereas this app could provide reminders and exercises without pressuring the user into completing them like a "to-do list".
+
+### Technology
+
+There is an existing MVP which was done by groups from the previous year, and we would build off of those existing MVPs. We will be using JavaScript with React Native for our front end, and Python with Django REST framework for the backend, to extend the previous groups’ work. We will also be setting up a database, most likely with MySQL or PostgreSQL. For deploying, to be inline with previous work done, we will be using Expo to deploy the app to both iOS and Android. 
+For testing, unit testing should be done with all backend components. We will be using GitHub Actions for automating testing.
+
+### User Stories
+
+The user stories that make up the MVP are listed in [userstories.md](https://github.com/csc301-fall-2021/team-project-2-bellwoods-strategic-capital/blob/main/deliverable-1/userstories.md).
+These user stories were created with the help of, reviewed, and accepted by our project partner.
+
+### Intellectual Property Confidentiality Agreement
+
+We have decided that the students can mention the project (e.g., on their resume) as well as share the application if it is available to the public, but not publish source code.
+
+### Roles and Responsibilities of each member
+
+*Our partner gave us a list of features that he wants us to work on to add for his mobile app, so each of us would claim one of it as our main responsibility.
+
+Erica Li:
+My role on a software level will be to work on frontend and help out with backend, working on the forgot password feature, chat feature and other features. For non-software related work, I communicate with the partner and help to organize the meetings with the partner, sending out Zoom meeting links and emails. I also help to delegate tasks.
+In terms of technical strengths, I have experience with React/React Native and CSS, and experience programming in Python and Javascript. I also have experience with databases (PostgreSQL, SQLite). For technical weaknesses, I lack experience in CI/CD, lack experience with Django framework, and lack experience with hosting apps/servers for deployment.
+
+Rui Miao(Amy):
+	Role: Working on the daily notifications, 
+	Strengths: 
+* Have experience building the backend of a web app using spring boot
+* Have experience on working on database using MySQL and SQLite
+* Have experience on basic machine learning skills
+	Weaknesses:
+* Lack of experience of react-native and frontend
+* Lack of experience of implementing CI/CD 
+* Lack of experience of Style Sheet language
+
+Calvin Chu:
+I will mainly be responsible for the backend of the application. Main features that I will be involved in implementing are the “forget password” feature and automatically login. I would also be focusing on enhancing the administrator's control of the app, including uploading pictures and videos for quests, and viewing app usage’s data and statistics. 
+My strengths include having experience from my internship and personal project of working with Django framework, react.js, node.js and implementing data structure and algorithms to solve problems concerning an application. My Weaknesses include lack of experience in style sheet language that are used to describe the presentation of the application, setting up CI/CD pipeline and testing with react native and node.js.
+
+Grace Li: 
+Roles: Implementing automatic login, writing and organizing meeting agendas and minutes
+Strengths: 
+Have experience with Django REST framework
+Have experience with designing schemas for databases and implementing
+Have experience with writing tests (mostly manual and some automated)
+Weaknesses: 
+Lack experience in JavaScript
+Lack experience in using CI/CD solutions
+Lack experience in style sheet languages
+Yunhan Lei (Eve):
+	Role: Implementing a quest playground and chat features for the technical side, promoting communication within group and setting up meeting time
+	Strengths: 
+1) Have worked full-stack for multiple projects
+		2) Familiarity with JavaScript and experience with React
+		3) Experience with databases like Firebase, PostgresSQL, SQLite, etc.
+	Weaknesses: 
+1) Lack of experience in styling the application using CSS and Style Sheet language
+2) Lack of experience of writing tests and implementing DevOps environment
+3) Lack of experience of working with a large group
+Xinpeng Shan(Joy)
+	Role: Quest playground and chat features
+	Strengths: 
+Some experience in backend development in Java using Spring Boot
+Some experience in frontend development using JavaScript, html, css in building web applications using Vue framework. UI design experience in a personal project
+Have data science background in Python
+	Weaknesses:
+Lack of experience in react native
+Lack of experience in testing
+Have little experience in database like SQL
+
+### Team operations (meetings)
+
+We will have a meeting every Tuesday with our partner online using Zoom. And we may randomly set up some meetings in between with our own group members if needed using Discord. All of our meetings are online. The purpose of meeting with partners is to make sure that what we made meets their expectations, and also make sure if all the things are on the track. For our own meeting, we will distribute our tasks, set deadlines for tasks, and if there are some members who have difficulties with their tasks, we can discuss and help. Other events could be coding sessions, code reviews, quick weekly sync meetings online, etc.
+
+We had our first meeting with our partner on September 28th. During this first meeting, our partner gave us a brief introduction to the app, and shared the code and two versions of the existing apps. Additionally, we discussed some of their expected user stories and what they expected us to implement. Also, we discussed a time for our weekly meetings that all of us are available and scheduled meetings for Tuesday at 16:30, to be rescheduled if there was an issue with the time.
+For the second meeting on October 6th, we provided a list of user stories, and we went over and discussed our user stories with our partner. We also added details to our list of user stories, and we showed some of our mockups. We discussed the details of each user story and added some user stories. Moreover, we also talked about the priority of the implementations of each feature. 
+
+The meeting minutes for our meetings so far are: 60 mins (First meeting), 75 mins (Second meeting).
+
+### Self-organize artifacts
+
+We have a discord group where we can manage the things we need to get done as a team and also we have a slack group where all of the team members and our partner are in so that we can keep track of their requests. There is a #ToDo section on discord when team members can post the deadlines and the tasks we need to get done where every one of us can keep track of it. We are having team meetings regularly (about once a week with our partner and once a week on our own) so that we can assign the tasks to each team member and discuss the things we need to get done as a team together. We will prioritize tasks by discussing them together as a team and then make the decision and set clear deadlines about when each of us need to get things finished. And then, when everyone is finished by that day, we will finalize the work together by having another group meeting.
+
+### Team Rules and Culture
  
-#### Q1: What are you planning to build?
+#### Communications within CSC301 group:
 
- > Short (1 - 2 min' read)
- * Start with a single sentence, high-level description of the product.
- * Be clear - Describe the problem you are solving in simple terms.
- * Be concrete. For example:
-    * What are you planning to build? Is it a website, mobile app,
-   browser extension, command-line app, etc.?      
-    * When describing the problem/need, give concrete examples of common use cases.
-    * Assume your the reader knows nothing about the problem domain and provide the necessary context. 
- * Focus on *what* your product does, and avoid discussing *how* you're going to implement it.      
-   For example: This is not the time or the place to talk about which programming language and/or framework you are planning to use.
- * **Feel free (and very much encouraged) to include useful diagrams, mock-ups and/or links**.
+We communicate by chat via Discord multiple times throughout the week and whenever something comes up, and schedule meetings to work on things together on call via Discord. If there is something added to the to-do channel in the Discord, all members should react to the message to acknowledge that they've seen it.
 
+#### Communications with Project Partner (Robbie from Bellwoods):
 
-#### Q2: Who are your target users?
+Our partner representative communicates with us through a Slack channel to deliver his requirements and details of the app. We send Zoom invites to meetings and documents through email to the partner, and have weekly meetings at 16:30 every Tuesday. If we were to have a question for the partner that doesn't need to be discussed in detail at a meeting, or have a technical question for our technical contacts on the partner's team, we will send a message through Slack.
 
-  > Short (1 - 2 min' read max)
- * Be specific (e.g. a 'a third-year university student studying Computer Science' and not 'a student')
- * **Feel free to use personas. You can create your personas as part of this Markdown file, or add a link to an external site (for example, [Xtensio](https://xtensio.com/user-persona/)).**
+#### Procedure for accountability:
 
-#### Q3: Why would your users choose your product? What are they using today to solve their problem/need?
+We have random/impromptu meetings set up via Discord if something comes up that week, and all group members are expected to attend a weekly meeting at 16:30 every Tuesday with our partner. Members who are not free should inform others of their absence beforehand and potentially reschedule. 
+For members who missed meetings without notice constantly (and not responding on messaging platforms), contact TAs or Prof for help.
 
-> Short (1 - 2 min' read max)
- * We want you to "connect the dots" for us - Why does your product (as described in your answer to Q1) fits the needs of your users (as described in your answer to Q2)?
- * Explain the benefits of your product explicitly & clearly. For example:
-    * Save users time (how much?)
-    * Allow users to discover new information (which information? And, why couldn't they discover it before?)
-    * Provide users with more accurate and/or informative data (what kind of data? Why is it useful to them?)
-    * Does this application exist in another form? If so, how does your differ and provide value to the users?
-    * How does this align with your partner's organization's values/mission/mandate?
+### Conflict Resolution:
+Possible team conflicts:
 
-#### Q4: How will you build it?
-
-> Short (1-2 min' read max)
- * What is the technology stack? Specify any and all languages, frameworks, libraries, PaaS products or tools. 
- * How will you deploy the application?
- * Describe the architecture - what are the high level components or patterns you will use? Diagrams are useful here. 
- * Will you be using third party applications or APIs? If so, what are they?
- * What is your testing strategy?
-
-#### Q5: What are the user stories that make up the MVP?
-
- * At least 5 user stories concerning the main features of the application - note that this can broken down further
- * You must follow proper user story format (as taught in lecture) ```As a <user of the app>, I want to <do something in the app> in order to <accomplish some goal>```
- * User stories must contain acceptance criteria. Examples of user stories with different formats can be found here: https://www.justinmind.com/blog/user-story-examples/. **It is important that you provide a link to an artifact containing your user stories**.
- * If you have a partner, these must be reviewed and accepted by them
-
-----
-## Intellectual Property Confidentiality Agreement 
-> Note this section is **not marked** but must be completed briefly if you have a partner. If you have any questions, please contact David and Adam.
->  
-**By default, you own any work that you do as part of your coursework.** However, some partners may want you to keep the project confidential after the course is complete. As part of your first deliverable, you should discuss and agree upon an option with your partner. Examples include:
-1. You can share the software and the code freely with anyone with or without a license, regardless of domain, for any use.
-2. You can upload the code to GitHub or other similar publicly available domains.
-3. You will only share the code under an open-source license with the partner but agree to not distribute it in any way to any other entity or individual. 
-4. You will share the code under an open-source license and distribute it as you wish but only the partner can access the system deployed during the course.
-
-**Briefly describe which option you have agreed to. Your partner cannot ask you to sign any legally binding agreements or documents pertaining to non-disclosure, confidentiality, IP ownership, etc.**
-
-----
-
-## Process Details
-
-#### Q6: What are the roles & responsibilities on the team?
-
-Describe the different roles on the team and the responsibilities associated with each role. 
- * Roles should reflect the structure of your team and be appropriate for your project. Not necessarily one role to one team member.
-
-List each team member and:
- * A description of their role(s) and responsibilities including the components they'll work on and non-software related work
- * 3 technical strengths and weaknesses each (e.g. languages, frameworks, libraries, development methodologies, etc.)
-
-#### Q7: What operational events will you have as a team?
-
-Describe meetings (and other events) you are planning to have. 
- * When and where? Recurring or ad hoc? In-person or online?
- * What's the purpose of each meeting?
- * Other events could be coding sessions, code reviews, quick weekly sync meeting online, etc.
- * You must have at least 2 meetings with your project partner (if you have one) before D1 is due. Describe them here:
-   * What did you discuss during the meetings?
-   * What were the outcomes of each meeting?
-   * You must provide meeting minutes.
-   * You must have a regular meeting schedule established by the second meeting.  
-  
-#### Q8: What artifacts will you use to self-organize?
-
-List/describe the artifacts you will produce in order to organize your team.       
-
- * Artifacts can be To-Do lists, Task boards, schedule(s), meeting minutes, etc.
- * We want to understand:
-   * How do you keep track of what needs to get done?
-   * **How do you prioritize tasks?**
-   * How do tasks get assigned to team members?
-   * How do you determine the status of work from inception to completion?
-
-#### Q9: What are the rules regarding how your team works?
-
-Describe your team's working culture.
-
-**Communications:**
- * What is the expected frequency? What methods/channels are appropriate? 
- * If you have a partner project, what is your process (in detail) for communicating with your partner?
- 
-**Meetings:**
- * How are people held accountable for attending meetings, completing action items? Is there a moderator or process?
- 
-**Conflict Resolution:**
- * List at least three team scenarios/conflicts you discussed in lecture and how you decided you will resolve them. Indecisions? Non-responsive team members? Any other scenarios you can think of?
-
-
+* Indecisions: Set deadlines for our plan and make sure to stick to the plan. If there is something that is hard to decide, we will set up a meeting and poll. Partner will act as a tie-breaker if needed.
+* Non-responsive team members: Try every single possible way to contact them; if they are still not answering, reach out TA and Prof for help.
+* If other members are stuck on their work and need help from the team, but the team members are all too busy with their own work to help: Set up a time to chat about the issue later on when more people/the person who is most qualified to help are free, so both parties can set aside time specifically to work on it.
 
 
 ----
