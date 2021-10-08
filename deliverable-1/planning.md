@@ -85,7 +85,7 @@ Yunhan Lei (Eve):
 2) Lack of experience of writing tests and implementing DevOps environment
 3) Lack of experience of working with a large group
 Xinpeng Shan(Joy)
-	Role: Quest playground and chat features
+	Role: Implementing Quest playground and chat features, will help with UI design and any problems other team members run into
 	Strengths: 
 Some experience in backend development in Java using Spring Boot
 Some experience in frontend development using JavaScript, html, css in building web applications using Vue framework. UI design experience in a personal project
