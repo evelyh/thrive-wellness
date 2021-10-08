@@ -40,6 +40,7 @@ These user stories were created with the help of, reviewed, and accepted by our 
 
 We have decided that the students can mention the project (e.g., on their resume) as well as share the application if it is available to the public, but not publish source code.
 
+----
 ### Roles and Responsibilities of each member
 
 *Our partner gave us a list of features that he wants us to work on to add for his mobile app, so each of us would claim one of it as our main responsibility.
@@ -94,6 +95,7 @@ Lack of experience in react native
 Lack of experience in testing
 Have little experience in database like SQL
 
+----
 ### Team operations (meetings)
 
 We will have a meeting every Tuesday with our partner online using Zoom. And we may randomly set up some meetings in between with our own group members if needed using Discord. All of our meetings are online. The purpose of meeting with partners is to make sure that what we made meets their expectations, and also make sure if all the things are on the track. For our own meeting, we will distribute our tasks, set deadlines for tasks, and if there are some members who have difficulties with their tasks, we can discuss and help. Other events could be coding sessions, code reviews, quick weekly sync meetings online, etc.
@@ -107,6 +109,7 @@ The meeting minutes for our meetings so far are: 60 mins (First meeting), 75 min
 
 We have a discord group where we can manage the things we need to get done as a team and also we have a slack group where all of the team members and our partner are in so that we can keep track of their requests. There is a #ToDo section on discord when team members can post the deadlines and the tasks we need to get done where every one of us can keep track of it. We are having team meetings regularly (about once a week with our partner and once a week on our own) so that we can assign the tasks to each team member and discuss the things we need to get done as a team together. We will prioritize tasks by discussing them together as a team and then make the decision and set clear deadlines about when each of us need to get things finished. And then, when everyone is finished by that day, we will finalize the work together by having another group meeting.
 
+----
 ### Team Rules and Culture
  
 #### Communications within CSC301 group:
