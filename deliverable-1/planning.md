@@ -49,18 +49,8 @@ Erica Li:
 My role on a software level will be to work on frontend and help out with backend, working on the forgot password feature, chat feature and other features. For non-software related work, I communicate with the partner and help to organize the meetings with the partner, sending out Zoom meeting links and emails. I also help to delegate tasks.
 In terms of technical strengths, I have experience with React/React Native and CSS, and experience programming in Python and Javascript. I also have experience with databases (PostgreSQL, SQLite). For technical weaknesses, I lack experience in CI/CD, lack experience with Django framework, and lack experience with hosting apps/servers for deployment.
 
-Rui Miao(Amy):
-Role: Working on the daily notifications,
-
-Strengths: 
-1) Have experience building the backend of a web app using spring boot
-2) Have experience on working on database using MySQL and SQLite
-3) Have experience on basic machine learning skills
-
-Weaknesses:
-1) Lack of experience of react-native and frontend
-2) Lack of experience of implementing CI/CD 
-3) Lack of experience of Style Sheet language
+Rui Miao:
+I will mainly work on the backend of the app and help with the frontend, working on admin portal, and the daily notifications of the apps. Also, I will help my teammates if needed. My strengths is that I have experience on building the backend of a web application using spring boot framework and experience on database using MySQL and SQLite. Additionally, I have experience on machine learning skills. My weakness is that I am lack of experience on building the frontend using react-native and Style Sheet langugae, and also new to CI/CD tools. 
 
 Calvin Chu:
 I will mainly be responsible for the backend of the application. Main features that I will be involved in implementing are the “forget password” feature and automatically login. I would also be focusing on enhancing the administrator's control of the app, including uploading pictures and videos for quests, and viewing app usage’s data and statistics. 
