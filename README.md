@@ -1,3 +1,5 @@
+Below is the README.md from the 2020 Team 4's [repository](https://github.com/Good-T/team-project-4-bellwoods-strategic-capital), which will serve as the starter code for our app. The other team's repo which we can also take inspiration and code from (especially for UI) is [here](https://github.com/csc301-fall-2020/team-project-2-bellwoods-strategic-capital).
+
 # Happyness App
 
 ## Requirements to run:
