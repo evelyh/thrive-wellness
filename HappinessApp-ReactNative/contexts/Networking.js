@@ -12,7 +12,6 @@ export const NetworkContext = React.createContext({
   signUp: () => {},
   signIn: () => {},
   signOut: () => {},
-  forgotPassword: () => {},
   loadToken: () => {},
   // Cached data and methods to retrieve it
   journeys: [],
@@ -134,11 +133,6 @@ export class NetworkContextProvider extends React.Component {
     });
 
     await this.removeToken();
-  };
-
-  // Forgot Password
-  forgotPassword = (email) => {
-    console.log("TEMP");
   };
 
   // Load token
@@ -340,7 +334,6 @@ export class NetworkContextProvider extends React.Component {
           signUp: this.signUp,
           signIn: this.signIn,
           signOut: this.signOut,
-          forgotPassword: this.forgotPassword,
           loadToken: this.loadToken,
           // Cached data and methods to retrieve them
           journeys: this.state.journeys,
