@@ -7,7 +7,7 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
-  FlatList
+  FlatList,
 } from "react-native";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 import { NetworkContext } from "../contexts/Networking";
@@ -17,13 +17,13 @@ export default class DailyQuestScreen extends React.Component {
   state = {
     journey: {},
     completedQuests: [],
-  }
+  };
 
   getJourneys = async () => {
     await this.context.getJourneys();
     const journeyProgress = await this.context.getJourneyProgress(10);
     this.setState({
-      journey: this.context.journeys[7],
+      journey: this.context.journeys[7], //Quest fetching is hardcoded
     });
     this.setState({
       completedQuests: journeyProgress.completed,
@@ -31,14 +31,14 @@ export default class DailyQuestScreen extends React.Component {
   };
 
   handleJourneyTap = (quest) => {
-    console.log(quest)
+    console.log(quest);
     const { navigate } = this.props.navigation;
-    navigate("Quest", { quest }); 
+    navigate("Quest", { quest });
   };
 
   componentDidMount() {
     this._unsubscribe = this.props.navigation.addListener("focus", () => {
-      this.getJourneys();
+      //this.getJourneys();
     });
   }
 
@@ -47,47 +47,47 @@ export default class DailyQuestScreen extends React.Component {
   }
 
   renderItem = ({ item }) => (
-    <Card style={[cardStyles.cardContainer, this.state.completedQuests.findIndex(
-      (completedQuest) => completedQuest.id === item.id
-    ) != -1
-      ? { backgroundColor: "#6ff2b1" }
-      : { backgroundColor: "#edf7f5" },]}>
-              <Card.Content>
-                <View
-                  style={{ flexDirection: "row", justifyContent: "space-between" }}
-                >
-                  <Title style={{ fontSize: 25, flex: 7 }}>
-                    {item.name}
-                  </Title>
-                  <Title style={{ fontSize: 20, flex: 1 }}>
-                    1 ★{" "}
-                  </Title>
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                  <Paragraph style={{ fontWeight: "bold" }}>
-                    Estimated Time:{" "}
-                  </Paragraph>
-                  <Paragraph>1 Minutes </Paragraph>
-                </View>
-    
-                <Paragraph style={{ fontWeight: "bold" }}>Instructions:</Paragraph>
-                <Paragraph numberOfLines={4}>{item.description}</Paragraph>
-              </Card.Content>
-              <Card.Actions
-                style={{ margin: 0, padding: 0, justifyContent: "flex-end" }}
-              >
-                <Button
-                  labelStyle={{ fontSize: 16 }}
-                  onPress={() => this.handleJourneyTap(item)}
-                >
-                  Start Quest
-                </Button>
-              </Card.Actions>
-            </Card>
-    )
+    <Card
+      style={[
+        cardStyles.cardContainer,
+        this.state.completedQuests.findIndex(
+          (completedQuest) => completedQuest.id === item.id
+        ) != -1
+          ? { backgroundColor: "#6ff2b1" }
+          : { backgroundColor: "#edf7f5" },
+      ]}
+    >
+      <Card.Content>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Title style={{ fontSize: 25, flex: 7 }}>{item.name}</Title>
+          <Title style={{ fontSize: 20, flex: 1 }}>1 ★ </Title>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Paragraph style={{ fontWeight: "bold" }}>Estimated Time: </Paragraph>
+          <Paragraph>1 Minutes </Paragraph>
+        </View>
+
+        <Paragraph style={{ fontWeight: "bold" }}>Instructions:</Paragraph>
+        <Paragraph numberOfLines={4}>{item.description}</Paragraph>
+      </Card.Content>
+      <Card.Actions
+        style={{ margin: 0, padding: 0, justifyContent: "flex-end" }}
+      >
+        <Button
+          labelStyle={{ fontSize: 16 }}
+          onPress={() => this.handleJourneyTap(item)}
+        >
+          Start Quest
+        </Button>
+      </Card.Actions>
+    </Card>
+  );
   render() {
     // const { name } = this.props.route.params; // Get name from params which comes from the navigate function from LogIn.js
-    const {quests} = this.state.journey;
+    const { quests } = this.state.journey;
+    if (Object.keys(this.state.journey).length == 0) {
+      return <Title style={QuestListStyles.title}>No Quest</Title>;
+    }
     return (
       <SafeAreaView style={styles.container}>
         <View
@@ -103,16 +103,23 @@ export default class DailyQuestScreen extends React.Component {
           <Title style={QuestListStyles.title}>Welcome Journey</Title>
         </View>
         <FlatList
-						nestedScrollEnabled
-            data={quests}
-            keyExtractor={(item) => (item.name)}
-						renderItem={this.renderItem}
-					/>
+          nestedScrollEnabled
+          data={quests}
+          keyExtractor={(item) => item.name}
+          renderItem={this.renderItem}
+        />
         <View style={ButtonStyles.home_primary_buttons}>
-          <Button mode="contained" onPress={() => console.log("not feeling it")}>Not feeling it?</Button>
+          <Button
+            mode="contained"
+            onPress={() => console.log("not feeling it")}
+          >
+            Not feeling it?
+          </Button>
         </View>
         <View style={ButtonStyles.home_primary_buttons}>
-          <Button mode="contained" onPress={() => console.log("playground")}>Playground</Button>
+          <Button mode="contained" onPress={() => console.log("playground")}>
+            Playground
+          </Button>
         </View>
       </SafeAreaView>
     );
