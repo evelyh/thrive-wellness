@@ -7,6 +7,7 @@ import {
   Button,
   Alert,
   SafeAreaView,
+  Linking,
 } from "react-native";
 import { NetworkContext } from "../../contexts/Networking";
 
@@ -76,6 +77,16 @@ export default class ForgotPassword extends React.Component {
             title="Submit"
             onPress={this.checkInput}
           />
+          <Text
+            style={{ color: "blue" }}
+            onPress={() =>
+              Linking.openURL(
+                "http://192.168.0.128:8050/api/auth/reset_password/"
+              )
+            }
+          >
+            Click Here to Reset Password
+          </Text>
         </View>
       </SafeAreaView>
     );
