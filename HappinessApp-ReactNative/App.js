@@ -20,7 +20,7 @@ export default class App extends React.Component {
     });
   };
   render() {
-	const {welcomeFinished} = this.state
+    const { welcomeFinished } = this.state;
     console.log("BRUH MOMENT INBOUND");
 
     return (
