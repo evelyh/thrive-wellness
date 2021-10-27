@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, Linking } from "react-native";
 
 export default class Authentication extends React.Component {
   render() {
@@ -28,7 +28,11 @@ export default class Authentication extends React.Component {
         <Button
           style={styles.button}
           title="Forgot Password?"
-          onPress={() => navigate("ForgotPassword")}
+          onPress={() =>
+            Linking.openURL(
+              "http://192.168.0.128:8050/api/auth/reset_password/"
+            )
+          }
         />
       </View>
     );
