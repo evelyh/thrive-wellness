@@ -18,6 +18,7 @@ class Quest(models.Model):
     journey = models.ForeignKey(Journey, related_name="quests",
                                 on_delete=models.CASCADE)
     order = models.IntegerField()
+    survey_question = models.TextField(null=True)
 
     def __str__(self):
         return self.name
