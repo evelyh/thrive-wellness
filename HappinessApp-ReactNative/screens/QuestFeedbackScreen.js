@@ -26,6 +26,7 @@ export default class QuestFeedbackScreen extends React.Component {
       answer: answer,
       feelingRating: 5,
       questRating: 5,
+      surveyAnswer: '',
     }
   }
 
@@ -35,14 +36,19 @@ export default class QuestFeedbackScreen extends React.Component {
     })
   }
 
+  onChangeText = (key, value) => {
+    this.setState({ [key]: value })
+  }
+
   onSubmit = async() => {
     const { quest } = this.props.route.params
     const { answer, feelingRating, questRating} = this.state
-    await this.context.completeQuest(quest.id, answer, feelingRating, questRating);
+    await this.context.completeQuest(quest.id, answer, feelingRating, questRating, surveyAnswer);
     this.props.navigation.navigate("Home")
   }
 
   render() {
+    const { quest } = this.props.route.params
     return (
       <SafeAreaView style={styles.container}>
 
@@ -96,13 +102,27 @@ export default class QuestFeedbackScreen extends React.Component {
                   maximumValue={10}
                   step={1}
                   value={this.state.questRating}
-                  onValueChange={(val) => {this.onValueChange('questRating', val)}}
+                  onValueChange={(val) => {this.onChangeText('surveyAnswer', val)}}
                   minimumTrackTintColor="#C9DBC5"
                   maximumTrackTintColor="#FFFFFF"
                 />
               </View>
             </View>
           </View>
+          <View>
+            <View style={styles.line4}/>
+            <Text style={styles.heading3}>{quest.survey_question}</Text>
+            <View style={styles.heading3}>
+              <TextInput
+                  style={styles.input}
+                  placeholder="What do you think?"
+                  autoCapitalize="none"
+                  onChangeText={val => this.onValueChange('surveyAnswer', val)}/>
+            </View>
+          </View>
+        </View>
+        <View>
+
         </View>
 
         <View style={styles.buttonsView}>
@@ -201,6 +221,13 @@ const styles = StyleSheet.create({
     height: 1,
     width: '90%',
     marginTop: 13,
+  },
+  line4: {
+    backgroundColor: "#6C9191",
+    height: 1,
+    width: '90%',
+    marginLeft: 18,
+    marginTop: 8,
   },
 
   sliderContentBox: {

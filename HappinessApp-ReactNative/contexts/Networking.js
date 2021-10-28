@@ -285,7 +285,7 @@ export class NetworkContextProvider extends React.Component {
   };
 
   // Set a particular quest to be complete with given id
-  completeQuest = async (questId, answer, feelingRating, questRating) => {
+  completeQuest = async (questId, answer, feelingRating, questRating, surveyAnswer) => {
     const data = {
       method: "POST",
       headers: {
@@ -296,7 +296,8 @@ export class NetworkContextProvider extends React.Component {
       body: JSON.stringify({
         'answer': answer,
         'feeling_rating': feelingRating,
-        'quest_rating': questRating
+        'quest_rating': questRating,
+        'survey_answer': surveyAnswer
       })
     };
     try {
