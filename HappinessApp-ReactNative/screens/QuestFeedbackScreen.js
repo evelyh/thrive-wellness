@@ -81,7 +81,7 @@ export default class QuestFeedbackScreen extends React.Component {
                   maximumTrackTintColor="#FFFFFF"
                 />
               </View>
-            </View>
+            </View> 
             <View style={styles.line3}/>
             <View style={styles.sliderContentBox}>
               <View style={styles.sliderTextContainer}>
