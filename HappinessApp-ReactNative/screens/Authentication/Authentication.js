@@ -25,15 +25,6 @@ export default class Authentication extends React.Component {
           title="SignUp"
           onPress={() => navigate("SignUp1")}
         />
-        <Button
-          style={styles.button}
-          title="Forgot Password?"
-          onPress={() =>
-            Linking.openURL(
-              "http://192.168.0.128:8050/api/auth/reset_password/"
-            )
-          }
-        />
       </View>
     );
   }

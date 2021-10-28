@@ -72,7 +72,6 @@ export default class SignIn extends React.Component {
     const username = await this.getRememberedUser();
     const password = await this.getRememberedPassword();
     const remember = await this.getRememberedOption();
-    console.log(username);
     this.setState({
       username: username,
       password: password,
@@ -82,6 +81,9 @@ export default class SignIn extends React.Component {
         rememberMe: true,
       });
     }
+    // if (username != "" && password != "" ) {
+    //   this.checkInput();
+    // }
   }
 
   getRememberedUser = async () => {
@@ -147,6 +149,15 @@ export default class SignIn extends React.Component {
             />
             <Text style={styles.label}>Remember Me</Text>
           </View>
+          <Button
+            style={styles.button}
+            title="Forgot Username or Password?"
+            onPress={() =>
+              Linking.openURL(
+                "http://192.168.0.128:8050/api/auth/reset_password/"
+              )
+            }
+          />
         </View>
       </SafeAreaView>
     );
