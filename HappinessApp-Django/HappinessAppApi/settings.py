@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'users',
     'progress',
     'questdata',
+    'media'
 ]
 
 MIDDLEWARE = [

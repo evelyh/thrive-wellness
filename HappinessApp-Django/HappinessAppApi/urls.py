@@ -24,5 +24,6 @@ urlpatterns = [
     path('api/journeys/', include('journeys.urls')),
     path('api/auth/', include('users.urls')),
     path('api/progress/', include('progress.urls')),
-    path('api/questdata/', include('questdata.urls'))
+    path('api/questdata/', include('questdata.urls')),
+    path('api/media/', include('media.urls'))
 ]
