@@ -17,7 +17,7 @@ class Quest(models.Model):
     journey = models.ForeignKey(Journey, related_name="quests",
                                 on_delete=models.CASCADE)
     order = models.IntegerField()
-    media = models.ForeignKey(Image, on_delete=models.CASCADE)
+    media = models.ImageField(upload_to='assets')
 
     def __str__(self):
         return self.name
@@ -25,14 +25,3 @@ class Quest(models.Model):
     class Meta:
         ordering = ['order']
 
-
-class Image(models.Model):
-    name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='assets')
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        db_table = "media_image"
-        unique_together = [('name', 'image'), ]

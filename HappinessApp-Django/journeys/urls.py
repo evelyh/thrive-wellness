@@ -9,6 +9,6 @@ urlpatterns = [
          name="api-quest"),
      path('<int:jid>/reorder-quests', views.re_order,
          name="api-re-order"),
-     path('<int:jid>/images/', views.images, name="api-images"),
-     path('<int:jid>/images/<int:pid>', views.image, name="api-image")
+#      path('<int:jid>/images/', views.images, name="api-images"),
+#      path('<int:jid>/images/<int:pid>', views.image, name="api-image")
 ]
