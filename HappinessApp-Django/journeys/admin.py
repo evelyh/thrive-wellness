@@ -5,3 +5,4 @@ from .models import *
 
 admin.site.register(Quest)
 admin.site.register(Journey)
+admin.site.register(Image)

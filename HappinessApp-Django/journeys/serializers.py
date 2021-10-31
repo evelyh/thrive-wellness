@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Journey, Quest
+from .models import Journey, Quest, Image
 
 
 class QuestSerializer(serializers.ModelSerializer):
@@ -15,3 +15,7 @@ class JourneySerializer(serializers.ModelSerializer):
         model = Journey
         fields = ['id', 'name', 'description', 'quests']
 
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ['id', 'name', 'image']
