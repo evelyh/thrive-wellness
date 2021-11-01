@@ -43,7 +43,6 @@ export default class QuestScreen extends React.Component {
             source={require(default_image)}
             />
           }
-          
         </View>
         <View style={styles.view2}>
           <ScrollView>
@@ -76,9 +75,8 @@ export default class QuestScreen extends React.Component {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-
-      }
     );
+  }
 }
 
 const styles = StyleSheet.create({
