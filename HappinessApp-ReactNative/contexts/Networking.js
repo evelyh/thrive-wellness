@@ -33,7 +33,7 @@ export const NetworkContext = React.createContext({
   displayNoConnectionAlert: () => {},
 });
 
-const url = "http://xxx.xxx.x.xxx:8050";
+const url = "https://intezzz.pythonanywhere.com/";
 
 export class NetworkContextProvider extends React.Component {
   state = {
@@ -284,7 +284,13 @@ export class NetworkContextProvider extends React.Component {
   };
 
   // Set a particular quest to be complete with given id
-  completeQuest = async (questId, answer, feelingRating, questRating, surveyAnswer) => {
+  completeQuest = async (
+    questId,
+    answer,
+    feelingRating,
+    questRating,
+    surveyAnswer
+  ) => {
     const data = {
       method: "POST",
       headers: {
@@ -293,11 +299,11 @@ export class NetworkContextProvider extends React.Component {
         Authorization: "Token " + this.state.token,
       },
       body: JSON.stringify({
-        'answer': answer,
-        'feeling_rating': feelingRating,
-        'quest_rating': questRating,
-        'survey_answer': surveyAnswer
-      })
+        answer: answer,
+        feeling_rating: feelingRating,
+        quest_rating: questRating,
+        survey_answer: surveyAnswer,
+      }),
     };
     try {
       let fetchResponse = await fetch(
