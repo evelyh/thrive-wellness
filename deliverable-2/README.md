@@ -20,9 +20,36 @@ tasks eases users to the process, and make users more willing to commit long ter
  * Described the key features in the application that the user can access
  * Provide a breakdown or detail for each feature that is most appropriate for your application
  * This section will be used to assess the value of the features built
-1. Starting a journey
-2. Completing a quest
-3. 
+1. Starting a Journey
+  
+  Description: 
+  
+  There are different jouneys available on our apps. Each journey has a list of quests relavant to its theme. Users can follow the list of quests to complete a journey. 
+  To start a journey:
+  - Go to the 'Journeys' page
+  - Pick one that you are interested and tap the card
+  - Start to do the quests
+
+3. Completing a daily quests
+   
+   Description: 
+   
+   If users do not want to complete an entire journey, they can pick a individual quest. After finishing a quest, users may provide feedbacks and answers to a survey
+   question to the quests. So that we may improve our quests based on users' feedbacks.
+   To complete adaily quest:
+   - Go to the 'Daily Quests' page
+   - Pick one that your are interested in and tap the card.
+   - Start to do the quests
+   - Gice feedbacks to the quests
+ 
+3. Admin portal
+
+   Description:
+   
+   Admin of the apps can add survey questions and image to each quests. They can also add images to each journey.
+   To add information:
+   - Go to the backend og django
+   - Add information to quests or journeys
 
 ## Instructions
  * Clear instructions for how to use the application from the end-user's perspective
