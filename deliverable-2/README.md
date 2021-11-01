@@ -30,7 +30,7 @@ tasks eases users to the process, and make users more willing to commit long ter
   - Pick one that you are interested and tap the card
   - Start to do the quests
 
-3. Completing a daily quests
+2. Completing a daily quests
    
    Description: 
    
