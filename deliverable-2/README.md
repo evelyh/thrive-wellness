@@ -20,6 +20,7 @@ tasks eases users to the process, and make users more willing to commit long ter
  * Described the key features in the application that the user can access
  * Provide a breakdown or detail for each feature that is most appropriate for your application
  * This section will be used to assess the value of the features built
+ 
 1. Starting a Journey
   
   Description: 
