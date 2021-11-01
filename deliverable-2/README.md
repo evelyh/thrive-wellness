@@ -50,20 +50,33 @@ tasks eases users to the process, and make users more willing to commit long ter
    
    Admin of the apps can add survey questions and image to each quests. They can also add images to each journey.
    To add information:
-   - Go to the backend og django
-   - Add information to quests or journeys
+   - Go to the admin portal at intezzz.pythonanywhere.com/admin/ with a browser
+   - Log in with an admin account
+   - Add quests and journeys as needed
 
 ## Instructions
  * Clear instructions for how to use the application from the end-user's perspective
  * How do you access it? Are accounts pre-created or does a user register? Where do you start? etc. 
  * Provide clear steps for using each feature described above
  * This section is critical to testing your application and must be done carefully and thoughtfully
+ 
+ #### Sign up for an account / Log in an existing account
+ 
+ To use the app, users must sign up for an account. As a first time user, the app will prompt you with 2 options, "sign up" or "log in". Choose sign up to create a new account, or log in to an existing account.
+ 
+ #### Stay logged in
+ 
+ To make it easier for users, we have a "remember me" option which allows users to stay logged in, and does not need to login every time they access the app. Please choose the "remember me" option when entering your credentials if you wish to do so.
+ 
+ #### Forget password / username
+ 
+ We understand that we sometimes forget our credentials to accounts, and we are able to retrieve that information for you. As a user forget their password, choose the "forget password" option, which brings users to a page to key in their email address which is associated to their account. Instructions to resetting their password will then be sent to their email address if it is registered in our system.
 
  #### [Feature] Adding image for a quest or journey from Administer in backend
  
  *We don’t allow users to create a journey/quest themselves.
 
- Administer should log in to their account through http://intezzz.pythonanywhere.com/admin with credentials username ‘admin’ and password ‘happyApp’. In the JOURNEYS/Journeys & Quests columns, they can add a journey/quest with/without uploading a picture for it. When there is no picture uploaded for it, there would be a placeholder picture shown in the app. 
+ Administer should log in to their account through intezzz.pythonanywhere.com/admin with credentials username ‘admin’ and password ‘happyApp’. In the JOURNEYS/Journeys & Quests columns, they can add a journey/quest with/without uploading a picture for it. When there is no picture uploaded for it, there would be a placeholder picture shown in the app. 
  
  ## Development requirements
  * If a developer were to set this up on their machine or a remote server, what are the technical requirements (e.g. OS, libraries, etc.)?
