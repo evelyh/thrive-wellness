@@ -31,14 +31,18 @@ export default class QuestScreen extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.view1}>
-          <Image
+        {quest.media &&
+            <Image
             style={styles.image}
-            source={require("../assets/gee_me_054.png")}
-          />
-          <Image
+            source={{uri: 'http://localhost:8000'+quest.media, }}
+            />
+          }
+          {quest.media == null &&
+            <Image
             style={styles.image}
-            source={require("../assets/gee_me_100.png")}
-          />
+            source={require(default_image)}
+            />
+          }
         </View>
         <View style={styles.view2}>
           <ScrollView>
@@ -82,8 +86,12 @@ const styles = StyleSheet.create({
   },
   view1: {
     flex: 1.3,
-    backgroundColor: "white",
     flexDirection: "row",
+  },
+  image: {
+    width: 420,
+    height: 110,
+    resizeMode: 'stretch',
   },
   view2: {
     flex: 7,

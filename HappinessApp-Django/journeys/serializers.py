@@ -5,7 +5,7 @@ from .models import Journey, Quest
 class QuestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Quest
-        fields = ['id', 'name', 'description', "survey_question"]
+        fields = ['id', 'name', 'description', 'media', 'servey_question']
 
 
 class JourneySerializer(serializers.ModelSerializer):
@@ -13,5 +13,4 @@ class JourneySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Journey
-        fields = ['id', 'name', 'description', 'quests']
-
+        fields = ['id', 'name', 'description', 'quests', 'media']

@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+from django.conf.urls.static import static 
+from django.conf import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('', views.home),
@@ -24,5 +27,9 @@ urlpatterns = [
     path('api/journeys/', include('journeys.urls')),
     path('api/auth/', include('users.urls')),
     path('api/progress/', include('progress.urls')),
-    path('api/questdata/', include('questdata.urls'))
-]
+    path('api/questdata/', include('questdata.urls')),
+    path('api/media/', include('media.urls'))
+]  
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += staticfiles_urlpatterns()

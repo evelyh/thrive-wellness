@@ -1,11 +1,11 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from .models import Journey, Quest
 from .serializers import JourneySerializer, QuestSerializer
-
+from .forms import ImageForm
 
 # Create your views here.
 
@@ -99,3 +99,42 @@ def re_order(request, jid):
         q.save()
 
     return redirect("/api/journeys/" + str(jid))
+
+
+# @api_view(['GET', 'POST'])
+# @permission_classes(())
+# def images(request):
+#    saved = False
+#    if request.method == "POST":
+#       #Get the posted form
+#       MyImageForm = ImageForm(request.POST, request.FILES)
+#       if MyImageForm.is_valid():
+#          profile = Image()
+#          profile.name = MyImageForm.cleaned_data["name"]
+#          profile.picture = MyImageForm.cleaned_data["picture"]
+#          profile.save()
+#          saved = True
+#    else:
+#       MyImageForm = ImageForm()
+		
+#    return render(request, 'image', locals())
+
+
+# @api_view(['GET', 'PUT', 'DELETE'])
+# @permission_classes(())
+# def image(request, pid):
+#     if request.method == "GET":
+#         p = Quest.objects.get(media=pid)
+#         serializer = QuestSerializer(instance=p)
+#         return Response(serializer.data)
+#     elif request.method == "PUT":
+#         p = Image.objects.get(id=pid)
+#         serializer = ImageSerializer(instance=p, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#         return Response(serializer.data)
+#     else:
+#         p = Image.objects.get(id=pid)
+#         deleted = ImageSerializer(instance=p).data
+#         p.delete()
+#         return Response(deleted)
