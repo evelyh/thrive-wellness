@@ -32,10 +32,8 @@ export default class QuestScreen extends React.Component {
         <View style={styles.view1}>
           {quest.media && (
             <Image
-              style={styles.image}
-              source={{
-                uri: "http://intezzz.pythonanywhere.com/" + quest.media,
-              }}
+            style={styles.image}
+            source={{uri: 'https://intezzz.pythonanywhere.com/'+quest.media, }}
             />
           )}
           {quest.media == null && (
