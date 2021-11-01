@@ -26,7 +26,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    '3.15.239.159'
+    '3.15.239.159',
+    '127.0.0.1',
 ]
 
 # Application definition
@@ -137,3 +138,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'users.User'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'bellwoodspw@gmail.com'
+EMAIL_HOST_PASSWORD = 'bell8000'

@@ -26,6 +26,7 @@ export default class QuestFeedbackScreen extends React.Component {
       answer: answer,
       feelingRating: 5,
       questRating: 5,
+      surveyAnswer: '',
     }
   }
 
@@ -35,87 +36,190 @@ export default class QuestFeedbackScreen extends React.Component {
     })
   }
 
+  onChangeText = (key, value) => {
+    this.setState({ [key]: value })
+  }
+
   onSubmit = async() => {
     const { quest } = this.props.route.params
-    const { answer, feelingRating, questRating} = this.state
-    await this.context.completeQuest(quest.id, answer, feelingRating, questRating);
+    const { answer, feelingRating, questRating, surveyAnswer} = this.state
+    await this.context.completeQuest(quest.id, answer, feelingRating, questRating, surveyAnswer);
     this.props.navigation.navigate("Home")
   }
 
   render() {
-    return (
-      <SafeAreaView style={styles.container}>
+    const { quest } = this.props.route.params
+    // if(quest.survey_question){
+      return (
+        <SafeAreaView style={styles.container}>
+  
+          <View style={styles.feedbackContainer}>
+            <View>
+              <Text style={styles.heading2}>Good job!</Text>
+              <View style={styles.line}/>
+              <Text style={styles.heading3}>How did you like this quest?</Text>
+              <View style={styles.line2}/>
+            </View>
+            <View style={styles.mainContainer}>
+              <View style={styles.blobContainer}>
+                <Text style={styles.blobText}>
+                  This app is dynamic and gives different users different Quests and different Journey
+                  recommendations. The program becomes tailored to meet your individual needs and
+                  circumstances. We gather the information below after each quest to help us customize
+                  the program to you. Thank you for taking the time to submit it.
+                </Text>
+              </View>
+              <View style={styles.line3}/>
+              <View style={styles.sliderContentBox}>
+                <View style={styles.sliderTextContainer}>
+                  <Text style={styles.sliderText}>
+                    Rate your feeling after completing the quest: {this.state.feelingRating}
+                  </Text>
+                </View>
+                <View style={styles.sliderContainer}>
+                  <Slider
+                    style={styles.slider}
+                    minimumValue={1}
+                    maximumValue={10}
+                    step={1}
+                    value={this.state.feelingRating}
+                    onValueChange={(val) => {this.onValueChange('feelingRating', val)}}
+                    minimumTrackTintColor="#C9DBC5"
+                    maximumTrackTintColor="#FFFFFF"
+                  />
+                </View>
+              </View> 
+              <View style={styles.line3}/>
+              <View style={styles.sliderContentBox}>
+                <View style={styles.sliderTextContainer}>
+                  <Text style={styles.sliderText}>
+                    Rate the quest: {this.state.questRating}
+                  </Text>
+                </View>
+                <View style={styles.sliderContainer}>
+                  <Slider
+                    style={styles.slider}
+                    minimumValue={1}
+                    maximumValue={10}
+                    step={1}
+                    value={this.state.questRating}
+                    onValueChange={(val) => {this.onChangeText('surveyAnswer', val)}}
+                    minimumTrackTintColor="#C9DBC5"
+                    maximumTrackTintColor="#FFFFFF"
+                  />
+                </View>
+              </View>
+            </View>
+            {quest.survey_question &&
+              <View>
+                <View style={styles.line4}/>
+                <Text style={styles.heading3}>{quest.survey_question}</Text>
+                <View style={styles.heading3}>
+                  <TextInput
+                      style={styles.input}
+                      placeholder="What do you think?"
+                      autoCapitalize="none"
+                      onChangeText={val => this.onValueChange('surveyAnswer', val)}/>
+                </View>
+              </View>
+            }
 
-        <View style={styles.feedbackContainer}>
+          </View>
           <View>
-            <Text style={styles.heading2}>Good job!</Text>
-            <View style={styles.line}/>
-            <Text style={styles.heading3}>How did you like this quest?</Text>
-            <View style={styles.line2}/>
+  
           </View>
-          <View style={styles.mainContainer}>
-            <View style={styles.blobContainer}>
-              <Text style={styles.blobText}>
-                This app is dynamic and gives different users different Quests and different Journey
-                recommendations. The program becomes tailored to meet your individual needs and
-                circumstances. We gather the information below after each quest to help us customize
-                the program to you. Thank you for taking the time to submit it.
-              </Text>
-            </View>
-            <View style={styles.line3}/>
-            <View style={styles.sliderContentBox}>
-              <View style={styles.sliderTextContainer}>
-                <Text style={styles.sliderText}>
-                  Rate your feeling after completing the quest: {this.state.feelingRating}
-                </Text>
-              </View>
-              <View style={styles.sliderContainer}>
-                <Slider
-                  style={styles.slider}
-                  minimumValue={1}
-                  maximumValue={10}
-                  step={1}
-                  value={this.state.feelingRating}
-                  onValueChange={(val) => {this.onValueChange('feelingRating', val)}}
-                  minimumTrackTintColor="#C9DBC5"
-                  maximumTrackTintColor="#FFFFFF"
-                />
-              </View>
-            </View>
-            <View style={styles.line3}/>
-            <View style={styles.sliderContentBox}>
-              <View style={styles.sliderTextContainer}>
-                <Text style={styles.sliderText}>
-                  Rate the quest: {this.state.questRating}
-                </Text>
-              </View>
-              <View style={styles.sliderContainer}>
-                <Slider
-                  style={styles.slider}
-                  minimumValue={1}
-                  maximumValue={10}
-                  step={1}
-                  value={this.state.questRating}
-                  onValueChange={(val) => {this.onValueChange('questRating', val)}}
-                  minimumTrackTintColor="#C9DBC5"
-                  maximumTrackTintColor="#FFFFFF"
-                />
-              </View>
-            </View>
+          
+          <View style={styles.buttonsView}>
+            <TouchableOpacity
+              style={styles.journeyButton}
+              onPress={this.onSubmit}
+            >
+              <Text style={styles.text}>Submit</Text>
+            </TouchableOpacity>
           </View>
-        </View>
-
-        <View style={styles.buttonsView}>
-          <TouchableOpacity
-            style={styles.journeyButton}
-            onPress={this.onSubmit}
-          >
-            <Text style={styles.text}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-
-      </SafeAreaView>
-    );
+  
+        </SafeAreaView>
+      );
+    // }
+    // else{
+    //   return (
+    //     <SafeAreaView style={styles.container}>
+  
+    //       <View style={styles.feedbackContainer}>
+    //         <View>
+    //           <Text style={styles.heading2}>Good job!</Text>
+    //           <View style={styles.line}/>
+    //           <Text style={styles.heading3}>How did you like this quest?</Text>
+    //           <View style={styles.line2}/>
+    //         </View>
+    //         <View style={styles.mainContainer}>
+    //           <View style={styles.blobContainer}>
+    //             <Text style={styles.blobText}>
+    //               This app is dynamic and gives different users different Quests and different Journey
+    //               recommendations. The program becomes tailored to meet your individual needs and
+    //               circumstances. We gather the information below after each quest to help us customize
+    //               the program to you. Thank you for taking the time to submit it.
+    //             </Text>
+    //           </View>
+    //           <View style={styles.line3}/>
+    //           <View style={styles.sliderContentBox}>
+    //             <View style={styles.sliderTextContainer}>
+    //               <Text style={styles.sliderText}>
+    //                 Rate your feeling after completing the quest: {this.state.feelingRating}
+    //               </Text>
+    //             </View>
+    //             <View style={styles.sliderContainer}>
+    //               <Slider
+    //                 style={styles.slider}
+    //                 minimumValue={1}
+    //                 maximumValue={10}
+    //                 step={1}
+    //                 value={this.state.feelingRating}
+    //                 onValueChange={(val) => {this.onValueChange('feelingRating', val)}}
+    //                 minimumTrackTintColor="#C9DBC5"
+    //                 maximumTrackTintColor="#FFFFFF"
+    //               />
+    //             </View>
+    //           </View> 
+    //           <View style={styles.line3}/>
+    //           <View style={styles.sliderContentBox}>
+    //             <View style={styles.sliderTextContainer}>
+    //               <Text style={styles.sliderText}>
+    //                 Rate the quest: {this.state.questRating}
+    //               </Text>
+    //             </View>
+    //             <View style={styles.sliderContainer}>
+    //               <Slider
+    //                 style={styles.slider}
+    //                 minimumValue={1}
+    //                 maximumValue={10}
+    //                 step={1}
+    //                 value={this.state.questRating}
+    //                 onValueChange={(val) => {this.onChangeText('surveyAnswer', val)}}
+    //                 minimumTrackTintColor="#C9DBC5"
+    //                 maximumTrackTintColor="#FFFFFF"
+    //               />
+    //             </View>
+    //           </View>
+    //         </View>
+    //       </View>
+    //       <View>
+  
+    //       </View>
+  
+    //       <View style={styles.buttonsView}>
+    //         <TouchableOpacity
+    //           style={styles.journeyButton}
+    //           onPress={this.onSubmit}
+    //         >
+    //           <Text style={styles.text}>Submit</Text>
+    //         </TouchableOpacity>
+    //       </View>
+  
+    //     </SafeAreaView>
+    //   );
+    // }
+    
   }
 }
 
@@ -201,6 +305,13 @@ const styles = StyleSheet.create({
     height: 1,
     width: '90%',
     marginTop: 13,
+  },
+  line4: {
+    backgroundColor: "#6C9191",
+    height: 1,
+    width: '90%',
+    marginLeft: 18,
+    marginTop: 8,
   },
 
   sliderContentBox: {

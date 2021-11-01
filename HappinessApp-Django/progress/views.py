@@ -44,7 +44,8 @@ def complete_quest(request, qid):
 
     QuestFeedback(user=request.user, quest=quest, answer=request.data["answer"],
                   feeling_rating=request.data["feeling_rating"],
-                  quest_rating=request.data["quest_rating"]).save()
+                  quest_rating=request.data["quest_rating"],
+                  survey_answer=request.data["survey_answer"]).save()
 
     return Response({"Success": "Success"})
 

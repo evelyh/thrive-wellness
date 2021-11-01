@@ -1,7 +1,7 @@
 import React from "react";
 import AsyncStorage from "@react-native-community/async-storage";
 import { Alert } from "react-native";
-import {registerForPushNotificationsAsync} from "./networkingHelpers/notifications";
+import { registerForPushNotificationsAsync } from "./networkingHelpers/notifications";
 
 export const NetworkContext = React.createContext({
   // User Authentication and info
@@ -16,8 +16,8 @@ export const NetworkContext = React.createContext({
   // Cached data and methods to retrieve it
   journeys: [],
   userInfo: {
-    firstname: '',
-    lastname: '',
+    firstname: "",
+    lastname: "",
     age: -1,
   },
 
@@ -33,7 +33,7 @@ export const NetworkContext = React.createContext({
   displayNoConnectionAlert: () => {},
 });
 
-const url = "http://3.15.239.159:8000";
+const url = "http://xxx.xxx.x.xxx:8050";
 
 export class NetworkContextProvider extends React.Component {
   state = {
@@ -44,15 +44,14 @@ export class NetworkContextProvider extends React.Component {
 
     journeys: [],
     userInfo: {
-      firstname: '',
-      lastname: '',
+      firstname: "",
+      lastname: "",
       age: -1,
-    }
+    },
   };
 
   // Send new user registration date to the server, get new token
-  signUp = async (username, password, email,
-                  firstName, lastName, age, sex) => {
+  signUp = async (username, password, email, firstName, lastName, age, sex) => {
     const data = {
       method: "POST",
       headers: {
@@ -67,7 +66,7 @@ export class NetworkContextProvider extends React.Component {
         email: email,
         password: password,
         age: age,
-        sex: sex
+        sex: sex,
       }),
     };
     try {
@@ -81,10 +80,10 @@ export class NetworkContextProvider extends React.Component {
         await this.setToken(respJson.token);
         this.checkIfAdmin();
         this.getUserMeta();
-        registerForPushNotificationsAsync()
+        registerForPushNotificationsAsync();
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
       this.displayNoConnectionAlert();
     }
   };
@@ -116,7 +115,7 @@ export class NetworkContextProvider extends React.Component {
         await this.setToken(respJson.token);
         this.checkIfAdmin();
         this.getUserMeta();
-        registerForPushNotificationsAsync()
+        registerForPushNotificationsAsync();
       } else {
         console.log("Authentication Failed!");
       }
@@ -152,7 +151,7 @@ export class NetworkContextProvider extends React.Component {
           isAuthenticated: true,
           isLoading: false,
         });
-        registerForPushNotificationsAsync()
+        registerForPushNotificationsAsync();
       }
     });
     await this.checkIfAdmin();
@@ -212,8 +211,8 @@ export class NetworkContextProvider extends React.Component {
           firstname: respJson.firstname,
           lastname: respJson.lastname,
           age: respJson.age,
-        }
-      })
+        },
+      });
     } catch (e) {
       console.log(e);
       this.displayNoConnectionAlert();
@@ -255,7 +254,7 @@ export class NetworkContextProvider extends React.Component {
         data
       );
       const respJson = await fetchResponse.json();
-      return respJson
+      return respJson;
     } catch (e) {
       this.displayNoConnectionAlert();
       return [];
@@ -272,11 +271,11 @@ export class NetworkContextProvider extends React.Component {
     };
     try {
       let fetchResponse = await fetch(
-        url + "/api/progress/getJourneyProgress/" + journeyId + '/',
+        url + "/api/progress/getJourneyProgress/" + journeyId + "/",
         data
       );
-      const respJson = await fetchResponse.json()
-      return respJson
+      const respJson = await fetchResponse.json();
+      return respJson;
     } catch (e) {
       console.log(e);
       this.displayNoConnectionAlert();
@@ -285,7 +284,7 @@ export class NetworkContextProvider extends React.Component {
   };
 
   // Set a particular quest to be complete with given id
-  completeQuest = async (questId, answer, feelingRating, questRating) => {
+  completeQuest = async (questId, answer, feelingRating, questRating, surveyAnswer) => {
     const data = {
       method: "POST",
       headers: {
@@ -296,16 +295,17 @@ export class NetworkContextProvider extends React.Component {
       body: JSON.stringify({
         'answer': answer,
         'feeling_rating': feelingRating,
-        'quest_rating': questRating
+        'quest_rating': questRating,
+        'survey_answer': surveyAnswer
       })
     };
     try {
       let fetchResponse = await fetch(
-        url + "/api/progress/completeQuest/" + questId + '/',
+        url + "/api/progress/completeQuest/" + questId + "/",
         data
       );
       const respJson = await fetchResponse.json();
-      return respJson
+      return respJson;
     } catch (e) {
       console.log(e);
       this.displayNoConnectionAlert();
@@ -344,8 +344,8 @@ export class NetworkContextProvider extends React.Component {
 
           // Methods to retrieve non-cached data
           getJourneyInfo: this.getJourneyInfo,
-		      getJourneyProgress: this.getJourneyProgress,
-		  
+          getJourneyProgress: this.getJourneyProgress,
+
           // Method to complete quest
           completeQuest: this.completeQuest,
 

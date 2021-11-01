@@ -19,6 +19,7 @@ class Quest(models.Model):
                                 on_delete=models.CASCADE, blank=True)
     order = models.IntegerField()
     media = models.ImageField(upload_to='assets', blank=True)
+    survey_question = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
