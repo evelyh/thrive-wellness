@@ -34,13 +34,13 @@ export default class QuestScreen extends React.Component {
         {quest.media &&
             <Image
             style={styles.image}
-            source={{uri: 'http://localhost:8000'+quest.media, }}
+            source={{uri: 'http://intezzz.pythonanywhere.com/'+quest.media, }}
             />
           }
           {quest.media == null &&
             <Image
             style={styles.image}
-            source={require(default_image)}
+            source={require('../assets/placeholder_journey_image.png')}
             />
           }
         </View>
