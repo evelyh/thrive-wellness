@@ -30,17 +30,17 @@ tasks eases users to the process, and make users more willing to commit long ter
  * Provide clear steps for using each feature described above
  * This section is critical to testing your application and must be done carefully and thoughtfully
 
- #### [Feature] Adding image for a quest or journey (creating or changing from Administer in backend)
+ #### [Feature] Adding image for a quest or journey from Administer in backend
  
  *We don’t allow users to create a journey/quest themselves.
 
- Administer should log in to their account through xxx.xxx.xx:8000/admin with credentials username ‘admin’ and password ‘happyApp’. In the JOURNEYS/Journeys & Quests columns, you can add a journey/quest with/without uploading a picture for it. When there is no picture for it, there would be a placeholder picture in the app. 
+ Administer should log in to their account through xxx.xxx.xx:8000/admin with credentials username ‘admin’ and password ‘happyApp’. In the JOURNEYS/Journeys & Quests columns, they can add a journey/quest with/without uploading a picture for it. When there is no picture uploaded for it, there would be a placeholder picture shown in the app. 
  
  ## Development requirements
  * If a developer were to set this up on their machine or a remote server, what are the technical requirements (e.g. OS, libraries, etc.)?
  * Briefly describe instructions for setting up and running the application (think a true README).
 
- ### Front end codebase
+ ### Frontend codebase
  A developer would need some tools that are available for free on Windows, MacOS and Linus.
  1) Download npm and node.js
  2) Install and add nodejs/node_modules/npm/bin to PATH (this can be omitted)
