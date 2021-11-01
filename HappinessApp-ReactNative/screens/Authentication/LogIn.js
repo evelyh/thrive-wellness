@@ -6,9 +6,9 @@ import {
   Button,
   Alert,
   SafeAreaView,
-  Switch,
   Text,
   CheckBox,
+  Linking,
 } from "react-native";
 import { NetworkContext } from "../../contexts/Networking";
 import AsyncStorage from "@react-native-community/async-storage";
