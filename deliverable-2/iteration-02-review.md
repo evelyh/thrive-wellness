@@ -16,6 +16,13 @@
 4. We talked to some members from the previous team to clarify some of the code and decisions made. Able to directly contact the previous team and pick their brains really made it a lot more efficient in understanding the code base and knowing what’s the strength and deficiency of the current code state. For example, we learned the question daily quest screen is hard-coded and therefore we need to make future improvements to make sure it works as intended.
 
 
+1. We assigned priorities to every feature/task given by our partners as his wish and we’re currently planning to work in this order. It prevents us from running out of time to get to some essential part of this app.
+
+2. We decided to split our task by features, not by frontend or backend because the number of team members (4) doesn’t allow us to work in the latter way, which would be much less efficient. This way, we get to finish more features.
+
+3. We meet with our partner once a week and write agendas prior to the meeting. This way instead of doing all the work at the last minute we would be more motivated to space out the tasks to not disappoint our partner. Also, these meetings have flexibility that if there’s nothing really up that week, after discussion we’ll skip or reschedule the meeting.
+
+
 #### Q2. Decisions that did not turn out as well as we hoped
 
 1. We initially intended to incorporate two versions of the app, which were created by teams from last fall. One has a better UI while one has a stronger backend. After members dropped from the course, we have realized that it takes too much time to merge two code bases, and that we do not have enough manpower to do so.
@@ -23,12 +30,17 @@
 3. The usage of Issues was not as successful as intended. After two of the members dropped the course, we had to re-split the tasks. The use of issues on Github workflow is less necessary as there are fewer of us, so we communicate, identify problems and distribute tasks with our internal communication channel, which is on Discord. We also just simply forgot to use the issues.
 
 
+1. The usage of Issues and projects was not as successful as intended. After two of the members dropped from the course, we had to re-split the tasks and forgot to use the issues and projects feature in Github. 
+
+2. The decision of incorporating the two MVPs from last year into one did not turn our as we expected. Originially we planned to start a whole new project and combine two MVPs together with their UI and structure. But for sake of time and less number of team members, we just sticked to one of them and directly work on its code base. Planning in the earlier stage turned out to be waste of time. 
 
 #### Q3. Planned changes
 
 1. Review with our partner on some of the existing problems with the app that’s unbeknown to our partner and perhaps we need to shift our focus to implement those functionalities first. This is important as our partner did not know that, among other issues, the previous team did not code an error message when a user tries to register a new account with an email address already in the database. Letting our partner know what new problems or deficiency we found in the app and devise a plan to solve them is needed for the app to be successful.
 2. Set definite internal deadlines for implementing features, and if extensions are needed, we should communicate with other team members, so as to give a definite timeline to our partner, in order to give them a clearer idea of what features can be implemented within the time frame. It will also help with time management and splitting tasks within the team.
 
+
+1. For communication, we'll use Discord more organized with different channels for different purposes, instead of just flooding the general channel. 
 
 
 ## Product - Review
