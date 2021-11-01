@@ -5,4 +5,4 @@ from .models import QuestFeedback
 class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestFeedback
-        fields = ['id', 'answer', 'quest_rating', 'feeling_rating']
+        fields = ['id', 'answer', 'quest_rating', 'feeling_rating', "survey_answer"]

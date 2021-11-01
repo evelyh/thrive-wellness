@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   view1: {
     flex: 1.3,
-    backgroundColor: "#BADEDE",
+    backgroundColor: "white",
     flexDirection: "row",
   },
   view2: {
