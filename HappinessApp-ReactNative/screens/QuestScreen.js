@@ -27,14 +27,23 @@ export default class QuestScreen extends React.Component {
 
   render() {
     const { quest } = this.props.route.params;
-
+    const { default_image } = '../assets/placeholder_journey_image.png';
     return (
-      <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container}>
         <View style={styles.view1}>
-          <Image
+          {quest.media &&
+            <Image
             style={styles.image}
             source={{uri: 'http://localhost:8000'+quest.media, }}
-          />
+            />
+          }
+          {quest.media == null &&
+            <Image
+            style={styles.image}
+            source={require(default_image)}
+            />
+          }
+          
         </View>
         <View style={styles.view2}>
           <ScrollView>
@@ -67,8 +76,9 @@ export default class QuestScreen extends React.Component {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
+
+      }
     );
-  }
 }
 
 const styles = StyleSheet.create({
