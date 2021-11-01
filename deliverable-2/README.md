@@ -79,9 +79,9 @@ tasks eases users to the process, and make users more willing to commit long ter
  
  Once logged in, users can go to the "journey" tab to view all journeys. From here, they can access quests of each journey by clicking "tap to see more" on each journey, whcih brings users to a page containing quests in that particular journey. Users can then click "start quest" to complete a quest. There is also a feedback page after the quest itself, which contains ratings for the quest and a question specific to that quest (may or may not have this question) the users could fill in to let the app cater to their needs in the future and suggest them quests that suit their needs and liking.
 
- #### [Feature] Adding image for a quest or journey from Administer in backend
+ #### Adding image for a quest or journey from Administer in backend
  
- *We don’t allow users to create a journey/quest themselves.
+ _*We don’t allow users to create a journey/quest on their own_
 
  Administer should log in to their account through intezzz.pythonanywhere.com/admin with credentials username ‘admin’ and password ‘happyApp’. In the JOURNEYS/Journeys & Quests columns, they can add a journey/quest with/without uploading a picture for it. When there is no picture uploaded for it, there would be a placeholder picture shown in the app. 
  
@@ -117,11 +117,13 @@ Describe your Git / GitHub workflow. Essentially, we want to understand how your
  * Don't forget to **briefly explain why** you chose this workflow or particular aspects of it!
 
 We create a new branch for every feature we are to add. For example, there are separate branches for adding the features
-"additional survey question for each quest", "adding images and multimedia for journeys and quests" and "forget password and
-automatic login". We name the branches as the names we used to communicate internally. We abbreviate the description of the functionality
-of such additional feature. After developing and testing the features, we create a pull request to initiate the process of merging
-the newly added feature to main branch. We all have to agree that the feature is usable, and ready to merge before actually 
-merging the branches.
+"additional survey question for each quest", "adding images for journeys and quests" and "forget password and
+automatic login". We abbreviate the description of the functionality of such additional feature and we name the branches as the names we used to communicate internally, so the branch name doesn't get redundant. After developing and testing the features, we create a pull request to initiate the process of merging
+the newly added feature to main branch. Besides the people developed the feature, we appoint one other person to should all review the code and test it again. After we all agree with the usability of the features, we merge the branches.
+
+For the deployment tools, we hosted our project on pythonanywhere and using expo to pack our project into an apk since we used Django as backend and React Native as frontend. After deploying the project to the server, everytime we make changes to it, we can just pull changes from our repo to the remote repo on the server. For live application, we run our app on expo with Android/IOS simulators to see the actuall app. After finishing all work, we make an apk of our app for users.
+
+Since our main task is to modify and update an exsting MVP, some of us sometimes need to work based on the same thing, not just simply splitting tasks. So it's really important to directly communicate with each other and with our partner. So this workflow we chose avoids potential conflicts when people work independently but to make us up-to-date with each other's progress.
 
  ## Licenses 
 
