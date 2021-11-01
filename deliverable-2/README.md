@@ -29,6 +29,11 @@ tasks eases users to the process, and make users more willing to commit long ter
  * How do you access it? Are accounts pre-created or does a user register? Where do you start? etc. 
  * Provide clear steps for using each feature described above
  * This section is critical to testing your application and must be done carefully and thoughtfully
+
+ [Feature] Adding image for a quest or journey (creating or changing from Administer in backend)
+ *We don’t allow users to create a journey/quest themselves.
+
+ Administer should log in to their account through xxx.xxx.xx:8000/admin with credentials username ‘admin’ and password ‘happyApp’. In the JOURNEYS/Journeys & Quests columns, you can add a journey/quest with/without uploading a picture for it. When there is no picture for it, there would be a placeholder picture in the app. 
  
  ## Development requirements
  * If a developer were to set this up on their machine or a remote server, what are the technical requirements (e.g. OS, libraries, etc.)?
