@@ -30,7 +30,7 @@ tasks eases users to the process, and make users more willing to commit long ter
  * Provide clear steps for using each feature described above
  * This section is critical to testing your application and must be done carefully and thoughtfully
 
- ### [Feature] Adding image for a quest or journey (creating or changing from Administer in backend)
+ #### [Feature] Adding image for a quest or journey (creating or changing from Administer in backend)
  
  *We don’t allow users to create a journey/quest themselves.
 
