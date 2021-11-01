@@ -112,7 +112,7 @@ class JourneyTreeComponent extends Component {
             {journey.media &&
                 <Image
                 style={styles.image}
-                source={{uri: 'http://intezzz.pythonanywhere.com/'+journey.media, }}
+                source={{uri: 'https://intezzz.pythonanywhere.com/'+journey.media, }}
                 />
               }
               {journey.media == null &&
