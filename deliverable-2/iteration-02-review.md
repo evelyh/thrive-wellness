@@ -1,14 +1,14 @@
-# YOUR PRODUCT/TEAM NAME
+# Bellwoods Strategic Capital Happiness App/ACG.EXE
 
  > _Note:_ This document is meant to be written during (or shortly after) your review meeting, which should happen fairly close to the due date.      
  >      
  > _Suggestion:_ Have your review meeting a day or two before the due date. This way you will have some time to go over (and edit) this document, and all team members should have a chance to make their contribution.
 
 
-## Iteration XX - Review & Retrospect
+## Iteration 02 - Review & Retrospect
 
- * When: FILL IN THE DATE WHEN YOU ACTUALLY HAD YOUR REVIEW MEETING
- * Where: PHYSICAL LOCATION AND/OR ONLINE
+ * When: Oct 28 (Thur) 16:30
+ * Where: Zoom
 
 ## Process - Reflection
 
@@ -50,3 +50,12 @@ List any **process-related** (i.e. team organization and how you work) changes y
  * Were there change requests?
  * What did you learn from the demo from either a process or product perspective?
  * *This section will be marked very leniently so keep it brief and just make sure the points are addressed*
+
+We prepared for our demo according to features. Each one (or pair) of us have taken up a feature to implement, and has
+prepared our own part of the demo separately. We demonstrated forget/reset password, automatic login (keep me logged in), and
+a survey question after each quest. Our partner accepted the features, with a few minor changes that were addressed. 
+
+We have learnt that being explicit in the backend admin portal is important for our partner, as they value clarity and 
+they would like details to be stated clearly. We have also learnt that our design decisions will always be based on the 
+users' user experience as the centre of our design decision-making process. It is important for our partner that our design
+leaves users using the app at ease.
