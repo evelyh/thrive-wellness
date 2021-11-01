@@ -13,18 +13,14 @@ from .forms import ImageForm
 def images(request):
    saved = False
    if request.method == "POST":
-      #Get the posted form
       MyImageForm = ImageForm(request.POST, request.FILES)
       if MyImageForm.is_valid():
          profile = Image()
-         profile.name = MyImageForm.cleaned_data["name"]
-         profile.picture = MyImageForm.cleaned_data["picture"]
          profile.save()
          saved = True
    else:
-      MyImageForm = Imageform()
+      MyImageForm = ImageForm()
 		
-   return render(request, 'image', locals())
 
 
 @api_view(['GET', 'PUT', 'DELETE'])

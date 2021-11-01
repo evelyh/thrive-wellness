@@ -110,8 +110,8 @@ class JourneyTreeComponent extends Component {
       <View style={MIStyles.MIContainer}>
             <View style={MIStyles.MIPictureContainer}>
                 <Image
-                    style={MIStyles.MIPicture}
-                    source={require("../../assets/placeholder_journey_image.png")}
+                    style={styles.image}
+                    source={{uri: 'http://localhost:8000'+journey.media, }}
                 />
             </View>
             <View style={MIStyles.MITextContainer}>
@@ -145,6 +145,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+  },
+  image:{
+    width: 440,
+    height: 130,
+    resizeMode: 'stretch',
   },
   journeyButton: {
     width: 200,

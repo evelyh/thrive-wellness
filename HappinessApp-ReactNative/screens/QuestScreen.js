@@ -33,11 +33,7 @@ export default class QuestScreen extends React.Component {
         <View style={styles.view1}>
           <Image
             style={styles.image}
-            source={require("../assets/gee_me_054.png")}
-          />
-          <Image
-            style={styles.image}
-            source={require("../assets/gee_me_100.png")}
+            source={{uri: 'http://localhost:8000'+quest.media, }}
           />
         </View>
         <View style={styles.view2}>
@@ -82,8 +78,12 @@ const styles = StyleSheet.create({
   },
   view1: {
     flex: 1.3,
-    backgroundColor: "#BADEDE",
     flexDirection: "row",
+  },
+  image: {
+    width: 420,
+    height: 110,
+    resizeMode: 'stretch',
   },
   view2: {
     flex: 7,
