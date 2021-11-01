@@ -6,9 +6,9 @@ import {
   Button,
   Alert,
   SafeAreaView,
-  Switch,
   Text,
   CheckBox,
+  Linking,
 } from "react-native";
 import { NetworkContext } from "../../contexts/Networking";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -59,14 +59,6 @@ export default class SignIn extends React.Component {
       ]
     );
   };
-
-  // async componentDidMount() {
-  //   const username = await this.getRememberedUser();
-  //   this.setState({
-  //     username: username || "",
-  //     rememberMe: username ? true : false,
-  //   });
-  // }
 
   async componentDidMount() {
     const username = await this.getRememberedUser();

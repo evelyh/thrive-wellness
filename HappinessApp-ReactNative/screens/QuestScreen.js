@@ -12,18 +12,17 @@ import {
 } from "react-native";
 
 export default class QuestScreen extends React.Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      answer: ''
-    }
+      answer: "",
+    };
   }
 
   onChangeText = (key, value) => {
-    this.setState({ [key]: value })
-  }
+    this.setState({ [key]: value });
+  };
 
   render() {
     const { quest } = this.props.route.params;
@@ -31,18 +30,18 @@ export default class QuestScreen extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.view1}>
-        {quest.media &&
+          {quest.media && (
             <Image
             style={styles.image}
             source={{uri: 'https://intezzz.pythonanywhere.com/'+quest.media, }}
             />
-          }
-          {quest.media == null &&
+          )}
+          {quest.media == null && (
             <Image
-            style={styles.image}
-            source={require('../assets/placeholder_journey_image.png')}
+              style={styles.image}
+              source={require("../assets/placeholder_journey_image.png")}
             />
-          }
+          )}
         </View>
         <View style={styles.view2}>
           <ScrollView>
@@ -57,7 +56,7 @@ export default class QuestScreen extends React.Component {
               multiline
               placeholder="How did doing the quest make you feel? Type here."
               autoCapitalize="none"
-              onChangeText={val => this.onChangeText('answer', val)}
+              onChangeText={(val) => this.onChangeText("answer", val)}
             />
           </ScrollView>
         </View>
@@ -68,7 +67,7 @@ export default class QuestScreen extends React.Component {
               this.props.navigation.navigate("Feedback", {
                 answer: this.state.answer,
                 quest: quest,
-              })
+              });
             }}
           >
             <Text style={styles.text}>Submit</Text>
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
   image: {
     width: 420,
     height: 110,
-    resizeMode: 'stretch',
+    resizeMode: "stretch",
   },
   view2: {
     flex: 7,

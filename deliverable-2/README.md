@@ -6,6 +6,7 @@
  * Provide a high-level description of your application and it's value from an end-user's perspective
  * What is the problem you're trying to solve?
  * Is there any context required to understand **why** the application solves this problem?
+
 This app provides users with a way to further increase the level of happiness and fulfillment in their everyday lives. By
 providing modules known as "jouneys" which is on a specific topic related to happiness, and "quests" within journeys which
 are simple exercises that users can practice. The journeys are completed in the course of a few days to a week, which is meant
@@ -62,7 +63,7 @@ tasks eases users to the process, and make users more willing to commit long ter
  
  *We don’t allow users to create a journey/quest themselves.
 
- Administer should log in to their account through happiness-app-2021-fall.herokuapp.com/admin with credentials username ‘admin’ and password ‘happyApp’. In the JOURNEYS/Journeys & Quests columns, they can add a journey/quest with/without uploading a picture for it. When there is no picture uploaded for it, there would be a placeholder picture shown in the app. 
+ Administer should log in to their account through http://intezzz.pythonanywhere.com/admin with credentials username ‘admin’ and password ‘happyApp’. In the JOURNEYS/Journeys & Quests columns, they can add a journey/quest with/without uploading a picture for it. When there is no picture uploaded for it, there would be a placeholder picture shown in the app. 
  
  ## Development requirements
  * If a developer were to set this up on their machine or a remote server, what are the technical requirements (e.g. OS, libraries, etc.)?
