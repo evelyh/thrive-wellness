@@ -71,6 +71,12 @@ tasks eases users to the process, and make users more willing to commit long ter
  #### Forget password / username
  
  We understand that we sometimes forget our credentials to accounts, and we are able to retrieve that information for you. As a user forget their password, choose the "forget password" option, which brings users to a page to key in their email address which is associated to their account. Instructions to resetting their password will then be sent to their email address if it is registered in our system.
+ 
+ #### Viewing and completing quests in a journey
+ 
+ _this is a feature implemented by last year's team, with modifications done by us_
+ 
+ Once logged in, users can go to the "journey" tab to view all journeys. From here, they can access quests of each journey by clicking "tap to see more" on each journey, whcih brings users to a page containing quests in that particular journey. Users can then click "start quest" to complete a quest. There is also a feedback page after the quest itself, which contains ratings for the quest and a question specific to that quest (may or may not have this question) the users could fill in to let the app cater to their needs in the future and suggest them quests that suit their needs and liking.
 
  #### [Feature] Adding image for a quest or journey from Administer in backend
  
