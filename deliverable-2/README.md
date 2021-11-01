@@ -29,20 +29,21 @@ tasks eases users to the process, and make users more willing to commit long ter
   There are different jouneys available on our apps. Each journey has a list of quests relavant to its theme. Users can follow the list of quests to complete a journey. 
   To start a journey:
   - Go to the 'Journeys' page
-  - Pick one that you are interested and tap the card
-  - Start to do the quests
+  - Pick one that you are interested in and tap the card
+  - start on one of the quests in a journey
 
 2. Completing a daily quests
    
    Description: 
    
-   If users do not want to complete an entire journey, they can pick a individual quest. After finishing a quest, users may provide feedbacks and answers to a survey
-   question to the quests. So that we may improve our quests based on users' feedbacks.
+   Users can complete a quest in a Journey. After finishing the quest, users may provide their feedback to the quests. We may improve our quests based on users' feedbacks.
+   And there may also a survey question for a quest, this may use on some researches in psychology in the future. 
+   
    To complete adaily quest:
-   - Go to the 'Daily Quests' page
-   - Pick one that your are interested in and tap the card.
-   - Start to do the quests
-   - Gice feedbacks to the quests
+   - Do every steps in the starting a journey
+   - Start to do the quest
+   - Give feedbacks to the quests
+   - Answer the survey question
  
 3. Admin portal
 
