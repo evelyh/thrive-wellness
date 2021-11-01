@@ -13,9 +13,4 @@ class JourneySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Journey
-        fields = ['id', 'name', 'description', 'quests']
-
-# class ImageSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Image
-#         fields = ['id', 'name', 'image']
+        fields = ['id', 'name', 'description', 'quests', 'media']
