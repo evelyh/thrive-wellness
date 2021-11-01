@@ -60,14 +60,6 @@ export default class SignIn extends React.Component {
     );
   };
 
-  // async componentDidMount() {
-  //   const username = await this.getRememberedUser();
-  //   this.setState({
-  //     username: username || "",
-  //     rememberMe: username ? true : false,
-  //   });
-  // }
-
   async componentDidMount() {
     const username = await this.getRememberedUser();
     const password = await this.getRememberedPassword();
