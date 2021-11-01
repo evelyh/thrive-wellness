@@ -147,22 +147,22 @@ Testing survey question for quest:
 ### Frontend codebase
 A developer would need some tools that are available for free on Windows, MacOS and Linux.
 
-Download npm and node.js
-Install and add ‘nodejs/node_modules/npm/bin’ to PATH (this can be omitted)
-Clone repository and change directories to HappinessApp-ReactNative
-Run ‘npm install -g expo-cli’ to install expo build services to emulate and test the application on your mobile device or emulator
-Run ‘npm install’ to install all project dependencies
-Run ‘expo start’ to commence app deployment on localhost network
-Download Expo app on your mobile device and scan the QR code to open the app on your mobile device, or run it on your emulator by choosing the corresponding option given:
-Download and install Android Studio, open AVD Manager in Android Studio. Install an emulator of an Android phone. Press ‘a’ to run the app.
-Download Xcode and open a simulator in ‘Developer tools’ (model chosen by user). Press ‘i’ to run the app.
+* Download npm and node.js
+* Install and add ‘nodejs/node_modules/npm/bin’ to PATH (this can be omitted)
+* Clone repository and change directories to HappinessApp-ReactNative
+* Run ‘npm install -g expo-cli’ to install expo build services to emulate and test the application on your mobile device or emulator
+* Run ‘npm install’ to install all project dependencies
+* Run ‘expo start’ to commence app deployment on localhost network
+* Download Expo app on your mobile device and scan the QR code to open the app on your mobile device, or run it on your emulator by choosing the corresponding option given:
+* Download and install Android Studio, open AVD Manager in Android Studio. Install an emulator of an Android phone. Press ‘a’ to run the app.
+* Download Xcode and open a simulator in ‘Developer tools’ (model chosen by user). Press ‘i’ to run the app.
 
 ### Backend codebase
-Download and install Python (versions 3.7 or after)
-Change directories to HappinessApp-Django
-Run ‘pip install -r requirements.txt’ to install all packages used in the project
-Run ‘python manage.py makemigrations’ and ‘python manage.py migrate’ if this is the first time running the code (use ‘python3’ instead of ‘python’ if you’re using Macbook)
-Run python manage.py runserver to run the Django server on your local network localhost
+* Download and install Python (versions 3.7 or after)
+* Change directories to HappinessApp-Django
+* Run ‘pip install -r requirements.txt’ to install all packages used in the project
+* Run ‘python manage.py makemigrations’ and ‘python manage.py migrate’ if this is the first time running the code (use ‘python3’ instead of ‘python’ if you’re using Macbook)
+* Run python manage.py runserver to run the Django server on your local network localhost
 
 
 ## Deployment and Github Workflow
