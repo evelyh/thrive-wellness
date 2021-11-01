@@ -154,7 +154,7 @@ export default class SignIn extends React.Component {
             title="Forgot Username or Password?"
             onPress={() =>
               Linking.openURL(
-                "http://192.168.0.128:8050/api/auth/reset_password/"
+                "http://xxx.xxx.x.xxx:8050/api/auth/reset_password/"
               )
             }
           />
