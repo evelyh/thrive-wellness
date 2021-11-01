@@ -22,7 +22,7 @@ export default class WelcomeScreen extends React.Component {
     return (
       <SafeAreaView style={styles.background}>
         {!dailyReport ? (
-            // Welcome message
+          // Welcome message
           <View>
             <Text style={styles.regularText}>
               Hey, you’re awake! It’s winter and cold as sh*t outside but I’m
@@ -63,34 +63,30 @@ export default class WelcomeScreen extends React.Component {
             />
           </View>
         ) : (
-            // Daily Report
-            <View style={styles.scrollView}>
-                <ScrollView
-            contentContainerStyle={styles.scrollContents}
-          >
+          // Daily Report
+          <View style={styles.scrollView}>
+            <ScrollView contentContainerStyle={styles.scrollContents}>
               <View style={styles.dailyHeader}>
-            <Text>Daily Report</Text>
-              </View>   
+                <Text>Daily Report</Text>
+              </View>
               <View style={styles.dailyReport}>
-            <Text>Good Morning</Text>
-            <Text>{"\n\n\n"}</Text>
-            <Text>Your current progress on the _ Journey is</Text>
-            <Text>{"\n\n\n\n\n"}</Text>
-            <Text>Calendar</Text>
-            <Text>{"\n\n\n\n\n\n\n\n\n"}</Text>
-            <Text>Comment #1</Text>
-            <Text>{"\n\n\n"}</Text>
-            <Text>Comment #2</Text>
-            <Text>{"\n\n\n"}</Text>
-            <Text>What would you like to do now? *Dropdown*</Text>
-            <Button
-              onPress={() => this.props.finishWelcome()}
-              title="Continue"
-              color="#841584"
-            />
-              </View>   
-          </ScrollView>
-            </View>
+                <Text>Good Morning</Text>
+                <Text>{"\n\n\n"}</Text>
+                <Text>Your current progress on the _ Journey is</Text>
+                <Text>{"\n\n\n\n\n"}</Text>
+                <Text>Calendar</Text>
+                <Text>{"\n\n\n\n\n\n\n\n\n"}</Text>
+                <Text>Comment #1</Text>
+                <Text>{"\n\n\n"}</Text>
+                <Text>What would you like to do now? *Dropdown*</Text>
+                <Button
+                  onPress={() => this.props.finishWelcome()}
+                  title="Continue"
+                  color="#841584"
+                />
+              </View>
+            </ScrollView>
+          </View>
         )}
       </SafeAreaView>
     );
@@ -113,36 +109,34 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   scrollContents: {
-    flex: 1 ,
-    flexDirection: 'column',
-    width: '100%',
+    flex: 1,
+    flexDirection: "column",
+    width: "100%",
   },
   buttonDailyReport: {
-      flex: 1,
+    flex: 1,
   },
   SquareShapeView: {
- 
     width: 500,
     height: 40,
-    backgroundColor: '#00BCD4'
- 
+    backgroundColor: "#00BCD4",
   },
   scrollView: {
     flex: 9,
-    flexDirection: 'column',
-    width: '100%',
+    flexDirection: "column",
+    width: "100%",
   },
   dailyHeader: {
-    width: '100%',
+    width: "100%",
     flex: 1,
     marginTop: "10%",
-    alignItems: 'center',
-    backgroundColor: '#00BCD4'
+    alignItems: "center",
+    backgroundColor: "#00BCD4",
   },
   dailyReport: {
-    width: '100%',
+    width: "100%",
     flex: 7,
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF'
-  }
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+  },
 });
