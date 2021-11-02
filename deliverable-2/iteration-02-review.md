@@ -36,3 +36,7 @@ We prepared for our demo according to features. Each one (or pair) of us have ta
 
 We have learnt that being explicit in the backend admin portal is important for our partner, as they value clarity and they would like details to be stated clearly. We have also learnt that our design decisions will always be based on the users' experience as the centre of our design decision-making process. It is important for our partner that our design leaves users using the app at ease.
 
+The following link is a video of the demo to our partner:
+
+https://utoronto.zoom.us/rec/share/VgEua3wTIeYkGhpi7RDTcTcU9uer5-w5xMnFfLzWa458jVVHPrCaCPWG2lSJOxzE.0Z3GEFUCcv-JbnZa Passcode: 0kBM#n&4aa
+
