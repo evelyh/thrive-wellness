@@ -29,8 +29,6 @@ import { Icon } from "react-native-elements";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-
-
 export class MainStackNavigator extends React.Component {
   static contextType = NetworkContext;
 
@@ -40,14 +38,14 @@ export class MainStackNavigator extends React.Component {
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color, size }) => {
             const modules = {
-              Tree: "MaterialComm",
+              Submit: "MaterialComm",
               Journey: "Entypo",
               Daily: "MaterialIcons",
               Friends: "FontAwesome",
               Profile: "FontAwesome",
             };
             const icons = {
-              Tree: "tree",
+              Submit: "tree",
               Journey: "flower", // or Leaf, rainbow,
               Daily: "today",
               Friends: "user-friends",
@@ -85,7 +83,6 @@ export class MainStackNavigator extends React.Component {
           },
         })}
       >
-        <Tab.Screen name="Tree" component={HappinessTree} />
         <Tab.Screen name="Journey" component={JourneyScreen} />
         <Tab.Screen
           name="Daily"
@@ -96,17 +93,16 @@ export class MainStackNavigator extends React.Component {
         />
         <Tab.Screen name="Friends" component={Friends} />
         <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="Submit Quest" component={Profile} />
       </Tab.Navigator>
     );
   }
 }
 
-
-
 export class MainStack extends React.Component {
   handleSettings = () => {
-    navigation.goBack
-    console.log("Settings button")
+    navigation.goBack;
+    console.log("Settings button");
   };
 
   render() {
@@ -119,10 +115,10 @@ export class MainStack extends React.Component {
             headerTitle: getHeaderTitle(route),
             headerRight: () => (
               <Icon
-			  reverse
-			  name= 'ios-settings'
-			  type='ionicon'
-			  color='#517fa4'
+                reverse
+                name="ios-settings"
+                type="ionicon"
+                color="#517fa4"
               />
             ),
           })}
@@ -149,10 +145,10 @@ export class MainStack extends React.Component {
 }
 
 function getHeaderTitle(route) {
-  const routeName = getFocusedRouteNameFromRoute(route) ?? "Tree";
+  const routeName = getFocusedRouteNameFromRoute(route) ?? "Daily";
 
   switch (routeName) {
-    case "Tree":
+    case "Submit Quest":
       return "Happiness Tree";
     case "Journey":
       return "Journey";
