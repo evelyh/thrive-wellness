@@ -21,6 +21,7 @@ export default class SignIn extends React.Component {
     username: "",
     password: "",
     rememberMe: false,
+    login_message: false,
   };
 
   onChangeText = (key, value) => {
@@ -45,6 +46,9 @@ export default class SignIn extends React.Component {
       AsyncStorage.setItem("option", "false");
     }
     this.context.signIn(username, password);
+    this.setState({
+      login_message: true,
+    });
   };
 
   displayEmptyFieldsAlert = () => {
@@ -106,6 +110,7 @@ export default class SignIn extends React.Component {
   };
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.inputContainer}>
@@ -141,6 +146,14 @@ export default class SignIn extends React.Component {
             />
             <Text style={styles.label}>Remember Me</Text>
           </View>
+          {this.state.login_message === true && (
+            <Text>Wrong Username or Password</Text>
+          )}
+          <Button
+            style={styles.button}
+            title="Register for a new account"
+            onPress={() => navigate("SignUp1")}
+          />
           <Button
             style={styles.button}
             title="Forgot Username or Password?"
