@@ -102,7 +102,7 @@ export default class QuestFeedbackScreen extends React.Component {
                   maximumValue={10}
                   step={1}
                   value={this.state.questRating}
-                  onValueChange={(val) => {this.onChangeText('questRating', val)}}
+                  onValueChange={(val) => {this.onValueChange('questRating', val)}}
                   minimumTrackTintColor="#C9DBC5"
                   maximumTrackTintColor="#FFFFFF"
                 />
@@ -118,7 +118,7 @@ export default class QuestFeedbackScreen extends React.Component {
                     style={styles.input}
                     placeholder="What do you think?"
                     autoCapitalize="none"
-                    onChangeText={val => this.onValueChange('surveyAnswer', val)}/>
+                    onChangeText={val => this.onChangeText('surveyAnswer', val)}/>
               </View>
             </View>)
           }
