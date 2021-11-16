@@ -9,7 +9,6 @@ class QuestSerializer(serializers.ModelSerializer):
 
 
 class JourneySerializer(serializers.ModelSerializer):
-    quests = QuestSerializer(many=True, read_only=True)
 
     class Meta:
         model = Journey

@@ -33,7 +33,7 @@ export const NetworkContext = React.createContext({
   displayNoConnectionAlert: () => {},
 });
 
-const url = "http://xxx.xxx.x.xxx:8050";
+const url = "http://localhost:8000/";
 
 export class NetworkContextProvider extends React.Component {
   state = {

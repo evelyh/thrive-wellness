@@ -109,18 +109,18 @@ class JourneyTreeComponent extends Component {
       <SafeAreaView style={styles.container}>
       <View style={MIStyles.MIContainer}>
             <View style={MIStyles.MIPictureContainer}>
-            {journey.media &&
+            {journey.media &&(
                 <Image
                 style={styles.image}
-                source={{uri: 'http://localhost:8000'+journey.media, }}
+                source={{uri: 'http://localhost:8000/'+ journey.media, }}
                 />
-              }
-              {journey.media == null &&
+              )}
+              {journey.media == null &&(
                 <Image
                 style={styles.image}
-                source={require('../assets/placeholder_journey_image.png')}
+                source={require('../../assets/placeholder_journey_image.png')}
                 />
-              }
+              )}
             </View>
             <View style={MIStyles.MITextContainer}>
                 <Text style={MIStyles.MIDescriptionText}>

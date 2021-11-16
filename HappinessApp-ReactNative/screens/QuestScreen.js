@@ -27,22 +27,29 @@ export default class QuestScreen extends React.Component {
 
   render() {
     const { quest } = this.props.route.params;
+    // const{ journey } = quest;
 
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.view1}>
-        {quest.media &&
+        {quest.media && (
             <Image
             style={styles.image}
-            source={{uri: 'http://localhost:8000'+quest.media, }}
+            source={{uri: 'http://localhost:8000/'+ quest.media, }}
             />
-          }
-          {quest.media == null &&
+          )}
+          {quest.media == null && journey.media &&(
+            <Image
+              style={styles.image}
+              source={{uri: 'http://localhost:8000/'+ journey.media, }}
+            />
+          )}
+          {quest.media == null && (journey == null || journey.media == null) &&(
             <Image
             style={styles.image}
-            source={require(default_image)}
+            source={require('../assets/placeholder_journey_image.png')}
             />
-          }
+          )}
         </View>
         <View style={styles.view2}>
           <ScrollView>
