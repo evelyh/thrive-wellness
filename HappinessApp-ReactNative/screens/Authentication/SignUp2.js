@@ -122,8 +122,8 @@ export default class SignUp2 extends React.Component {
 
   displayShortAlert = () => {
     Alert.alert(
-      "Password too weak",
-      "Password must contain at least 8 characters, at least 1 lowercase character and at least 1 number",
+      "Password strength is too weak",
+      "Password must contain: \n -At least 8 characters\n -At least 1 number\n -At least 1 lowercase character",
       [
         {
           text: "Close",
