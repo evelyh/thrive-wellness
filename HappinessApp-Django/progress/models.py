@@ -10,6 +10,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Progress(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quest = models.ForeignKey(Quest, on_delete=models.CASCADE)
+    complete_time = models.DateTimeField(auto_now=True)
     progress = models.IntegerField(validators=[MaxValueValidator(1),
                                                MinValueValidator(0)])
 

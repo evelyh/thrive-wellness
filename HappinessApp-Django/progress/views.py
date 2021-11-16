@@ -1,3 +1,4 @@
+from datetime import datetime
 from questdata.models import *
 from .models import *
 from journeys.models import *
@@ -39,10 +40,11 @@ def complete_quest(request, qid):
         prog = qset.first()
         prog.progress = 1
         prog.save()
+        Progress(quest=quest, user=user, progress=0).save()
     else:
         Progress(quest=quest, user=user, progress=1).save()
 
-    QuestFeedback(user=request.user, quest=quest, answer=request.data["answer"],
+     (user=request.user, quest=quest, answer=request.data["answer"],
                   feeling_rating=request.data["feeling_rating"],
                   quest_rating=request.data["quest_rating"],
                   survey_answer=request.data["survey_answer"]).save()
