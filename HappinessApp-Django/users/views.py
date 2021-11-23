@@ -55,25 +55,8 @@ def register(request):
         send_mail(mail_subject, message, 'bellwoodspw@gmail.com', [to_email])
         return Response({"response" : 'Please confirm your email address to complete the registration'})
     else:
-        # user = User.objects.create_user(request.data["username"],
-        #                             request.data["email"],
-        #                             request.data["password"])
-        # user.save()
         return
-    # user = User.objects.create_user(request.data["username"],
-    #                                 request.data["email"],
-    #                                 request.data["password"])
-    # user.save()
-
-    # first_name = models.TextField()
-    # last_name = models.TextField()
-    # age = models.IntegerField()
-    # sex = models.CharField(max_length=1)
-
-    # UserMeta(user=user, firstname=request.data["firstname"],
-    #          lastname=request.data["lastname"],
-    #          age=request.data["age"], sex=request.data["sex"]).save()
-    # return Response({"token": Token.objects.get(user=user).key})
+  
 
 def activate(request, uidb64, token):
     User = get_user_model()
