@@ -89,3 +89,26 @@ def completed_journeys(request):
         completed.append(JourneySerializer(instance=journey).data)
 
     return Response(completed)
+
+@api_view(['GET'])
+def incomplete_journey(request):
+    user = request.user
+    journeys = Journey.objects.all()
+    incomplete_journey = None
+
+    for journey in journeys:
+        quests = journey.quests.all()
+        incomplete = False
+        for quest in quests:
+            qset = Progress.objects.filter(user=user, quest=quest)
+            if not qset:
+                incomplete = True
+                break
+            progress_obj = qset.first()
+            if progress_obj.progress != 1:
+                incomplete = True
+                break
+        if incomplete:
+            incomplete_journey = JourneySerializer(instance=journey).data
+            break
+    return Response(incomplete_journey)

@@ -14,6 +14,13 @@ export const NetworkContext = React.createContext({
   signOut: () => {},
   loadToken: () => {},
   // Cached data and methods to retrieve it
+  incompleteJourney: {
+    description: "",
+    id: null,
+    media: null,
+    name: "",
+    quests: []
+  },
   journeys: [],
   userInfo: {
     firstname: "",
@@ -22,6 +29,7 @@ export const NetworkContext = React.createContext({
   },
 
   getJourneys: () => {},
+  getIncompleteJourney: () => {},
   // Methods to retrieve non-cached data
   getJourneyInfo: () => {},
   getJourneyProgress: () => {},
@@ -34,7 +42,7 @@ export const NetworkContext = React.createContext({
 });
 
 // const url = "https://intezzz.pythonanywhere.com/";
-const url = "http://100.65.200.88:8000";
+const url = "http://100.64.234.64:8000";
 
 export class NetworkContextProvider extends React.Component {
   state = {
@@ -44,6 +52,13 @@ export class NetworkContextProvider extends React.Component {
     isAdmin: false,
 
     journeys: [],
+    incompleteJourney: {
+      description: "",
+      id: null,
+      media: null,
+      name: "",
+      quests: []
+    },
     userInfo: {
       firstname: "",
       lastname: "",
@@ -241,6 +256,35 @@ export class NetworkContextProvider extends React.Component {
     }
   };
 
+ // Get the information of the incomplete journey
+ getIncompleteJourney = async () => {
+  console.log("Beginning daily quests fetch");
+  const data = {
+    method: "GET",
+    headers: {
+      Authorization: "Token " + this.state.token,
+    },
+  };
+  try {
+    let fetchResponse = await fetch(url + "/api/progress/incompleteJourney/", data);
+    let respJson = await fetchResponse.json();
+    this.setState({
+      incompleteJourney: {
+        description: respJson.description,
+        id: respJson.id,
+        media: respJson.media,
+        name: respJson.name,
+        quests: respJson.quests
+      }
+    });
+    return respJson;
+  } catch (e) {
+    console.log(e);
+    this.displayNoConnectionAlert();
+    return null;
+  }
+};
+
   // Get info of a particular journey with given id
   getJourneyInfo = async (journeyId) => {
     const data = {
@@ -283,31 +327,6 @@ export class NetworkContextProvider extends React.Component {
       return [];
     }
   };
-
-  // getIncompleteJourneys = async() => {
-  //   const data = {
-  //     method: "GET",
-  //     headers: {
-  //       Authorization: "Token " + this.state.token,
-  //     },
-  //   };
-  //   const journeys = this.getJourneys();
-  //   var ids = [];
-  //   for(let i=0; i<journeys.length; i++){
-  //     ids.push(journeys[i]['id']);
-  //   }
-  //   try{
-  //     let fetchResponse = await fetch(
-  //       url + ""
-  //     );
-
-  //   }catch (e) {
-  //     console.log();
-  //     this.displayNoConnectionAlert();
-  //     return [];
-  //   }
-
-  // };
 
   // Set a particular quest to be complete with given id
   completeQuest = async (
@@ -384,10 +403,11 @@ export class NetworkContextProvider extends React.Component {
           userInfo: this.state.userInfo,
 
           getJourneys: this.getJourneys,
-
+          getIncompleteJourney: this.getIncompleteJourney,
           // Methods to retrieve non-cached data
           getJourneyInfo: this.getJourneyInfo,
           getJourneyProgress: this.getJourneyProgress,
+          
 
           // Method to complete quest
           completeQuest: this.completeQuest,

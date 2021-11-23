@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   FlatList,
+  ScrollView
 } from "react-native";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 import { NetworkContext } from "../contexts/Networking";
@@ -15,16 +16,32 @@ export default class DailyQuestScreen extends React.Component {
   static contextType = NetworkContext;
 
   state = {
-    journey: {},
+    journey: {}, 
     completedQuests: [],
+    incompleteJourney: {
+      description: "",
+      id: null,
+      media: null,
+      name: "",
+      quests: []
+    } // This is the journey in progress
   };
 
   getJourneys = async () => {
-    await this.context.getJourneys();
-    const journeyProgress = await this.context.getJourneyProgress(10);
-    this.setState({
-      journey: this.context.journeys[7], //Quest fetching is hardcoded
-    });
+    const incomplete = await this.context.getIncompleteJourney();
+    const journeyProgress = await this.context.getJourneyProgress(incomplete.id);
+    if(incomplete != null){
+      this.setState({
+        incompleteJourney: {
+          description: incomplete.description,
+          id: incomplete.id,
+          media: incomplete.media,
+          name: incomplete.name,
+          quests: incomplete.quests
+        }
+      });
+    }
+    console.log(this.state.incompleteJourney);
     this.setState({
       completedQuests: journeyProgress.completed,
     });
@@ -38,7 +55,7 @@ export default class DailyQuestScreen extends React.Component {
 
   componentDidMount() {
     this._unsubscribe = this.props.navigation.addListener("focus", () => {
-      //this.getJourneys();
+      this.getJourneys();
     });
   }
 
@@ -82,12 +99,23 @@ export default class DailyQuestScreen extends React.Component {
       </Card.Actions>
     </Card>
   );
+
   render() {
-    // const { name } = this.props.route.params; // Get name from params which comes from the navigate function from LogIn.js
-    const { quests } = this.state.journey;
-    if (Object.keys(this.state.journey).length == 0) {
+    //const { name } = this.props.route.params; // Get name from params which comes from the navigate function from LogIn.js
+    const { quests } = this.state.incompleteJourney;
+    if(this.state.incompleteJourney.name == ""){
+    //if (Object.keys(this.state.journey).length == 0) {
       return <Title style={QuestListStyles.title}>No Quest</Title>;
     }
+    let incompleteQuests = [];
+    for(let i=0; i < quests.length; i++){
+      console.log(this.state.completedQuests[i].id);
+      if(!(this.state.completedQuests.some(quest => quests[i].id === quest.id))){
+        incompleteQuests.concat([quests[i]])
+      }
+    }
+    console.log(incompleteQuests);
+
     return (
       <SafeAreaView style={styles.container}>
         <View
@@ -100,14 +128,16 @@ export default class DailyQuestScreen extends React.Component {
           }}
         >
           <Title style={QuestListStyles.title}>Your current journey is:</Title>
-          <Title style={QuestListStyles.title}>Welcome Journey</Title>
+          <Title style={QuestListStyles.title}>{this.state.incompleteJourney.name}</Title>
         </View>
-        <FlatList
-          nestedScrollEnabled
-          data={quests}
-          keyExtractor={(item) => item.name}
-          renderItem={this.renderItem}
-        />
+        <View style={{flex:1}}>
+          <FlatList
+            nestedScrollEnabled
+            data={incompleteQuests}
+            keyExtractor={(item) => item.name}
+            renderItem={this.renderItem}
+          />
+        </View>
         <View style={ButtonStyles.home_primary_buttons}>
           <Button
             mode="contained"
