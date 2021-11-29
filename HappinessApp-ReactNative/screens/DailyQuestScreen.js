@@ -29,8 +29,8 @@ export default class DailyQuestScreen extends React.Component {
 
   getJourneys = async () => {
     const incomplete = await this.context.getIncompleteJourney();
-    const journeyProgress = await this.context.getJourneyProgress(incomplete.id);
     if(incomplete != null){
+      const journeyProgress = await this.context.getJourneyProgress(incomplete.id);
       this.setState({
         incompleteJourney: {
           description: incomplete.description,
@@ -40,11 +40,11 @@ export default class DailyQuestScreen extends React.Component {
           quests: incomplete.quests
         }
       });
+      console.log(this.state.incompleteJourney);
+      this.setState({
+        completedQuests: journeyProgress.completed,
+      });
     }
-    console.log(this.state.incompleteJourney);
-    this.setState({
-      completedQuests: journeyProgress.completed,
-    });
   };
 
   handleJourneyTap = (quest) => {
@@ -107,15 +107,6 @@ export default class DailyQuestScreen extends React.Component {
     //if (Object.keys(this.state.journey).length == 0) {
       return <Title style={QuestListStyles.title}>No Quest</Title>;
     }
-    let incompleteQuests = [];
-    for(let i=0; i < quests.length; i++){
-      console.log(this.state.completedQuests[i].id);
-      if(!(this.state.completedQuests.some(quest => quests[i].id === quest.id))){
-        incompleteQuests.concat([quests[i]])
-      }
-    }
-    console.log(incompleteQuests);
-
     return (
       <SafeAreaView style={styles.container}>
         <View
@@ -133,7 +124,7 @@ export default class DailyQuestScreen extends React.Component {
         <View style={{flex:1}}>
           <FlatList
             nestedScrollEnabled
-            data={incompleteQuests}
+            data={quests}
             keyExtractor={(item) => item.name}
             renderItem={this.renderItem}
           />

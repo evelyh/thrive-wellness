@@ -1,3 +1,4 @@
+from rest_framework.fields import empty
 from questdata.models import *
 from .models import *
 from journeys.models import *
@@ -94,8 +95,11 @@ def completed_journeys(request):
 def incomplete_journey(request):
     user = request.user
     journeys = Journey.objects.all()
-    incomplete_journey = None
+    incomplete_journey = []
 
+    incompleted = []
+    #completed journeys
+    completed = []
     for journey in journeys:
         quests = journey.quests.all()
         incomplete = False
@@ -109,6 +113,38 @@ def incomplete_journey(request):
                 incomplete = True
                 break
         if incomplete:
-            incomplete_journey = JourneySerializer(instance=journey).data
-            break
+            continue
+        completed.append(journey)
+
+    # incompleted journeys
+    for j in journeys:
+        if(j not in completed):
+            incompleted.append(j)
+
+    for j in incompleted:
+        progress = False
+        quests = journey.quests.all()
+        for q in quests:
+            qset = Progress.objects.filter(user=user, quest=q)
+            if qset:
+                progress = True
+                break
+        if progress:
+            incomplete_journey.append(JourneySerializer(instance=journey).data)
+
+    # for journey in journeys:
+    #     quests = journey.quests.all()
+    #     incomplete = False
+    #     for quest in quests:
+    #         qset = Progress.objects.filter(user=user, quest=quest)
+    #         if not qset:
+    #             incomplete = True
+    #             break
+    #         progress_obj = qset.first()
+    #         if progress_obj.progress != 1:
+    #             incomplete = True
+    #             break
+    #     if incomplete:
+    #         incomplete_journey = JourneySerializer(instance=journey).data
+    #         break
     return Response(incomplete_journey)
