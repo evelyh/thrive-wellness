@@ -3,7 +3,7 @@ from questdata.models import *
 from .models import *
 from journeys.models import *
 from journeys.serializers import JourneySerializer, QuestSerializer
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 
@@ -35,7 +35,7 @@ def complete_quest(request, qid):
     user = request.user
     quest = Quest.objects.get(id=qid)
     qset = Progress.objects.filter(quest=quest, user=user)
-
+    
     if qset:
         prog = qset.first()
         prog.progress = 1
@@ -148,3 +148,18 @@ def incomplete_journey(request):
     #         incomplete_journey = JourneySerializer(instance=journey).data
     #         break
     return Response(incomplete_journey)
+
+
+@api_view(['DELETE'])
+def drop_journey(request, jid):
+    user = request.user
+    journey = Journey.objects.get(id=jid)
+
+    qset = Progress.objects.filter(user=user)
+    if qset:
+        for quest in qset:
+            if quest.journey.id == jid:
+                Progress.objects.get(id=quest.id).delete()
+    else:
+        return Response({"Error": "No journey"})
+    return Response({"Success": "Success"})
