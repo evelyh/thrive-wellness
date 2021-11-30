@@ -12,4 +12,4 @@ class JourneySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Journey
-        fields = ['id', 'name', 'description', 'quests', 'media']
+        fields = ['id', 'name', 'description', 'quests', 'media', 'video']

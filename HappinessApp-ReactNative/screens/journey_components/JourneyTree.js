@@ -7,9 +7,11 @@ import {
   FlatList,
   SafeAreaView,
   Image,
+  Linking,
 } from "react-native";
 import { QuestListItem } from "../JourneyManagement/ManageJourneyScreen";
 import { NetworkContext } from "../../contexts/Networking";
+import {Ionicons} from "@expo/vector-icons";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 
 class JourneyTreeComponent extends Component {
@@ -121,6 +123,18 @@ class JourneyTreeComponent extends Component {
                 source={require('../../assets/placeholder_journey_image.png')}
                 />
               )}
+              {journey.video != '' && (
+                <Ionicons
+                style={styles.play}
+                name="play-circle"
+                size={50}
+                onPress={()=> Linking.canOpenURL(journey.video).then(
+                supported => {if (supported) {
+                Linking.openURL(journey.video);
+              }else{
+                console.log("Couldn't load this URL")
+              }})}
+              />)}
             </View>
             <View style={MIStyles.MITextContainer}>
                 <Text style={MIStyles.MIDescriptionText}>
@@ -151,6 +165,14 @@ class JourneyTreeComponent extends Component {
 
 // Styles for button, etc.
 const styles = StyleSheet.create({
+  play:{
+    opacity: 0.8,
+    position: "absolute",
+    top: 35,
+    left: 185,
+    backgroundColor: "transparent",
+    color: 'white',
+  },
   container: {
     flex: 1,
     alignItems: "center",

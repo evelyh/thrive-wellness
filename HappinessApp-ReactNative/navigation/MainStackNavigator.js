@@ -41,14 +41,14 @@ export class MainStackNavigator extends React.Component {
           tabBarIcon: ({ color, size }) => {
             const modules = {
               Tree: "MaterialComm",
-              Journey: "Entypo",
+              Playground: "Entypo",
               Daily: "MaterialIcons",
               Friends: "FontAwesome",
               Profile: "FontAwesome",
             };
             const icons = {
               Tree: "tree",
-              Journey: "flower", // or Leaf, rainbow,
+              Playground: "flower", // or Leaf, rainbow,
               Daily: "today",
               Friends: "user-friends",
               Profile: "user-alt",
@@ -86,15 +86,15 @@ export class MainStackNavigator extends React.Component {
         })}
       >
         <Tab.Screen name="Tree" component={HappinessTree} />
-        <Tab.Screen name="Journey" component={JourneyScreen} />
+        <Tab.Screen name="Playground" component={JourneyScreen} />
         <Tab.Screen
           name="Daily"
           component={DailyQuestScreen}
           options={{
-            title: "Daily Quest",
+            title: "My Journey",
           }}
         />
-        <Tab.Screen name="Friends" component={Friends} />
+        {/* <Tab.Screen name="Friends" component={Friends} /> */}
         <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     );
@@ -119,10 +119,11 @@ export class MainStack extends React.Component {
             headerTitle: getHeaderTitle(route),
             headerRight: () => (
               <Icon
-			  reverse
-			  name= 'ios-settings'
-			  type='ionicon'
-			  color='#517fa4'
+                reverse
+                name= 'ios-settings'
+                type='ionicon'
+                color='#517fa4'
+                // onPress={this.handleSettings}
               />
             ),
           })}

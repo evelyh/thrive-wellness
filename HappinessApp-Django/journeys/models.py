@@ -18,6 +18,7 @@ class Journey(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     media = models.ImageField(upload_to='assets', blank=True)
+    video = models.URLField(max_length=200, blank=True)
     quests = models.ManyToManyField(
         Quest, related_name="quests", through="JourneyQuests")
 
