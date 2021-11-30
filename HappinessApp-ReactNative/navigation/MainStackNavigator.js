@@ -29,8 +29,6 @@ import { Icon } from "react-native-elements";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-
-
 export class MainStackNavigator extends React.Component {
   static contextType = NetworkContext;
 
@@ -101,12 +99,10 @@ export class MainStackNavigator extends React.Component {
   }
 }
 
-
-
 export class MainStack extends React.Component {
   handleSettings = () => {
-    navigation.goBack
-    console.log("Settings button")
+    navigation.goBack;
+    console.log("Settings button");
   };
 
   render() {
@@ -119,10 +115,10 @@ export class MainStack extends React.Component {
             headerTitle: getHeaderTitle(route),
             headerRight: () => (
               <Icon
-			  reverse
-			  name= 'ios-settings'
-			  type='ionicon'
-			  color='#517fa4'
+                reverse
+                name="ios-settings"
+                type="ionicon"
+                color="#517fa4"
               />
             ),
           })}
