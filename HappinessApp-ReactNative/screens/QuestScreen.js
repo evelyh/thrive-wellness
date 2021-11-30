@@ -26,7 +26,7 @@ export default class QuestScreen extends React.Component {
 
   render() {
     const { quest } = this.props.route.params;
-    // const{ journey } = quest;
+    const{ journey } = this.props.route.params;
 
     return (
       <SafeAreaView style={styles.container}>

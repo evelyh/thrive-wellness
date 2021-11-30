@@ -14,7 +14,6 @@ import { Card, Title, Paragraph, Button } from "react-native-paper";
 
 class JourneyTreeComponent extends Component {
   // Function to navigate to quest screen and hand over quest object to it
-
   static contextType = NetworkContext;
 
   state = {
@@ -22,35 +21,34 @@ class JourneyTreeComponent extends Component {
     updated: false,
   };
 
-  handleJourneyTap = (quest) => {
-    console.log(quest);
-    const { navigate } = this.props.navigation;
-    navigate("Quest", { quest });
-  };
+  // handleJourneyTap = (quest, journey) => {
+  //   console.log(quest);
+  //   this.props.navigation.navigate("Quest", {q: quest, j: journey});
+  // };
 
-  onSelect = (quest) => {
-    const { navigate } = this.props.navigation;
-    setTimeout(() => {
-      this.setState({ updated: false });
-    }, 2000);
-    navigate("Quest", { quest });
-  };
+  // onSelect = (quest, journey) => {
+  //   setTimeout(() => {
+  //     this.setState({ updated: false });
+  //   }, 2000);
+  //   this.props.navigation.navigate("Quest", { q: quest, j: journey });
+  // };
 
   getQuestProgress = async () => {
     const { journey } = this.props;
     const journeyProgress = await this.context.getJourneyProgress(journey.id);
+    console.log(journeyProgress);
     this.setState({
       completedQuests: journeyProgress.completed,
     });
   };
 
   componentDidMount = async () => {
-    const { journey } = this.props;
-    const journeyProgress = await this.context.getJourneyProgress(journey.id);
-    this.setState({
-      completedQuests: journeyProgress.completed,
-    });
-    this._unsubscribe = this.props.navigation.addListener("focus", () =>
+    // const { journey } = this.props;
+    // const journeyProgress = await this.context.getJourneyProgress(journey.id);
+    // this.setState({
+    //   completedQuests: journeyProgress.completed,
+    // });
+    this._unsubscribe = this.props.navigation.addListener("didFocus", () =>
       this.getQuestProgress()
     );
   };
@@ -88,7 +86,12 @@ class JourneyTreeComponent extends Component {
       >
         <Button
           labelStyle={{ fontSize: 16 }}
-          onPress={() => this.handleJourneyTap(item)}
+          onPress={() => {
+            this.props.navigation.navigate("Quest", {
+              quest: item,
+              journey: this.props.journey
+            });
+          }}
         >
           Start Quest
         </Button>

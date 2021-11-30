@@ -11,7 +11,8 @@ from rest_framework.response import Response
 def progress(request, jid):
     user = request.user
     journey = Journey.objects.get(id=jid)
-    quests = journey.quests.all()
+    q = journey.quests.all()
+    quests = QuestSerializer(q, many=True).data
     completed_quests = []
     skipped_quests = []
 
@@ -73,7 +74,10 @@ def completed_journeys(request):
     completed = []
 
     for journey in journeys:
-        quests = journey.quests.all()
+        q = journey.quests.all()
+        quests = QuestSerializer(q, many=True).data
+        data = JourneySerializer(instance=journey).data
+        data['quests'] = quests
         incomplete = False
         for quest in quests:
             qset = Progress.objects.filter(user=user, quest=quest)
@@ -86,6 +90,6 @@ def completed_journeys(request):
                 break
         if incomplete:
             continue
-        completed.append(JourneySerializer(instance=journey).data)
+        completed.append(data)
 
     return Response(completed)
