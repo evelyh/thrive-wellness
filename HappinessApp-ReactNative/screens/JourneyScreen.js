@@ -134,6 +134,7 @@ export default class JourneyScreen extends React.Component {
 // Journey styles
 const JourneyStyles = StyleSheet.create({
   cardContainer: {
+    minWidth: "85%",
     margin: 10,
     padding: 10,
     shadowRadius: 15,
