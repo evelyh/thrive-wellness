@@ -1,5 +1,6 @@
 import "react-native-gesture-handler";
 import React from "react";
+import {Ionicons} from "@expo/vector-icons";
 import {
   StyleSheet,
   Text,
@@ -9,6 +10,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Linking,
 } from "react-native";
 
 export default class QuestScreen extends React.Component {
@@ -49,6 +51,19 @@ export default class QuestScreen extends React.Component {
             source={require('../assets/placeholder_journey_image.png')}
             />
           )}
+          {quest.video != '' && (
+            <Ionicons
+            style={styles.play}
+            name="play-circle"
+            size={50}
+            onPress={()=> Linking.canOpenURL(quest.video).then(
+              supported => {if (supported) {
+                Linking.openURL(quest.video);
+              }else{
+                console.log("Couldn't load this URL")
+              }})}
+            />
+        )}
         </View>
         <View style={styles.view2}>
           <ScrollView>
@@ -86,6 +101,14 @@ export default class QuestScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  play:{
+    opacity: 0.8,
+    position: "absolute",
+    top: 35,
+    left: 185,
+    backgroundColor: "transparent",
+    color: 'white',
+  },
   container: {
     flex: 1,
     backgroundColor: "#BADEDE",
@@ -95,12 +118,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   image: {
-    width: 420,
-    height: 110,
+    width: 425,
+    height: 150,
     resizeMode: "stretch",
   },
   view2: {
-    flex: 7,
+    flex: 5,
     backgroundColor: "white",
     borderTopRightRadius: 23,
     borderTopLeftRadius: 23,

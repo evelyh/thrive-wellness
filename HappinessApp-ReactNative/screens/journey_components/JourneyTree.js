@@ -156,8 +156,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 440,
-    height: 130,
+    width: 425,
+    height: 150,
     resizeMode: "stretch",
   },
   journeyButton: {
