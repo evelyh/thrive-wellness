@@ -38,14 +38,14 @@ export class MainStackNavigator extends React.Component {
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color, size }) => {
             const modules = {
-              Submit: "MaterialComm",
+              Tree: "MaterialComm",
               Journey: "Entypo",
               Daily: "MaterialIcons",
               Friends: "FontAwesome",
               Profile: "FontAwesome",
             };
             const icons = {
-              Submit: "tree",
+              Tree: "tree",
               Journey: "flower", // or Leaf, rainbow,
               Daily: "today",
               Friends: "user-friends",
@@ -83,6 +83,7 @@ export class MainStackNavigator extends React.Component {
           },
         })}
       >
+        <Tab.Screen name="Tree" component={HappinessTree} />
         <Tab.Screen name="Journey" component={JourneyScreen} />
         <Tab.Screen
           name="Daily"
@@ -93,7 +94,6 @@ export class MainStackNavigator extends React.Component {
         />
         <Tab.Screen name="Friends" component={Friends} />
         <Tab.Screen name="Profile" component={Profile} />
-        <Tab.Screen name="Submit Quest" component={Profile} />
       </Tab.Navigator>
     );
   }
@@ -145,10 +145,10 @@ export class MainStack extends React.Component {
 }
 
 function getHeaderTitle(route) {
-  const routeName = getFocusedRouteNameFromRoute(route) ?? "Daily";
+  const routeName = getFocusedRouteNameFromRoute(route) ?? "Tree";
 
   switch (routeName) {
-    case "Submit Quest":
+    case "Tree":
       return "Happiness Tree";
     case "Journey":
       return "Journey";
