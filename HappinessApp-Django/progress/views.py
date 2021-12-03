@@ -1,8 +1,9 @@
+from rest_framework.fields import empty
 from questdata.models import *
 from .models import *
 from journeys.models import *
 from journeys.serializers import JourneySerializer, QuestSerializer
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 
@@ -11,7 +12,8 @@ from rest_framework.response import Response
 def progress(request, jid):
     user = request.user
     journey = Journey.objects.get(id=jid)
-    quests = journey.quests.all()
+    q = journey.quests.all()
+    quests = QuestSerializer(q, many=True).data
     completed_quests = []
     skipped_quests = []
 
@@ -34,7 +36,7 @@ def complete_quest(request, qid):
     user = request.user
     quest = Quest.objects.get(id=qid)
     qset = Progress.objects.filter(quest=quest, user=user)
-
+    
     if qset:
         prog = qset.first()
         prog.progress = 1
@@ -73,6 +75,36 @@ def completed_journeys(request):
     completed = []
 
     for journey in journeys:
+        q = journey.quests.all()
+        quests = QuestSerializer(q, many=True).data
+        data = JourneySerializer(instance=journey).data
+        data['quests'] = quests
+        incomplete = False
+        for quest in quests:
+            qset = Progress.objects.filter(user=user, quest=quest)
+            if not qset:
+                incomplete = True
+                break
+            progress_obj = qset.first()
+            if progress_obj.progress != 1:
+                incomplete = True
+                break
+        if incomplete:
+            continue
+        completed.append(data)
+
+    return Response(completed)
+
+@api_view(['GET'])
+def incomplete_journey(request):
+    user = request.user
+    journeys = Journey.objects.all()
+    incomplete_journey = []
+
+    incompleted = []
+    #completed journeys
+    completed = []
+    for journey in journeys:
         quests = journey.quests.all()
         incomplete = False
         for quest in quests:
@@ -86,6 +118,52 @@ def completed_journeys(request):
                 break
         if incomplete:
             continue
-        completed.append(JourneySerializer(instance=journey).data)
+        completed.append(journey)
 
-    return Response(completed)
+    # incompleted journeys
+    for j in journeys:
+        if(j not in completed):
+            incompleted.append(j)
+
+    for j in incompleted:
+        progress = False
+        quests = journey.quests.all()
+        for q in quests:
+            qset = Progress.objects.filter(user=user, quest=q)
+            if qset:
+                progress = True
+                break
+        if progress:
+            incomplete_journey.append(JourneySerializer(instance=journey).data)
+
+    # for journey in journeys:
+    #     quests = journey.quests.all()
+    #     incomplete = False
+    #     for quest in quests:
+    #         qset = Progress.objects.filter(user=user, quest=quest)
+    #         if not qset:
+    #             incomplete = True
+    #             break
+    #         progress_obj = qset.first()
+    #         if progress_obj.progress != 1:
+    #             incomplete = True
+    #             break
+    #     if incomplete:
+    #         incomplete_journey = JourneySerializer(instance=journey).data
+    #         break
+    return Response(incomplete_journey)
+
+
+@api_view(['DELETE'])
+def drop_journey(request, jid):
+    user = request.user
+    journey = Journey.objects.get(id=jid)
+
+    qset = Progress.objects.filter(user=user)
+    if qset:
+        for quest in qset:
+            if quest.journey.id == jid:
+                Progress.objects.get(id=quest.id).delete()
+    else:
+        return Response({"Error": "No journey"})
+    return Response({"Success": "Success"})

@@ -28,6 +28,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '3.15.239.159',
     '127.0.0.1',
+    'https://intezzz.pythonanywhere.com/',
 ]
 
 # Application definition
@@ -44,8 +45,7 @@ INSTALLED_APPS = [
     'journeys',
     'users',
     'progress',
-    'questdata',
-    'media'
+    'questdata'
 ]
 
 MIDDLEWARE = [

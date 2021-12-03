@@ -23,12 +23,11 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('', views.home),
     path('admin/', admin.site.urls),
-    path('api/', views.api_overview, name="api-overview"),
+    
     path('api/journeys/', include('journeys.urls')),
     path('api/auth/', include('users.urls')),
     path('api/progress/', include('progress.urls')),
-    path('api/questdata/', include('questdata.urls')),
-    path('api/media/', include('media.urls'))
+    path('api/questdata/', include('questdata.urls'))
 ]  
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

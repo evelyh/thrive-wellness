@@ -27,8 +27,14 @@ receiver_email = config('email')
 def journeys(request):
     if request.method == "GET":
         lst = Journey.objects.all()
-        serializer = JourneySerializer(lst, many=True)
-        return Response(serializer.data)
+        jsonObj = []
+        for j in lst:
+            quests = j.quests.all()
+            Qserializer = QuestSerializer(quests, many=True)
+            data = JourneySerializer(instance=j).data
+            data['quests'] = Qserializer.data
+            jsonObj.append(data)
+        return Response(jsonObj)
     else:
         serializer = JourneySerializer(data=request.data)
         if serializer.is_valid():
@@ -41,8 +47,12 @@ def journeys(request):
 def journey(request, jid):
     if request.method == "GET":
         j = Journey.objects.get(id=jid)
-        serializer = JourneySerializer(instance=j)
-        return Response(serializer.data)
+        Jserializer = JourneySerializer(instance=j)
+        lst = j.quests.all()
+        Qserializer = QuestSerializer(lst, many=True)
+        data = Jserializer.data
+        data['quests'] = Qserializer.data
+        return Response(data)
     elif request.method == "PUT":
         j = Journey.objects.get(id=jid)
         serializer = JourneySerializer(instance=j, data=request.data)
@@ -65,11 +75,8 @@ def quests(request, jid):
         serializer = QuestSerializer(lst, many=True)
         return Response(serializer.data)
     else:
-        j = Journey.objects.get(id=jid)
-        order = len(j.quests.all())
         q = Quest(name=request.data["name"],
-                  description=request.data["description"], journey=j,
-                  order=order)
+                  description=request.data["description"])
         q.save()
         serializer = QuestSerializer(instance=q)
         return Response(serializer.data)
@@ -77,11 +84,11 @@ def quests(request, jid):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes(())
-def quest(request, jid, qid):
+def quest(request, qid):
     if request.method == "GET":
         q = Quest.objects.get(id=qid)
-        serializer = QuestSerializer(instance=q)
-        return Response(serializer.data)
+        Qserializer = QuestSerializer(instance=q)
+        return Response(Qserializer.data)
     elif request.method == "PUT":
         q = Quest.objects.get(id=qid)
         serializer = QuestSerializer(instance=q, data=request.data)
@@ -100,10 +107,11 @@ def quest(request, jid, qid):
 def re_order(request, jid):
     j = Journey.objects.get(id=jid)
     lst = j.quests.all()
+    quests = QuestSerializer(lst, many=True).data
     new_order = request.GET.get('ids', '').split(',')
 
     for i in range(len(new_order)):
-        qset = lst.filter(id=int(new_order[i]))
+        qset = quests.filter(id=int(new_order[i]))
         if not qset:
             continue
         q = qset.first()
@@ -247,41 +255,3 @@ def update_user_journey(request, jid):
         serializer = SubmittedJourneySerializer(j)
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# @api_view(['GET', 'POST'])
-# @permission_classes(())
-# def images(request):
-#    saved = False
-#    if request.method == "POST":
-#       #Get the posted form
-#       MyImageForm = ImageForm(request.POST, request.FILES)
-#       if MyImageForm.is_valid():
-#          profile = Image()
-#          profile.name = MyImageForm.cleaned_data["name"]
-#          profile.picture = MyImageForm.cleaned_data["picture"]
-#          profile.save()
-#          saved = True
-#    else:
-#       MyImageForm = ImageForm()
-
-#    return render(request, 'image', locals())
-
-
-# @api_view(['GET', 'PUT', 'DELETE'])
-# @permission_classes(())
-# def image(request, pid):
-#     if request.method == "GET":
-#         p = Quest.objects.get(media=pid)
-#         serializer = QuestSerializer(instance=p)
-#         return Response(serializer.data)
-#     elif request.method == "PUT":
-#         p = Image.objects.get(id=pid)
-#         serializer = ImageSerializer(instance=p, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#         return Response(serializer.data)
-#     else:
-#         p = Image.objects.get(id=pid)
-#         deleted = ImageSerializer(instance=p).data
-#         p.delete()
-#         return Response(deleted)

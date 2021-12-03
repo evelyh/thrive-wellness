@@ -14,6 +14,13 @@ export const NetworkContext = React.createContext({
   signOut: () => {},
   loadToken: () => {},
   // Cached data and methods to retrieve it
+  incompleteJourney: {
+    description: "",
+    id: null,
+    media: null,
+    name: "",
+    quests: []
+  },
   journeys: [],
   userInfo: {
     firstname: "",
@@ -22,6 +29,7 @@ export const NetworkContext = React.createContext({
   },
 
   getJourneys: () => {},
+  getIncompleteJourney: () => {},
   // Methods to retrieve non-cached data
   getJourneyInfo: () => {},
   getJourneyProgress: () => {},
@@ -38,7 +46,7 @@ export const NetworkContext = React.createContext({
   displayInvalidInfoAlert: () => {},
 });
 
-const url = "http://xxx.xxx.x.xxx:8050";
+const url = "http://localhost:8000";
 
 export class NetworkContextProvider extends React.Component {
   state = {
@@ -48,6 +56,13 @@ export class NetworkContextProvider extends React.Component {
     isAdmin: false,
 
     journeys: [],
+    incompleteJourney: {
+      description: "",
+      id: null,
+      media: null,
+      name: "",
+      quests: []
+    },
     userInfo: {
       firstname: "",
       lastname: "",
@@ -236,14 +251,43 @@ export class NetworkContextProvider extends React.Component {
     try {
       let fetchResponse = await fetch(url + "/api/journeys/", data);
       let respJson = await fetchResponse.json();
-      // this.state.journeys = await respJson
       this.setState({
         journeys: respJson,
       });
     } catch (e) {
-      this.displayNoConnectionAlert();
+      this.displayGetJourneyAlert();
     }
   };
+
+ // Get the information of the incomplete journey
+ getIncompleteJourney = async () => {
+  console.log("Beginning daily quests fetch");
+  const data = {
+    method: "GET",
+    headers: {
+      Authorization: "Token " + this.state.token,
+    },
+  };
+  try {
+    let fetchResponse = await fetch(url + "/api/progress/incompleteJourney/", data);
+    if(fetchResponse == null) {return null;}
+    let respJson = await fetchResponse.json();
+    this.setState({
+      incompleteJourney: {
+        description: respJson.description,
+        id: respJson.id,
+        media: respJson.media,
+        name: respJson.name,
+        quests: respJson.quests
+      }
+    });
+    return respJson;
+  } catch (e) {
+    console.log(e);
+    this.displayNoDailyQuestAlert();
+    return null;
+  }
+};
 
   // Get info of a particular journey with given id
   getJourneyInfo = async (journeyId) => {
@@ -259,6 +303,11 @@ export class NetworkContextProvider extends React.Component {
         data
       );
       const respJson = await fetchResponse.json();
+      // let Response = await fetch(
+      //    url + "api/journeys/" + journeyId + "/quests/", data);
+
+      // const Json = await Response.json();
+      // respJson.quests = Json;
       return respJson;
     } catch (e) {
       this.displayNoConnectionAlert();
@@ -277,6 +326,28 @@ export class NetworkContextProvider extends React.Component {
     try {
       let fetchResponse = await fetch(
         url + "/api/progress/getJourneyProgress/" + journeyId + "/",
+        data
+      );
+      const respJson = await fetchResponse.json();
+      return respJson;
+    } catch (e) {
+      console.log(e);
+      this.displayNoConnectionAlert();
+      return [];
+    }
+  };
+
+  // Drop a journey based on the given jid
+  dropJourney = async (journeyId) => {
+    const data = {
+      method: "DELETE",
+      headers: {
+        Authorization: "Token " + this.state.token,
+      },
+    };
+    try {
+      let fetchResponse = await fetch(
+        url + "/api/progress/dropJourney/" + journeyId + "/",
         data
       );
       const respJson = await fetchResponse.json();
@@ -435,6 +506,26 @@ export class NetworkContextProvider extends React.Component {
     ]);
   };
 
+
+  displayGetJourneyAlert = () => {
+    Alert.alert("Connection Error", "Failed to get journeys", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
+  displayNoDailyQuestAlert = () => {
+    Alert.alert("No Daily Quests", "Please start a new journey", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
+
   render() {
     return (
       <NetworkContext.Provider
@@ -453,10 +544,11 @@ export class NetworkContextProvider extends React.Component {
           userInfo: this.state.userInfo,
 
           getJourneys: this.getJourneys,
-
+          getIncompleteJourney: this.getIncompleteJourney,
           // Methods to retrieve non-cached data
           getJourneyInfo: this.getJourneyInfo,
           getJourneyProgress: this.getJourneyProgress,
+
 
           // Method to complete quest
           completeQuest: this.completeQuest,
