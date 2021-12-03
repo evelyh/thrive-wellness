@@ -29,8 +29,13 @@ export const NetworkContext = React.createContext({
   // Methods to complete a quest
   completeQuest: () => {},
 
+  // submit a journey or quest
+  uploadJourney: () => {},
+  submitQuest: () => {},
+
   // Alerts
   displayNoConnectionAlert: () => {},
+  displayInvalidInfoAlert: () => {},
 });
 
 const url = "http://xxx.xxx.x.xxx:8050";
@@ -284,7 +289,13 @@ export class NetworkContextProvider extends React.Component {
   };
 
   // Set a particular quest to be complete with given id
-  completeQuest = async (questId, answer, feelingRating, questRating, surveyAnswer) => {
+  completeQuest = async (
+    questId,
+    answer,
+    feelingRating,
+    questRating,
+    surveyAnswer
+  ) => {
     const data = {
       method: "POST",
       headers: {
@@ -293,11 +304,11 @@ export class NetworkContextProvider extends React.Component {
         Authorization: "Token " + this.state.token,
       },
       body: JSON.stringify({
-        'answer': answer,
-        'feeling_rating': feelingRating,
-        'quest_rating': questRating,
-        'survey_answer': surveyAnswer
-      })
+        answer: answer,
+        feeling_rating: feelingRating,
+        quest_rating: questRating,
+        survey_answer: surveyAnswer,
+      }),
     };
     try {
       let fetchResponse = await fetch(
@@ -313,9 +324,110 @@ export class NetworkContextProvider extends React.Component {
     }
   };
 
+  // submit journey
+  uploadJourney = async (
+      journeyName,
+      journeyDescription,
+      quests,
+      emaill,
+      namae
+  ) => {
+    const data = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Token " + this.state.token,
+      },
+      body: JSON.stringify({
+        name: journeyName,
+        description: journeyDescription,
+        email: emaill,
+        user_name: namae,
+        quests: quests
+      }),
+    };
+    console.log(emaill)
+    console.log(namae)
+    console.log(data)
+    try{
+      let fetchResponse = await fetch(
+          url + "/api/journeys/submit-journeys", data
+      );
+      const respJson = await fetchResponse.json();
+      if (!fetchResponse.ok){
+        throw new Error();
+      }
+      else {
+        this.displaySuccessAlert();
+      }
+      return respJson;
+    } catch (e){
+      console.log(e);
+      this.displayInvalidInfoAlert();
+      return [];
+    }
+  };
+
+  // submit quest
+  submitQuest = async (
+      quests,
+      user_name,
+      email
+  ) => {
+    const data = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Token " + this.state.token,
+      },
+      body: JSON.stringify({
+        quests: quests,
+        user_name: user_name,
+        email: email
+      }),
+    };
+    try{
+      let fetchResponse = await fetch(
+          url + "/api/journeys/submit-quests", data
+      );
+      const respJson = await fetchResponse.json();
+      if (!fetchResponse.ok){
+        throw new Error();
+      }
+      else {
+        this.displaySuccessAlert();
+      }
+      return respJson;
+    } catch (e){
+      console.log(e);
+      this.displayInvalidInfoAlert();
+      return [];
+    }
+  };
+
   // Alerts
   displayNoConnectionAlert = () => {
     Alert.alert("Connection Error", "Failed to connect to the server", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
+  displayInvalidInfoAlert = () => {
+    Alert.alert("Error", "Provided information incorrect, please try again", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
+  displaySuccessAlert = () => {
+    Alert.alert("Success!", "Your journey/quest is submitted successfully", [
       {
         text: "Close",
         style: "cancel",
@@ -349,8 +461,13 @@ export class NetworkContextProvider extends React.Component {
           // Method to complete quest
           completeQuest: this.completeQuest,
 
+          // methods to submit user-defined quest / journey
+          uploadJourney: this.uploadJourney,
+          submitQuest: this.submitQuest,
+
           // Alerts
           displayNoConnectionAlert: this.displayNoConnectionAlert,
+          displayInvalidInfoAlert: this.displayInvalidInfoAlert,
         }}
       >
         {this.props.children}

@@ -10,7 +10,7 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 
-import HappinessTree from "../screens/HappinessTree";
+import SubmitQuest from "../screens/SubmitQuest";
 import JourneyScreen from "../screens/JourneyScreen";
 import QuestScreen from "../screens/QuestScreen";
 import QuestFeedbackScreen from "../screens/QuestFeedbackScreen";
@@ -40,14 +40,14 @@ export class MainStackNavigator extends React.Component {
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color, size }) => {
             const modules = {
-              Tree: "MaterialComm",
+              Submit: "MaterialComm",
               Journey: "Entypo",
               Daily: "MaterialIcons",
               Friends: "FontAwesome",
               Profile: "FontAwesome",
             };
             const icons = {
-              Tree: "tree",
+              Submit: "tree",
               Journey: "flower", // or Leaf, rainbow,
               Daily: "today",
               Friends: "user-friends",
@@ -85,7 +85,13 @@ export class MainStackNavigator extends React.Component {
           },
         })}
       >
-        <Tab.Screen name="Tree" component={HappinessTree} />
+          <Tab.Screen
+              name="Submit"
+              component={SubmitQuest}
+              options={{
+                  title: "Submit Quests",
+              }}
+          />
         <Tab.Screen name="Journey" component={JourneyScreen} />
         <Tab.Screen
           name="Daily"
@@ -149,11 +155,11 @@ export class MainStack extends React.Component {
 }
 
 function getHeaderTitle(route) {
-  const routeName = getFocusedRouteNameFromRoute(route) ?? "Tree";
+  const routeName = getFocusedRouteNameFromRoute(route) ?? "Daily";
 
   switch (routeName) {
-    case "Tree":
-      return "Happiness Tree";
+    case "Submit":
+      return "Submit Your Quests";
     case "Journey":
       return "Journey";
     case "Daily":
