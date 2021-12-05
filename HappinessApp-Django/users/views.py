@@ -138,7 +138,8 @@ def reject_buddy_request(request):
 @api_view(['POST'])
 @permission_classes([])
 def fetch_buddy_request(request):
-    user = request.data["user"]
+    u = request.data["user"]
+    user = User.objects.get(username=u)
     
     brs = Buddy_Request.objects.filter(to_user=user)
     buddy_requests = []
@@ -153,10 +154,9 @@ def fetch_buddy_request(request):
 def fetch_buddy(request):
     username = request.data["user"]
     
-    user = User.objects.filter(username=username)
+    user = User.objects.get(username=username)
     possible = user.buddy.all()
     buddies = []
-
     for bud in possible:
         buddies.append(bud.username)
 

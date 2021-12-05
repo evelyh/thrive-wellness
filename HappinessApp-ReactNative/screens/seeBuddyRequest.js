@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import "react-native-gesture-handler";
+import React from "react";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import {
-  View,
   StyleSheet,
-  TextInput,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  View,
+  TouchableOpacity,
   Button,
   Alert,
-  SafeAreaView,
-  Text,
-  CheckBox,
-  Linking,
 } from "react-native";
 import { NetworkContext } from "../contexts/Networking";
 //import { Button } from "react-native-paper";
@@ -16,13 +17,13 @@ import { NetworkContext } from "../contexts/Networking";
 export default class seeBuddyRequest extends React.Component {
   static contextType = NetworkContext;
   state = {
-    allRequests: [],
+    br: "",
   };
 
   getBuddyRequests = async () => {
     await this.context.fetchBuddyRequest();
     this.setState({
-      allRequests: this.context.buddy_requests,
+      br: this.context.buddy_requests,
     });
   };
 
@@ -30,114 +31,136 @@ export default class seeBuddyRequest extends React.Component {
     this._unsubscribe = this.props.navigation.addListener("focus", () => {
       this.getBuddyRequests();
     });
-    this.renderItem = ({ item }) => (
-      <Card style={JourneyStyles.cardContainer}>
-        <Card.Content>
-          <Title style={{ fontSize: 25 }}>{item.name}</Title>
-          <Paragraph numberOfLines={4}>{item.description}</Paragraph>
-        </Card.Content>
-        <Card.Actions
-          style={{ margin: 0, padding: 0, justifyContent: "flex-end" }}
-        >
-          <Button
-            labelStyle={{ fontSize: 16 }}
-            onPress={() => this.Accept(item)}
-          >
-            Accept
-          </Button>
-        </Card.Actions>
-      </Card>
-    );
   }
 
   componentWillUnmount() {
     this._unsubscribe();
   }
 
+  close = () => {
+    this.setState({ opened: false });
+  };
+
   render() {
-    const { navigate } = this.props.navigation;
+    var b_requests = [];
+
+    for (let i = 0; i < this.state.br.length; i++) {
+      b_requests.push(<BR key={i} name={this.state.br[i]} />);
+    }
+
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Username of accountability buddy"
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholderTextColor="#BADEDE"
-            value={this.state.buddy}
-            onChangeText={(val) => this.onChangeText("buddy", val)}
-          />
-          <TouchableOpacity onPress={() => null}>
-            <MaterialIcons name="check" size={28} color="green" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => null}>
-            <MaterialIcons name="close" size={28} color="red" />
-          </TouchableOpacity>
+        <ScrollView style={styles.body}>
+          {b_requests}
           <Button
-            style={styles.button}
-            title="Send Accountability Buddy Request"
-            onPress={this.checkInput}
+            title="Refresh Buddy invitation list"
+            color="green"
+            onPress={this.getBuddyRequests}
           />
-        </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }
 }
 
+class BR extends React.Component {
+  static contextType = NetworkContext;
+  state = {
+    opened: true,
+  };
+  accept = (b) => {
+    this.setState({ opened: false });
+    this.context.acceptBuddyRequest(b);
+  };
+
+  reject = (b) => {
+    this.setState({ opened: false });
+
+    this.context.rejectBuddyRequest(b);
+  };
+  render() {
+    return (
+      this.state.opened && (
+        <View>
+          <View flexDirection="row" alignItems="stretch">
+            <Ionicons name="ios-people" size={40} color="black" />
+
+            <View alignItems="flex-start" width="75%" textAlign="justify">
+              <View flexDirection="row">
+                <Text style={styles.name}> {this.props.name} </Text>
+              </View>
+            </View>
+
+            <TouchableOpacity
+              style={styles.buttonM}
+              onPress={() => this.accept(this.props.name)}
+            >
+              <MaterialIcons name="check" size={30} color="green" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonL}
+              onPress={() => this.reject(this.props.name)}
+            >
+              <MaterialIcons name="close" size={30} color="red" />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.line} />
+        </View>
+      )
+    );
+  }
+}
+
 const styles = StyleSheet.create({
-  input: {
-    width: "90%",
-    fontSize: 18,
-    fontWeight: "500",
-    height: 55,
-    backgroundColor: "white",
-    color: "green",
-    margin: 10,
-    padding: 8,
-    borderRadius: 14,
-  },
-
   container: {
-    flex: 1,
-    alignItems: "center",
-  },
-  inputContainer: {
-    marginTop: 30,
-    width: "100%",
-    alignItems: "center",
+    //justifyContent: "center",
+    //alignItems: "center",
   },
 
-  button: {
-    fontSize: 14,
-    color: "#f194ff",
-    fontFamily: "Comfortaa",
-    letterSpacing: -0.015,
-    width: "90%",
-    marginRight: 40,
-    marginLeft: 40,
+  body: {
     marginTop: 10,
-    paddingTop: 10,
-    paddingBottom: 10,
-    backgroundColor: "pink",
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "#fff",
-    alignItems: "center",
+    backgroundColor: "white",
+    padding: 20,
   },
-  checkboxContainer: {
-    flexDirection: "row",
-    marginBottom: 20,
-    marginTop: 10,
-  },
-  buttoncontainer: {
-    margin: 30,
-  },
-  checkbox: {
-    alignSelf: "center",
-  },
-  label: {
-    margin: 8,
+
+  name: {
+    fontSize: 16,
+    // Gives error on iOS
+    // fontFamily: "Comfortaa-Regular",
+    color: "#918573",
     fontWeight: "bold",
+    textAlign: "justify",
+  },
+  info: {
+    fontSize: 15,
+    color: "#22AAAA",
+    textAlign: "justify",
+  },
+  description: {
+    fontSize: 16,
+    color: "#696969",
+    marginTop: 8,
+    textAlign: "justify",
+  },
+  button1: {
+    paddingTop: 10,
+  },
+  button2: { paddingTop: 10 },
+  buttoncontainer: { padding: 10 },
+  buttonM: {
+    left: -35,
+    marginTop: 8,
+    paddingRight: 10,
+  },
+  buttonL: {
+    left: -20,
+    marginTop: 8,
+  },
+
+  line: {
+    backgroundColor: "#E5E5E5",
+    height: 1,
+    marginTop: 8,
   },
 });
