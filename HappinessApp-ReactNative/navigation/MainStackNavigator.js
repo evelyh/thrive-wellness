@@ -10,7 +10,7 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 
-import HappinessTree from "../screens/HappinessTree";
+import SubmitQuest from "../screens/SubmitQuest";
 import JourneyScreen from "../screens/JourneyScreen";
 import QuestScreen from "../screens/QuestScreen";
 import QuestFeedbackScreen from "../screens/QuestFeedbackScreen";
@@ -19,6 +19,7 @@ import Friends from "../screens/Friends";
 import addBuddy from "../screens/addBuddy";
 import seeBuddyRequest from "../screens/seeBuddyRequest";
 import Profile from "../screens/Profile";
+import Playground from "../screens/Playground";
 import CreateJourneyScreen from "../screens/JourneyManagement/CreateJourneyScreen";
 import CreateQuestScreen from "../screens/JourneyManagement/CreateQuestScreen";
 import ManageAllJourneysScreen from "../screens/JourneyManagement/ManageAllJourneysScreen";
@@ -30,6 +31,7 @@ import { Icon } from "react-native-elements";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+const Stackk = createStackNavigator();
 
 export class MainStackNavigator extends React.Component {
   static contextType = NetworkContext;
@@ -40,14 +42,14 @@ export class MainStackNavigator extends React.Component {
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color, size }) => {
             const modules = {
-              Tree: "MaterialComm",
+              Submit: "MaterialComm",
               Journey: "Entypo",
               Daily: "MaterialIcons",
               Friends: "FontAwesome",
               Profile: "FontAwesome",
             };
             const icons = {
-              Tree: "tree",
+              Submit: "tree",
               Journey: "flower", // or Leaf, rainbow,
               Daily: "today",
               Friends: "user-friends",
@@ -85,7 +87,14 @@ export class MainStackNavigator extends React.Component {
           },
         })}
       >
-        <Tab.Screen name="Tree" component={HappinessTree} />
+
+        <Tab.Screen
+              name="Submit"
+              component={SubmitQuest}
+              options={{
+                  title: "Submit Quests",
+              }}
+          />
         <Tab.Screen name="Journey" component={JourneyScreen} />
         <Tab.Screen
           name="Daily"
@@ -148,12 +157,23 @@ export class MainStack extends React.Component {
   }
 }
 
+export class OtherStack extends React.Component {
+  render() {
+    return (
+      <Stackk.Navigator>
+        <Stack.Screen name="Daily" component={DailyQuestScreen}/>
+        <Stackk.Screen name="Playground" component={Playground}/>
+      </Stackk.Navigator>
+    )
+  }
+}
+
 function getHeaderTitle(route) {
-  const routeName = getFocusedRouteNameFromRoute(route) ?? "Tree";
+  const routeName = getFocusedRouteNameFromRoute(route) ?? "Daily";
 
   switch (routeName) {
-    case "Tree":
-      return "Happiness Tree";
+    case "Submit":
+      return "Submit Your Quests";
     case "Journey":
       return "Journey";
     case "Daily":

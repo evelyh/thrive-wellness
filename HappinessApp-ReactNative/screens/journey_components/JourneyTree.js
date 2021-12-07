@@ -7,14 +7,15 @@ import {
   FlatList,
   SafeAreaView,
   Image,
+  Linking,
 } from "react-native";
 import { QuestListItem } from "../JourneyManagement/ManageJourneyScreen";
 import { NetworkContext } from "../../contexts/Networking";
+import {Ionicons} from "@expo/vector-icons";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 
 class JourneyTreeComponent extends Component {
   // Function to navigate to quest screen and hand over quest object to it
-
   static contextType = NetworkContext;
 
   state = {
@@ -22,27 +23,38 @@ class JourneyTreeComponent extends Component {
     updated: false,
   };
 
-  handleJourneyTap = (quest) => {
-    console.log(quest);
-    const { navigate } = this.props.navigation;
-    navigate("Quest", { quest });
-  };
+  // handleJourneyTap = (quest, journey) => {
+  //   console.log(quest);
+  //   this.props.navigation.navigate("Quest", {q: quest, j: journey});
+  // };
 
-  onSelect = (quest) => {
-    const { navigate } = this.props.navigation;
-    setTimeout(() => {
-      this.setState({ updated: false });
-    }, 2000);
-    navigate("Quest", { quest });
-  };
+  // onSelect = (quest, journey) => {
+  //   setTimeout(() => {
+  //     this.setState({ updated: false });
+  //   }, 2000);
+  //   this.props.navigation.navigate("Quest", { q: quest, j: journey });
+  // };
 
   getQuestProgress = async () => {
     const { journey } = this.props;
+    console.log(journey);
     const journeyProgress = await this.context.getJourneyProgress(journey.id);
+    console.log(journeyProgress);
     this.setState({
       completedQuests: journeyProgress.completed,
     });
   };
+
+  doQuest = async(item) =>{
+    const resp = await this.context.checkThirdJourney(this.props.journey.id);
+    if (resp != null){
+      this.props.navigation.navigate("Quest", {
+      quest: item,
+      journey: this.props.journey
+      }
+      );
+    };
+  }
 
   componentDidMount = async () => {
     const { journey } = this.props;
@@ -87,8 +99,8 @@ class JourneyTreeComponent extends Component {
         style={{ margin: 0, padding: 0, justifyContent: "flex-end" }}
       >
         <Button
-          labelStyle={{ fontSize: 16 }}
-          onPress={() => this.handleJourneyTap(item)}
+          labelStyle={{ fontSize: 16, color: "#63915e"}}
+          onPress={() => this.doQuest(item)}
         >
           Start Quest
         </Button>
@@ -104,37 +116,50 @@ class JourneyTreeComponent extends Component {
     return (
       // Loop through and display each individual quest from journey object
       <SafeAreaView style={styles.container}>
-        <View style={MIStyles.MIContainer}>
-          <View style={MIStyles.MIPictureContainer}>
-            {journey.media && 
-              <Image
-                style={styles.image}
-                source={{uri: 'https://intezzz.pythonanywhere.com/'+journey.media, }}
-                />
-            }
-              {journey.media == null &&
+      <View style={MIStyles.MIContainer}>
+            <View style={MIStyles.MIPictureContainer}>
+            {journey.media &&(
                 <Image
                 style={styles.image}
-                source={require("../../assets/placeholder_journey_image.png")}
-              />
-            }
-          </View>
-          <View style={MIStyles.MITextContainer}>
-            <Text style={MIStyles.MIDescriptionText}>
-              {journey.description}
-            </Text>
-          </View>
-          <FlatList
-            nestedScrollEnabled
-            data={journey.quests}
-            keyExtractor={(item) => item.name}
-            renderItem={this.renderItem}
-          />
+                source={{uri: 'http://localhost:8000/'+ journey.media, }}
+                />
+              )}
+              {journey.media == null &&(
+                <Image
+                style={styles.image}
+                source={require('../../assets/placeholder_journey_image.png')}
+                />
+              )}
+              {journey.video != '' && (
+                <Ionicons
+                style={styles.play}
+                name="play-circle"
+                size={50}
+                onPress={()=> Linking.canOpenURL(journey.video).then(
+                supported => {if (supported) {
+                Linking.openURL(journey.video);
+              }else{
+                console.log("Couldn't load this URL")
+              }})}
+              />)}
+            </View>
+            <View style={MIStyles.MITextContainer}>
+                <Text style={MIStyles.MIDescriptionText}>
+                    {journey.description}
+                </Text>
+            </View>
+            <FlatList
+              nestedScrollEnabled
+              data={journey.quests}
+              keyExtractor={(item) => item.name}
+              renderItem={this.renderItem}
+            />
+            
           <Button
             mode="contained"
-            style={{ alignSelf: "center" }}
+            style={{ alignSelf: "center", backgroundColor: "#C9DBC5" }}
             contentStyle={{ minHeight: 50 }}
-            labelStyle={{ fontSize: 18 }}
+            labelStyle={{ fontSize: 18, color: "#486b45"}}
             onPress={() => this.props.onBack()}
           >
             Back To Journey List
@@ -147,13 +172,21 @@ class JourneyTreeComponent extends Component {
 
 // Styles for button, etc.
 const styles = StyleSheet.create({
+  play:{
+    opacity: 0.8,
+    position: "absolute",
+    top: 35,
+    left: 185,
+    backgroundColor: "transparent",
+    color: 'white',
+  },
   container: {
     flex: 1,
     alignItems: "center",
   },
   image: {
-    width: 440,
-    height: 130,
+    width: 425,
+    height: 150,
     resizeMode: "stretch",
   },
   journeyButton: {
