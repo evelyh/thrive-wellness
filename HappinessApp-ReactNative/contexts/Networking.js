@@ -524,6 +524,8 @@ export class NetworkContextProvider extends React.Component {
         let respJson = await fetchResponse.json();
         if (respJson.response == "Buddy request sent!") {
           this.buddyRequestSuccessAlert();
+        } else if (respJson.response == "Buddy request already sent!") {
+          this.buddyRequestSuccessAlert();
         } else if (respJson.response == "Same User") {
           this.SameNameAlert();
         } else if (respJson.response == "Already buddy!") {
