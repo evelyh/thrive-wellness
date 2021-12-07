@@ -93,8 +93,6 @@ export class MainStackNavigator extends React.Component {
               }}
           />
         <Tab.Screen name="Journey" component={JourneyScreen} />
-        <Tab.Screen name="Tree" component={HappinessTree} />
-        <Tab.Screen name="Playground" component={JourneyScreen} />
         <Tab.Screen
           name="Daily"
           component={DailyQuestScreen}
@@ -102,6 +100,7 @@ export class MainStackNavigator extends React.Component {
             title: "My Journey",
           }}
         />
+        <Tab.Screen name="Playground" component={JourneyScreen} />
         {/* <Tab.Screen name="Friends" component={Friends} /> */}
         <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
