@@ -13,6 +13,8 @@ urlpatterns = [
          name="api-user-set-notification-time"),
     path('get_user_meta/', get_user_meta,
          name="api-user-set-notification-time"),
+
+     path('emailVerification/<uidb64>/<token>', activate, name='emailActivate'),
          
 path('reset_password/',
      auth_views.PasswordResetView.as_view(template_name="users/password_reset.html", html_email_template_name="users/password_reset_email.html"),

@@ -95,7 +95,7 @@ export class NetworkContextProvider extends React.Component {
       }
     } catch (e) {
       console.log(e);
-      this.displayNoConnectionAlert();
+      this.registerFailAlert();
     }
   };
 
@@ -129,6 +129,7 @@ export class NetworkContextProvider extends React.Component {
         registerForPushNotificationsAsync();
       } else {
         console.log("Authentication Failed!");
+        this.WrongPasswordAlert();
       }
     } catch (e) {
       this.displayNoConnectionAlert();
@@ -455,6 +456,16 @@ export class NetworkContextProvider extends React.Component {
     ]);
   };
 
+      
+  WrongPasswordAlert = () => {
+    Alert.alert("Login Unsuccessful", "Wrong Username and/or Password", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
   displayNoDailyQuestAlert = () => {
     Alert.alert("No Daily Quests", "Please start a new journey", [
       {
@@ -484,6 +495,18 @@ export class NetworkContextProvider extends React.Component {
     ]);
   }
 
+  registerFailAlert = () => {
+    Alert.alert(
+      "Registration Unsuccessful",
+      "An account is already registered with your email and/or username",
+      [
+        {
+          text: "Close",
+          style: "cancel",
+        },
+      ]
+    );
+  };
 
   render() {
     return (
@@ -518,6 +541,9 @@ export class NetworkContextProvider extends React.Component {
           // Alerts
           displayNoConnectionAlert: this.displayNoConnectionAlert,
           displayDropJourneyAlert: this.displayDropJourneyAlert,
+          WrongPasswordAlert: this.WrongPasswordAlert,
+          registerFailAlert: this.registerFailAlert,
+
         }}
       >
         {this.props.children}
