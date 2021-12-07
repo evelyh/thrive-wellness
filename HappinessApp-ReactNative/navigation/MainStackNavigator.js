@@ -43,14 +43,14 @@ export class MainStackNavigator extends React.Component {
               Tree: "MaterialComm",
               Journey: "Entypo",
               Daily: "MaterialIcons",
-              Playground: "MaterialIcons",
+              Friends: "FontAwesome",
               Profile: "FontAwesome",
             };
             const icons = {
               Tree: "tree",
               Journey: "flower", // or Leaf, rainbow,
               Daily: "today",
-              Playground: "local-library",
+              Friends: "user-friends",
               Profile: "user-alt",
             };
 
@@ -94,7 +94,7 @@ export class MainStackNavigator extends React.Component {
             title: "My Journey",
           }}
         />
-        <Tab.Screen name="Playground" component={Friends} />
+        <Tab.Screen name="Friends" component={Friends} />
         <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     );

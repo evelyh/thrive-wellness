@@ -11,7 +11,7 @@ import {
   Alert,
 } from "react-native";
 
-export default class Playground extends React.Component {
+export default class Friends extends React.Component {
   render() {
 	var friends = [];
 	var num_friends = 15;
