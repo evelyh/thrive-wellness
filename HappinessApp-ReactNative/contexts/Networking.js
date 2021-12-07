@@ -14,13 +14,6 @@ export const NetworkContext = React.createContext({
   signOut: () => {},
   loadToken: () => {},
   // Cached data and methods to retrieve it
-  incompleteJourney: {
-    description: "",
-    id: null,
-    media: null,
-    name: "",
-    quests: []
-  },
   journeys: [],
   userInfo: {
     firstname: "",
@@ -37,6 +30,7 @@ export const NetworkContext = React.createContext({
   // Methods to complete a quest
   completeQuest: () => {},
   checkThirdJourney: () => {},
+  dropJourney: () => {},
 
   getAllQuests: () => {},
   // Alerts
@@ -519,9 +513,11 @@ export class NetworkContextProvider extends React.Component {
           completeQuest: this.completeQuest,
           checkThirdJourney: this.checkThirdJourney,
           getAllQuests: this.getAllQuests,
+          dropJourney: this.dropJourney,
 
           // Alerts
           displayNoConnectionAlert: this.displayNoConnectionAlert,
+          displayDropJourneyAlert: this.displayDropJourneyAlert,
         }}
       >
         {this.props.children}
