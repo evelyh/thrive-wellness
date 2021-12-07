@@ -41,8 +41,13 @@ export const NetworkContext = React.createContext({
   acceptBuddyRequest: () => {},
   rejectBuddyRequest: () => {},
 
+  // submit a journey or quest
+  uploadJourney: () => {},
+  submitQuest: () => {},
+
   // Alerts
   displayNoConnectionAlert: () => {},
+  displayInvalidInfoAlert: () => {},
 });
 
 
@@ -316,7 +321,7 @@ export class NetworkContextProvider extends React.Component {
       const respJson = await fetchResponse.json();
       // let Response = await fetch(
       //    url + "api/journeys/" + journeyId + "/quests/", data);
-      
+
       // const Json = await Response.json();
       // respJson.quests = Json;
       return respJson;
@@ -368,7 +373,6 @@ export class NetworkContextProvider extends React.Component {
       }else{
         return null;
       }
-      
     } catch (e) {
       console.log(e);
       this.displayNoConnectionAlert();
@@ -414,7 +418,52 @@ export class NetworkContextProvider extends React.Component {
     }
   };
 
+  // submit journey
+  uploadJourney = async (
+      journeyName,
+      journeyDescription,
+      quests,
+      emaill,
+      namae
+  ) => {
+    const data = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Token " + this.state.token,
+      },
+      body: JSON.stringify({
+        name: journeyName,
+        description: journeyDescription,
+        email: emaill,
+        user_name: namae,
+        quests: quests
+      }),
+    };
+    console.log(emaill)
+    console.log(namae)
+    console.log(data)
+    try{
+      let fetchResponse = await fetch(
+          url + "/api/journeys/submit-journeys", data
+      );
+      const respJson = await fetchResponse.json();
+      if (!fetchResponse.ok){
+        throw new Error();
+      }
+      else {
+        this.displaySuccessAlert();
+      }
+      return respJson;
+    } catch (e){
+      console.log(e);
+      this.displayInvalidInfoAlert();
+      return [];
+    }
+  };
 
+  
   checkThirdJourney = async (jid) => {
     const data = {
       method: "GET",
@@ -462,7 +511,7 @@ export class NetworkContextProvider extends React.Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: null,
+         Authorization: null,
       },
       body: JSON.stringify({
         from: this.state.username,
@@ -483,6 +532,45 @@ export class NetworkContextProvider extends React.Component {
         console.log(e);
         this.registerFailAlert();
       }
+    }
+  };
+
+
+  // submit quest
+  submitQuest = async (
+      quests,
+      user_name,
+      email
+  ) => {
+    const data = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Token " + this.state.token,
+      },
+      body: JSON.stringify({
+        quests: quests,
+        user_name: user_name,
+        email: email
+      }),
+    };
+    try{
+      let fetchResponse = await fetch(
+          url + "/api/journeys/submit-quests", data
+      );
+      const respJson = await fetchResponse.json();
+      if (!fetchResponse.ok){
+        throw new Error();
+      }
+      else {
+        this.displaySuccessAlert();
+      }
+      return respJson;
+    } catch (e){
+      console.log(e);
+      this.displayInvalidInfoAlert();
+      return [];
     }
   };
 
@@ -569,7 +657,6 @@ export class NetworkContextProvider extends React.Component {
         user: this.state.username,
       }),
     };
-    //this.setState({ buddies: "" });
     try {
       fetch(url + "/api/auth/fetch_buddy/", data)
         .then((response) => response.json())
@@ -586,6 +673,24 @@ export class NetworkContextProvider extends React.Component {
   // Alerts
   displayNoConnectionAlert = () => {
     Alert.alert("Connection Error", "Failed to connect to the server", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
+  displayInvalidInfoAlert = () => {
+    Alert.alert("Error", "Provided information incorrect, please try again", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
+  displaySuccessAlert = () => {
+    Alert.alert("Success!", "Your journey/quest is submitted successfully", [
       {
         text: "Close",
         style: "cancel",
@@ -724,7 +829,7 @@ export class NetworkContextProvider extends React.Component {
           // Methods to retrieve non-cached data
           getJourneyInfo: this.getJourneyInfo,
           getJourneyProgress: this.getJourneyProgress,
-          
+
 
           // Method to complete quest
           completeQuest: this.completeQuest,
@@ -732,8 +837,13 @@ export class NetworkContextProvider extends React.Component {
           getAllQuests: this.getAllQuests,
           dropJourney: this.dropJourney,
 
+          // methods to submit user-defined quest / journey
+          uploadJourney: this.uploadJourney,
+          submitQuest: this.submitQuest,
+
           // Alerts
           displayNoConnectionAlert: this.displayNoConnectionAlert,
+          displayInvalidInfoAlert: this.displayInvalidInfoAlert,
           displayDropJourneyAlert: this.displayDropJourneyAlert,
           WrongPasswordAlert: this.WrongPasswordAlert,
           registerFailAlert: this.registerFailAlert,
