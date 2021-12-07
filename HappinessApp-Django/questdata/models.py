@@ -14,6 +14,8 @@ class QuestFeedback(models.Model):
                                                    MinValueValidator(1)])
     feeling_rating = models.IntegerField(validators=[MaxValueValidator(10),
                                                      MinValueValidator(1)])
+    survey_answer = models.TextField(null=True, blank=True)
+    submit_time = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = (('user', 'quest'),)
+        unique_together = (('user', 'quest', 'submit_time'),)

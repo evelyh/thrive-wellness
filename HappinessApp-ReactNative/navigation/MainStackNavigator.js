@@ -91,7 +91,7 @@ export class MainStackNavigator extends React.Component {
           name="Daily"
           component={DailyQuestScreen}
           options={{
-            title: "Daily Quest",
+            title: "My Journey",
           }}
         />
         <Tab.Screen name="Friends" component={Friends} />
@@ -119,10 +119,11 @@ export class MainStack extends React.Component {
             headerTitle: getHeaderTitle(route),
             headerRight: () => (
               <Icon
-			  reverse
-			  name= 'ios-settings'
-			  type='ionicon'
-			  color='#517fa4'
+                reverse
+                name= 'ios-settings'
+                type='ionicon'
+                color='#517fa4'
+                // onPress={this.handleSettings}
               />
             ),
           })}
