@@ -38,6 +38,7 @@ export const NetworkContext = React.createContext({
   completeQuest: () => {},
   checkThirdJourney: () => {},
 
+  getAllQuests: () => {},
   // Alerts
   displayNoConnectionAlert: () => {},
 });
@@ -423,6 +424,23 @@ export class NetworkContextProvider extends React.Component {
     }
   };
 
+  getAllQuests = async () => {
+    const data = {
+      method: "GET",
+    };
+    try{
+      let fetchResponse = await fetch(
+        url + "/api/journeys/allquests/", data
+      );
+      const respJson = await fetchResponse.json();
+      return respJson;
+    } catch(e){
+      console.log(e);
+      this.displayNoConnectionAlert();
+      return null;
+    }
+  };
+
   // Alerts
   displayNoConnectionAlert = () => {
     Alert.alert("Connection Error", "Failed to connect to the server", [
@@ -500,6 +518,7 @@ export class NetworkContextProvider extends React.Component {
           // Method to complete quest
           completeQuest: this.completeQuest,
           checkThirdJourney: this.checkThirdJourney,
+          getAllQuests: this.getAllQuests,
 
           // Alerts
           displayNoConnectionAlert: this.displayNoConnectionAlert,

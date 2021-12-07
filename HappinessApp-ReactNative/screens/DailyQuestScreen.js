@@ -1,6 +1,5 @@
 import "react-native-gesture-handler";
 import React from "react";
-import JourneyCardComponent from "./journey_components/JourneyCard";
 import {
   StyleSheet,
   Text,
@@ -10,6 +9,7 @@ import {
   FlatList,
   ScrollView
 } from "react-native";
+import Playground from "./Playground";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 import { NetworkContext } from "../contexts/Networking";
 import DropJourneyComponent from './DropJourney';
@@ -18,16 +18,11 @@ export default class DailyQuestScreen extends React.Component {
 
   state = {
     journey: {}, 
+    allQuests: [],
     completedQuests: [],
     incompleteJourney:[], // This is a list of journeys in progress
-    showIcons: true
-    // incompleteJourney: {
-    //   description: "",
-    //   id: null,
-    //   media: null,
-    //   name: "",
-    //   quests: []
-    // } 
+    showPlayground: false,
+    showIcons: false,
   };
 
   getJourneys = async () => {
@@ -80,8 +75,6 @@ export default class DailyQuestScreen extends React.Component {
 
   handleJourneyTap = (quest) => {
     console.log(quest);
-    // const { navigate } = this.props.navigation;
-    // navigate("Quest", { quest });
     this.props.navigation.navigate("Quest", {
       quest: quest,
       journey: this.props.journey
@@ -90,7 +83,7 @@ export default class DailyQuestScreen extends React.Component {
   };
 
    // This is when the user hits the back button on the DropJourneyComponent
-   handleBack = () => {
+   handleBackDrop = () => {
     this.setState({ showIcons: true });
     this.setState({ showPopup: false });
   };
@@ -101,10 +94,29 @@ export default class DailyQuestScreen extends React.Component {
     // this.setState({ selectedJourney: journey });
     // console.log(journey)
   };
+  handlePlayground = () =>{
+    this.setState({
+      showPlayground: true,
+    })
+  }
+
+  handleBack =() =>{
+    this.setState({
+      showPlayground: false,
+    })
+  }
+
+  getAllQuests = async() =>{
+    const response = await this.context.getAllQuests();
+    this.setState({
+      allQuests: response
+  })
+  }
 
   componentDidMount() {
     this._unsubscribe = this.props.navigation.addListener("focus", () => {
       this.getJourneys();
+      this.getAllQuests();
     });
   }
 
@@ -140,7 +152,7 @@ export default class DailyQuestScreen extends React.Component {
         style={{ margin: 0, padding: 0, justifyContent: "flex-end" }}
       >
         <Button
-          labelStyle={{ fontSize: 16 }}
+          labelStyle={{ fontSize: 16 , color: "#63915e"}}
           onPress={() => this.handleJourneyTap(item)}
         >
           Start Quest
@@ -151,7 +163,7 @@ export default class DailyQuestScreen extends React.Component {
 
   render() {
     //const { name } = this.props.route.params; // Get name from params which comes from the navigate function from LogIn.js
-    if(this.state.showIcons){
+    if(this.state.showIcons && this.state.showPlayground){
       if(this.state.incompleteJourney.length === 0){
         return (
           <SafeAreaView style={styles.container}>
@@ -159,7 +171,7 @@ export default class DailyQuestScreen extends React.Component {
             <View style={ButtonStyles.no_quest_home_buttons}>
               <Button
                 mode="contained"
-                onPress={() => this.props.navigation.navigate("Playground", {})} 
+                onPress={() => this.handlePlayground()} 
               >
                 Go to quest playground
               </Button>
@@ -213,52 +225,42 @@ export default class DailyQuestScreen extends React.Component {
           <Button
               mode="contained"
               onPress={() => this.handleJourneyConfirm()}
+              style={{ alignSelf: "center", backgroundColor: "#C9DBC5" }}
+              labelStyle={{ fontSize: 18, color: "#486b45"}}
             >
               Not feeling it?
             </Button>
             <Button
               mode="contained"
-              onPress={() => this.props.navigation.navigate("Playground", {})}
+              onPress={() => this.handlePlayground()}
+              style={{ alignSelf: "center", backgroundColor: "#C9DBC5" }}
+              labelStyle={{ fontSize: 18, color: "#486b45"}}
             >
               Go to quest playground
             </Button>
           </View>
         </SafeAreaView>
       );
+    }else{
+      return (
+        <Playground
+        navigation={this.props.navigation}
+        onBack={this.handleBack}
+        allQuests={this.state.allQuests}
+        />
+      )}
     }
     else{
       return (
         <DropJourneyComponent
           // journey={selectedJourney}
           navigation={this.props.navigation}
-          onBack={this.handleBack}
+          onBack={this.handleBackDrop}
         />
       );
     }
     
   }
-}
-
-const journeyGratitude = {
-  id: 0,
-  name: "Graditude",
-  quests: [
-    {
-      name: "Practice graditude",
-      description: "Write 5 things you are grateful for on paper",
-    },
-    {
-      name: "Meditate",
-      description: "Close your eyes for 2-5 mins",
-    },
-    {
-      name: "Enjoy Nature",
-      description: "Go for a walk",
-    },
-  ],
-  image: require("../assets/journey_icons/gratitude_icon.png"),
-  description: "Learn to appreciate the finer things in life.",
-};
 
 const styles = StyleSheet.create({
   container: {
