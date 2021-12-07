@@ -42,8 +42,9 @@ export default class QuestFeedbackScreen extends React.Component {
 
   onSubmit = async() => {
     const { quest } = this.props.route.params
+    const { journey } = this.props.route.params
     const { answer, feelingRating, questRating, surveyAnswer} = this.state
-    await this.context.completeQuest(quest.id, answer, feelingRating, questRating, surveyAnswer);
+    await this.context.completeQuest(journey.id, quest.id, answer, feelingRating, questRating, surveyAnswer);
     this.props.navigation.navigate("Home")
   }
 

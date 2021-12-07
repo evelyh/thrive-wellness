@@ -47,7 +47,7 @@ export default class JourneyScreen extends React.Component {
           style={{ margin: 0, padding: 0, justifyContent: "flex-end" }}
         >
           <Button
-            labelStyle={{ fontSize: 16 }}
+            labelStyle={{ fontSize: 16 , color: "#63915e", fontFamily:"Arial" }}
             onPress={() => this.handleJourneyConfirm(item)}
           >
             Tap to see more

@@ -88,7 +88,6 @@ def quest(request, qid):
         q.delete()
         return Response(deleted)
 
-
 @api_view(['GET'])
 @permission_classes(())
 def re_order(request, jid):

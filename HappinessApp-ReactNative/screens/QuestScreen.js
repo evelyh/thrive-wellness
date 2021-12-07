@@ -89,6 +89,7 @@ export default class QuestScreen extends React.Component {
               this.props.navigation.navigate("Feedback", {
                 answer: this.state.answer,
                 quest: quest,
+                journey: journey,
               });
             }}
           >
