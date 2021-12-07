@@ -37,6 +37,7 @@ class JourneyTreeComponent extends Component {
 
   getQuestProgress = async () => {
     const { journey } = this.props;
+    console.log(journey);
     const journeyProgress = await this.context.getJourneyProgress(journey.id);
     console.log(journeyProgress);
     this.setState({
@@ -44,8 +45,8 @@ class JourneyTreeComponent extends Component {
     });
   };
 
-  checkThird = async() =>{
-    const resp = await this.context.checkThirdJourney(this.props.journey);
+  doQuest = async(item) =>{
+    const resp = await this.context.checkThirdJourney(this.props.journey.id);
     if (resp != null){
       this.props.navigation.navigate("Quest", {
       quest: item,
@@ -99,7 +100,7 @@ class JourneyTreeComponent extends Component {
       >
         <Button
           labelStyle={{ fontSize: 16, color: "#63915e"}}
-          onPress={this.checkThird}
+          onPress={() => this.doQuest(item)}
         >
           Start Quest
         </Button>

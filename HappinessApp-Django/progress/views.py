@@ -36,13 +36,11 @@ def check_third_journey(request, jid):
     user = request.user
     pset = Progress.objects.filter(user=user)
     if pset:
-        count = 1
-        fir_id = pset.first().id
-        for j in pset:
-            if j.id != fir_id:
-                count += 1
-                sec_id = j.id
-        if count == 2 and (jid != fir_id and jid != sec_id):
+        jlist = []
+        for progress in pset:
+            if progress.journey.id not in jlist:
+                jlist.append(progress.journey.id)
+        if len(jlist) == 2 and jid not in jlist:
             return Response({"success": "Failure"})
     return Response({"success": "Success"})
 
@@ -81,7 +79,6 @@ def skip_quest(request, qid):
         Progress(quest=quest, user=user, progress=0).save()
 
     return Response({"Success": "Success"})
-
 
 @api_view(['GET'])
 def completed_journeys(request):
