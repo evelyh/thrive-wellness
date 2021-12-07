@@ -36,6 +36,7 @@ export const NetworkContext = React.createContext({
 
   // Methods to complete a quest
   completeQuest: () => {},
+  checkThirdJourney: () => {},
 
   // Alerts
   displayNoConnectionAlert: () => {},
@@ -401,7 +402,7 @@ export class NetworkContextProvider extends React.Component {
     };
     try{
       let fetchResponse = await fetch(
-        url + "api/progress/checkThirdJourney/" + jid + "/", data
+        url + "/api/progress/checkThirdJourney/" + jid + "/", data
       );
       const respJson = await fetchResponse.json();
       if(respJson.success == "Failure"){
@@ -410,10 +411,11 @@ export class NetworkContextProvider extends React.Component {
       }
       return respJson;
     } catch(e){
+      console.log(e);
       this.displayNoConnectionAlert();
       return null;
     }
-  }
+  };
 
   // Alerts
   displayNoConnectionAlert = () => {
@@ -481,6 +483,7 @@ export class NetworkContextProvider extends React.Component {
 
           // Method to complete quest
           completeQuest: this.completeQuest,
+          checkThirdJourney: this.checkThirdJourney,
 
           // Alerts
           displayNoConnectionAlert: this.displayNoConnectionAlert,

@@ -132,14 +132,9 @@ export default class DailyQuestScreen extends React.Component {
         <View style={ButtonStyles.home_primary_buttons}>
           <Button
             mode="contained"
-            onPress={() => console.log("not feeling it")}
+            onPress={() => this.props.navigation.navigate("Playground", {})}
           >
-            Not feeling it?
-          </Button>
-        </View>
-        <View style={ButtonStyles.home_primary_buttons}>
-          <Button mode="contained" onPress={() => console.log("playground")}>
-            Playground
+            Not feeling it? Go to quest playground
           </Button>
         </View>
       </SafeAreaView>
