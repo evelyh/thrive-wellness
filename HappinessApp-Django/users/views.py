@@ -193,4 +193,5 @@ def get_user_meta(request):
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def is_admin(request):
+    # return Response({"status": request.user.is_staff})
     return Response({"status": request.user.is_staff})

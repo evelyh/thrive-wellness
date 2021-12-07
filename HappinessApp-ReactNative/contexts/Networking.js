@@ -24,13 +24,18 @@ export const NetworkContext = React.createContext({
   },
 
   getJourneys: () => {},
+  getIncompleteJourney: () => {},
   // Methods to retrieve non-cached data
   getJourneyInfo: () => {},
   getJourneyProgress: () => {},
 
   // Methods to complete a quest
   completeQuest: () => {},
+  checkThirdJourney: () => {},
+  dropJourney: () => {},
 
+  getAllQuests: () => {},
+  
   // BuddyRequest
   sendBuddyRequest: () => {},
   acceptBuddyRequest: () => {},
@@ -40,8 +45,9 @@ export const NetworkContext = React.createContext({
   displayNoConnectionAlert: () => {},
 });
 
-//const url = "https://intezzz.pythonanywhere.com/";
-const url = "http://192.168.0.128:8050";
+
+const url = "https://intezzz.pythonanywhere.com/";
+
 
 export class NetworkContextProvider extends React.Component {
   state = {
@@ -50,10 +56,18 @@ export class NetworkContextProvider extends React.Component {
     isLoading: true,
     isAdmin: false,
     username: "",
-
     journeys: [],
+    incompleteJourney: {
+      description: "",
+      id: null,
+      media: null,
+      name: "",
+      quests: []
+    },
+
     buddies: [],
     buddy_requests: [],
+
     userInfo: {
       firstname: "",
       lastname: "",
@@ -248,14 +262,43 @@ export class NetworkContextProvider extends React.Component {
     try {
       let fetchResponse = await fetch(url + "/api/journeys/", data);
       let respJson = await fetchResponse.json();
-      // this.state.journeys = await respJson
       this.setState({
         journeys: respJson,
       });
     } catch (e) {
-      this.displayNoConnectionAlert();
+      this.displayGetJourneyAlert();
     }
   };
+
+ // Get the information of the incomplete journey
+ getIncompleteJourney = async () => {
+  console.log("Beginning daily quests fetch");
+  const data = {
+    method: "GET",
+    headers: {
+      Authorization: "Token " + this.state.token,
+    },
+  };
+  try {
+    let fetchResponse = await fetch(url + "/api/progress/incompleteJourney/", data);
+    if(fetchResponse == null) {return null;}
+    let respJson = await fetchResponse.json();
+    // this.setState({
+    //   incompleteJourney: {
+    //     description: respJson.description,
+    //     id: respJson.id,
+    //     media: respJson.media,
+    //     name: respJson.name,
+    //     quests: respJson.quests
+    //   }
+    // });
+    return respJson;
+  } catch (e) {
+    console.log(e);
+    this.displayNoDailyQuestAlert();
+    return null;
+  }
+};
 
   // Get info of a particular journey with given id
   getJourneyInfo = async (journeyId) => {
@@ -271,6 +314,11 @@ export class NetworkContextProvider extends React.Component {
         data
       );
       const respJson = await fetchResponse.json();
+      // let Response = await fetch(
+      //    url + "api/journeys/" + journeyId + "/quests/", data);
+      
+      // const Json = await Response.json();
+      // respJson.quests = Json;
       return respJson;
     } catch (e) {
       this.displayNoConnectionAlert();
@@ -300,8 +348,37 @@ export class NetworkContextProvider extends React.Component {
     }
   };
 
+  // Drop a journey based on the given jid
+  dropJourney = async (journeyId) => {
+    const data = {
+      method: "DELETE",
+      headers: {
+        Authorization: "Token " + this.state.token,
+      },
+    };
+    try {
+      let fetchResponse = await fetch(
+        url + "/api/progress/dropJourney/" + journeyId + "/",
+        data
+      );
+      const respJson = await fetchResponse.json();
+      this.displayDropJourneyAlert();
+      if (respJson.success == "Success") {
+        return respJson;
+      }else{
+        return null;
+      }
+      
+    } catch (e) {
+      console.log(e);
+      this.displayNoConnectionAlert();
+      return [];
+    }
+  };
+
   // Set a particular quest to be complete with given id
   completeQuest = async (
+    journeyId,
     questId,
     answer,
     feelingRating,
@@ -316,6 +393,7 @@ export class NetworkContextProvider extends React.Component {
         Authorization: "Token " + this.state.token,
       },
       body: JSON.stringify({
+        jid: journeyId,
         answer: answer,
         feeling_rating: feelingRating,
         quest_rating: questRating,
@@ -334,6 +412,48 @@ export class NetworkContextProvider extends React.Component {
       this.displayNoConnectionAlert();
       return [];
     }
+  };
+
+
+  checkThirdJourney = async (jid) => {
+    const data = {
+      method: "GET",
+      headers:{
+        Authorization: "Token " + this.state.token,
+      }
+    };
+    try{
+      let fetchResponse = await fetch(
+        url + "/api/progress/checkThirdJourney/" + jid + "/", data
+      );
+      const respJson = await fetchResponse.json();
+      if(respJson.success == "Failure"){
+        this.displayThirdJourneyAlert();
+        return null;
+      }
+      return respJson;
+    } catch(e){
+      console.log(e);
+      this.displayNoConnectionAlert();
+      return null;
+    }
+  };
+
+  getAllQuests = async () => {
+    const data = {
+      method: "GET",
+    };
+    try{
+      let fetchResponse = await fetch(
+        url + "/api/journeys/allquests/", data
+      );
+      const respJson = await fetchResponse.json();
+      return respJson;
+    } catch(e){
+      console.log(e);
+      this.displayNoConnectionAlert();
+      return null;
+      };
   };
 
   sendBuddyRequest = async (buddy) => {
@@ -473,6 +593,17 @@ export class NetworkContextProvider extends React.Component {
     ]);
   };
 
+
+  displayGetJourneyAlert = () => {
+    Alert.alert("Connection Error", "Failed to get journeys", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
+      
   WrongPasswordAlert = () => {
     Alert.alert("Login Unsuccessful", "Wrong Username and/or Password", [
       {
@@ -481,6 +612,36 @@ export class NetworkContextProvider extends React.Component {
       },
     ]);
   };
+
+
+  displayNoDailyQuestAlert = () => {
+    Alert.alert("No Daily Quests", "Please start a new journey", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
+  displayThirdJourneyAlert = () => {
+    Alert.alert("Third Journey", "You've already had two journeys in progress, please finish them before you start a new one",
+    [
+      {
+      text: "Close",
+      style: "cancel",
+      },
+    ]);
+  }
+
+  displayDropJourneyAlert = () => {
+    Alert.alert("Drop Journey", "Successfully",
+    [
+      {
+      text: "Close",
+      style: "cancel",
+      },
+    ]);
+  }
 
   registerSuccessAlert = () => {
     Alert.alert(
@@ -555,6 +716,7 @@ export class NetworkContextProvider extends React.Component {
           userInfo: this.state.userInfo,
 
           getJourneys: this.getJourneys,
+          getIncompleteJourney: this.getIncompleteJourney,
 
           buddies: this.state.buddies,
           buddy_requests: this.state.buddy_requests,
@@ -562,17 +724,23 @@ export class NetworkContextProvider extends React.Component {
           // Methods to retrieve non-cached data
           getJourneyInfo: this.getJourneyInfo,
           getJourneyProgress: this.getJourneyProgress,
+          
 
           // Method to complete quest
           completeQuest: this.completeQuest,
+          checkThirdJourney: this.checkThirdJourney,
+          getAllQuests: this.getAllQuests,
+          dropJourney: this.dropJourney,
 
           // Alerts
           displayNoConnectionAlert: this.displayNoConnectionAlert,
+          displayDropJourneyAlert: this.displayDropJourneyAlert,
           WrongPasswordAlert: this.WrongPasswordAlert,
           registerFailAlert: this.registerFailAlert,
           registerSuccessAlert: this.registerSuccessAlert,
           buddyRequestSuccessAlert: this.buddyRequestSuccessAlert,
           SameNameAlert: this.SameNameAlert,
+      
           fetchBuddyRequest: this.fetchBuddyRequest,
           fetchBuddy: this.fetchBuddy,
         }}

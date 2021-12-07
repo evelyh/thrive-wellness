@@ -102,7 +102,7 @@ export default class ManageJourneyScreen extends React.Component {
     let fetchedJourney = await this.context.getJourneyInfo(journey.id)
     this.setState({
       journey: fetchedJourney,
-      quests: fetchedJourney.quests
+      quests: fetchedJourney.quests,
     })
   }
 

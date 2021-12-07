@@ -19,6 +19,7 @@ import Friends from "../screens/Friends";
 import addBuddy from "../screens/addBuddy";
 import seeBuddyRequest from "../screens/seeBuddyRequest";
 import Profile from "../screens/Profile";
+import Playground from "../screens/Playground";
 import CreateJourneyScreen from "../screens/JourneyManagement/CreateJourneyScreen";
 import CreateQuestScreen from "../screens/JourneyManagement/CreateQuestScreen";
 import ManageAllJourneysScreen from "../screens/JourneyManagement/ManageAllJourneysScreen";
@@ -30,6 +31,7 @@ import { Icon } from "react-native-elements";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+const Stackk = createStackNavigator();
 
 export class MainStackNavigator extends React.Component {
   static contextType = NetworkContext;
@@ -145,6 +147,17 @@ export class MainStack extends React.Component {
         <Stack.Screen name="seeBuddyRequest" component={seeBuddyRequest} />
       </Stack.Navigator>
     );
+  }
+}
+
+export class OtherStack extends React.Component {
+  render() {
+    return (
+      <Stackk.Navigator>
+        <Stack.Screen name="Daily" component={DailyQuestScreen}/>
+        <Stackk.Screen name="Playground" component={Playground}/>
+      </Stackk.Navigator>
+    )
   }
 }
 
