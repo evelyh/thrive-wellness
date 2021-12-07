@@ -31,7 +31,7 @@ export default class QuestScreen extends React.Component {
     const{ journey } = this.props.route.params;
 
     return (
-      <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container}>
         <View style={styles.view1}>
         {quest.media && (
             <Image

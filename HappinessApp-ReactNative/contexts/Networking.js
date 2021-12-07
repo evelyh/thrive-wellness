@@ -268,15 +268,15 @@ export class NetworkContextProvider extends React.Component {
     let fetchResponse = await fetch(url + "/api/progress/incompleteJourney/", data);
     if(fetchResponse == null) {return null;}
     let respJson = await fetchResponse.json();
-    this.setState({
-      incompleteJourney: {
-        description: respJson.description,
-        id: respJson.id,
-        media: respJson.media,
-        name: respJson.name,
-        quests: respJson.quests
-      }
-    });
+    // this.setState({
+    //   incompleteJourney: {
+    //     description: respJson.description,
+    //     id: respJson.id,
+    //     media: respJson.media,
+    //     name: respJson.name,
+    //     quests: respJson.quests
+    //   }
+    // });
     return respJson;
   } catch (e) {
     console.log(e);
