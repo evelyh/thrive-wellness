@@ -16,6 +16,8 @@ import QuestScreen from "../screens/QuestScreen";
 import QuestFeedbackScreen from "../screens/QuestFeedbackScreen";
 import DailyQuestScreen from "../screens/DailyQuestScreen";
 import Friends from "../screens/Friends";
+import addBuddy from "../screens/addBuddy";
+import seeBuddyRequest from "../screens/seeBuddyRequest";
 import Profile from "../screens/Profile";
 import Playground from "../screens/Playground";
 import CreateJourneyScreen from "../screens/JourneyManagement/CreateJourneyScreen";
@@ -141,6 +143,8 @@ export class MainStack extends React.Component {
         />
         <Stack.Screen name="Manage Journey" component={ManageJourneyScreen} />
         <Stack.Screen name="Manage Quest" component={ManageQuestScreen} />
+        <Stack.Screen name="addBuddy" component={addBuddy} />
+        <Stack.Screen name="seeBuddyRequest" component={seeBuddyRequest} />
       </Stack.Navigator>
     );
   }
@@ -169,6 +173,10 @@ function getHeaderTitle(route) {
       return "Daily Quest";
     case "Friends":
       return "Friends";
+    case "addBuddy":
+      return "addBuddy";
+    case "seeBuddyRequest":
+      return "seeBuddyRequest";
     case "Profile":
       return "Profile";
   }
