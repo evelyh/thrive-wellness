@@ -114,7 +114,6 @@ def incomplete_journey(request):
     incomplete_journey = []
     # complete_journey = []
 
-    incompleted = []
     #completed journeys
     completed = []
     for journey in journeys:
@@ -138,6 +137,7 @@ def incomplete_journey(request):
         # complete_journey.append(data)
 
     # incompleted journeys
+    incompleted = []
     for j in journeys:
         if(j not in completed):
             incompleted.append(j)

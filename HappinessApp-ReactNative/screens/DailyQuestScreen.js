@@ -30,9 +30,9 @@ export default class DailyQuestScreen extends React.Component {
 
   getJourneys = async () => {
     const incomplete = await this.context.getIncompleteJourney();
-    
-    if(incomplete != null){
-      if(incomplete.length>=1){
+    console.log(incomplete);
+    if(incomplete !== null){
+      if(incomplete.length==1){
         const journeyProgress = await this.context.getJourneyProgress(incomplete[0].id);
         this.setState({
           incompleteJourney: [{
@@ -49,7 +49,7 @@ export default class DailyQuestScreen extends React.Component {
         });
       }
       if(incomplete.length == 2){
-        
+
       }
     }
   };
@@ -110,9 +110,22 @@ export default class DailyQuestScreen extends React.Component {
   render() {
     //const { name } = this.props.route.params; // Get name from params which comes from the navigate function from LogIn.js
     const { quests } = this.state.incompleteJourney;
-    if(!this.state.incompleteJourney.length){
+    console.log(this.state.incompleteJourney.length);
+    if(this.state.incompleteJourney.length === 0){
     //if (Object.keys(this.state.journey).length == 0) {
-      return <Title style={QuestListStyles.title}>No Quest</Title>;
+      return (
+        <SafeAreaView style={styles.container}>
+          <Title style={QuestListStyles.title}>No Quest</Title>
+          <View style={ButtonStyles.no_quest_home_buttons}>
+            <Button
+              mode="contained"
+              onPress={() => this.props.navigation.navigate("Playground", {})}
+            >
+              Go to quest playground
+            </Button>
+          </View>
+        </SafeAreaView>
+      );
     }
     return (
       <SafeAreaView style={styles.container}>
@@ -141,7 +154,7 @@ export default class DailyQuestScreen extends React.Component {
             mode="contained"
             onPress={() => this.props.navigation.navigate("Playground", {})}
           >
-            Not feeling it? Go to quest playground
+            Go to quest playground
           </Button>
         </View>
       </SafeAreaView>
@@ -228,6 +241,13 @@ const ButtonStyles = StyleSheet.create({
     marginVertical: 10,
     width: "80%",
     alignSelf: "center",
+  },
+  no_quest_home_buttons: {
+    marginVertical: 10,
+    width: "80%",
+    alignSelf: "center",
+    position: "absolute",
+    bottom: 10,
   },
 });
 
