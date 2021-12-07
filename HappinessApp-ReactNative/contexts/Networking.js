@@ -42,7 +42,7 @@ export const NetworkContext = React.createContext({
   displayNoConnectionAlert: () => {},
 });
 
-const url = "http://100.65.60.241:8000";
+const url = "http://localhost:8000";
 
 export class NetworkContextProvider extends React.Component {
   state = {
@@ -347,7 +347,13 @@ export class NetworkContextProvider extends React.Component {
         data
       );
       const respJson = await fetchResponse.json();
-      return respJson;
+      this.displayDropJourneyAlert();
+      if (respJson.success == "Success") {
+        return respJson;
+      }else{
+        return null;
+      }
+      
     } catch (e) {
       console.log(e);
       this.displayNoConnectionAlert();
@@ -448,6 +454,16 @@ export class NetworkContextProvider extends React.Component {
 
   displayThirdJourneyAlert = () => {
     Alert.alert("Third Journey", "You've already had two journeys in progress, please finish them before you start a new one",
+    [
+      {
+      text: "Close",
+      style: "cancel",
+      },
+    ]);
+  }
+
+  displayDropJourneyAlert = () => {
+    Alert.alert("Drop Journey", "Successfully",
     [
       {
       text: "Close",
