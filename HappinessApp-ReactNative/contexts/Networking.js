@@ -356,6 +356,7 @@ export class NetworkContextProvider extends React.Component {
 
   // Set a particular quest to be complete with given id
   completeQuest = async (
+    journeyId,
     questId,
     answer,
     feelingRating,
@@ -370,6 +371,7 @@ export class NetworkContextProvider extends React.Component {
         Authorization: "Token " + this.state.token,
       },
       body: JSON.stringify({
+        jid: journeyId,
         answer: answer,
         feeling_rating: feelingRating,
         quest_rating: questRating,
@@ -389,6 +391,29 @@ export class NetworkContextProvider extends React.Component {
       return [];
     }
   };
+
+  checkThirdJourney = async (jid) => {
+    const data = {
+      method: "GET",
+      headers:{
+        Authorization: "Token " + this.state.token,
+      }
+    };
+    try{
+      let fetchResponse = await fetch(
+        url + "api/progress/checkThirdJourney/" + jid + "/", data
+      );
+      const respJson = await fetchResponse.json();
+      if(respJson.success == "Failure"){
+        this.displayThirdJourneyAlert();
+        return null;
+      }
+      return respJson;
+    } catch(e){
+      this.displayNoConnectionAlert();
+      return null;
+    }
+  }
 
   // Alerts
   displayNoConnectionAlert = () => {
@@ -418,6 +443,16 @@ export class NetworkContextProvider extends React.Component {
       },
     ]);
   };
+
+  displayThirdJourneyAlert = () => {
+    Alert.alert("Third Journey", "You've already had two journeys in progress, please finish them before you start a new one",
+    [
+      {
+      text: "Close",
+      style: "cancel",
+      },
+    ]);
+  }
 
 
   render() {

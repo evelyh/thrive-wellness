@@ -44,13 +44,24 @@ class JourneyTreeComponent extends Component {
     });
   };
 
+  checkThird = async() =>{
+    const resp = await this.context.checkThirdJourney(this.props.journey);
+    if (resp != null){
+      this.props.navigation.navigate("Quest", {
+      quest: item,
+      journey: this.props.journey
+      }
+      );
+    };
+  }
+
   componentDidMount = async () => {
     // const { journey } = this.props;
     // const journeyProgress = await this.context.getJourneyProgress(journey.id);
     // this.setState({
     //   completedQuests: journeyProgress.completed,
     // });
-    this._unsubscribe = this.props.navigation.addListener("didFocus", () =>
+    this._unsubscribe = this.props.navigation.addListener("focus", () =>
       this.getQuestProgress()
     );
   };
@@ -87,13 +98,8 @@ class JourneyTreeComponent extends Component {
         style={{ margin: 0, padding: 0, justifyContent: "flex-end" }}
       >
         <Button
-          labelStyle={{ fontSize: 16 }}
-          onPress={() => {
-            this.props.navigation.navigate("Quest", {
-              quest: item,
-              journey: this.props.journey
-            });
-          }}
+          labelStyle={{ fontSize: 16, color: "#63915e", fontFamily:"Arial" }}
+          onPress={this.checkThird}
         >
           Start Quest
         </Button>
@@ -150,9 +156,9 @@ class JourneyTreeComponent extends Component {
           />
           <Button
             mode="contained"
-            style={{ alignSelf: "center" }}
+            style={{ alignSelf: "center", backgroundColor: "#C9DBC5" }}
             contentStyle={{ minHeight: 50 }}
-            labelStyle={{ fontSize: 18 }}
+            labelStyle={{ fontSize: 18, color: "#486b45", fontFamily:"Arial" }}
             onPress={() => this.props.onBack()}
           >
             Back To Journey List

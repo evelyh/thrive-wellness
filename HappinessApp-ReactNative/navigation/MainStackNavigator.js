@@ -41,16 +41,16 @@ export class MainStackNavigator extends React.Component {
           tabBarIcon: ({ color, size }) => {
             const modules = {
               Tree: "MaterialComm",
-              Playground: "Entypo",
+              Journey: "Entypo",
               Daily: "MaterialIcons",
-              Friends: "FontAwesome",
+              Playground: "MaterialIcons",
               Profile: "FontAwesome",
             };
             const icons = {
               Tree: "tree",
-              Playground: "flower", // or Leaf, rainbow,
+              Journey: "flower", // or Leaf, rainbow,
               Daily: "today",
-              Friends: "user-friends",
+              Playground: "local-library",
               Profile: "user-alt",
             };
 
@@ -86,7 +86,7 @@ export class MainStackNavigator extends React.Component {
         })}
       >
         <Tab.Screen name="Tree" component={HappinessTree} />
-        <Tab.Screen name="Playground" component={JourneyScreen} />
+        <Tab.Screen name="Journey" component={JourneyScreen} />
         <Tab.Screen
           name="Daily"
           component={DailyQuestScreen}
@@ -94,7 +94,7 @@ export class MainStackNavigator extends React.Component {
             title: "My Journey",
           }}
         />
-        {/* <Tab.Screen name="Friends" component={Friends} /> */}
+        <Tab.Screen name="Playground" component={Friends} />
         <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     );
