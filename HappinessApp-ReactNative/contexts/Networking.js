@@ -43,7 +43,7 @@ export const NetworkContext = React.createContext({
   displayNoConnectionAlert: () => {},
 });
 
-const url = "http://100.65.60.241:8000";
+const url = "http://localhost:8000";
 
 export class NetworkContextProvider extends React.Component {
   state = {
@@ -424,7 +424,7 @@ export class NetworkContextProvider extends React.Component {
     };
     try{
       let fetchResponse = await fetch(
-        url + "/api/journey/allquests/", data
+        url + "/api/journeys/allquests/", data
       );
       const respJson = await fetchResponse.json();
       return respJson;

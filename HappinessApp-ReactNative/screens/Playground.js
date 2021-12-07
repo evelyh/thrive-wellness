@@ -5,62 +5,17 @@ import {
   FlatList,
   SafeAreaView,
 } from "react-native";
+import { Card, Title, Paragraph, Button } from "react-native-paper";
 import { NetworkContext } from "../contexts/Networking";
 
 export default class Playground extends React.Component{
     static contextType = NetworkContext;
 
-    state = {
-        quests: [],
-    };
-
-
-  handleJourneyTap = (quest, journey) => {
-    console.log(quest);
-    this.props.navigation.navigate("Quest", {q: quest, j: journey});
-  };
-
-  onSelect = (quest, journey) => {
-    setTimeout(() => {
-      this.setState({ updated: false });
-    }, 2000);
-    this.props.navigation.navigate("Quest", { q: quest, j: journey });
-  };
-
-  getQuestProgress = async () => {
-    const { journey } = this.props;
-    console.log(journey);
-    const journeyProgress = await this.context.getJourneyProgress(journey.id);
-    console.log(journeyProgress);
-    this.setState({
-      completedQuests: journeyProgress.completed,
-    });
-  };
-
-  doQuest = async(item) =>{
-    const resp = await this.context.checkThirdJourney(this.props.journey.id);
-    if (resp != null){
-      this.props.navigation.navigate("Quest", {
-      quest: item,
-      journey: this.props.journey
-      }
-      );
-    };
-  }
-
-
-    getQuests = async() => {
-        const response = await this.context.getAllQuests();
-        this.setState({
-            quests: response
-        })
-    };
-
-    componentDidMount() {
+    componentDidMount= async() => {
         this._unsubscirbe  = this.props.navigation.addListener("focus", () => {
-            this.getQuests()
+            
         });
-    }
+    };
 
     renderItem = ({item}) => (
         <Card style={[cardStyles.cardContainer]}>
@@ -82,7 +37,7 @@ export default class Playground extends React.Component{
       >
         <Button
           labelStyle={{ fontSize: 16, color: "#63915e"}}
-          onPress={() => this.doQuest(item)}
+          onPress={() => this.props.navigation.navigate("Quest", {quest: item, journey: null})}
         >
           Start Quest
         </Button>
@@ -96,7 +51,7 @@ export default class Playground extends React.Component{
             <View style={MIStyles.MIContainer}>
                 <FlatList
                 nestedScrollEnabled
-                data={this.quests}
+                data={this.props.allQuests}
                 keyExtractor = {(item) => item.name}
                 renderItem={this.renderItem}
                 ></FlatList>
