@@ -16,7 +16,10 @@ import QuestScreen from "../screens/QuestScreen";
 import QuestFeedbackScreen from "../screens/QuestFeedbackScreen";
 import DailyQuestScreen from "../screens/DailyQuestScreen";
 import Friends from "../screens/Friends";
+import addBuddy from "../screens/addBuddy";
+import seeBuddyRequest from "../screens/seeBuddyRequest";
 import Profile from "../screens/Profile";
+import Playground from "../screens/Playground";
 import CreateJourneyScreen from "../screens/JourneyManagement/CreateJourneyScreen";
 import CreateQuestScreen from "../screens/JourneyManagement/CreateQuestScreen";
 import ManageAllJourneysScreen from "../screens/JourneyManagement/ManageAllJourneysScreen";
@@ -28,8 +31,7 @@ import { Icon } from "react-native-elements";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
-
+const Stackk = createStackNavigator();
 
 export class MainStackNavigator extends React.Component {
   static contextType = NetworkContext;
@@ -41,14 +43,14 @@ export class MainStackNavigator extends React.Component {
           tabBarIcon: ({ color, size }) => {
             const modules = {
               Submit: "MaterialComm",
-              Playground: "Entypo",
+              Journey: "Entypo",
               Daily: "MaterialIcons",
               Friends: "FontAwesome",
               Profile: "FontAwesome",
             };
             const icons = {
               Submit: "tree",
-              Playground: "flower", // or Leaf, rainbow,
+              Journey: "flower", // or Leaf, rainbow,
               Daily: "today",
               Friends: "user-friends",
               Profile: "user-alt",
@@ -85,7 +87,8 @@ export class MainStackNavigator extends React.Component {
           },
         })}
       >
-          <Tab.Screen
+
+        <Tab.Screen
               name="Submit"
               component={SubmitQuest}
               options={{
@@ -97,23 +100,20 @@ export class MainStackNavigator extends React.Component {
           name="Daily"
           component={DailyQuestScreen}
           options={{
-            title: "My Journey",
+            title: "Daily Quest",
           }}
         />
-        <Tab.Screen name="Playground" component={JourneyScreen} />
-        {/* <Tab.Screen name="Friends" component={Friends} /> */}
+        <Tab.Screen name="Friends" component={Friends} />
         <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     );
   }
 }
 
-
-
 export class MainStack extends React.Component {
   handleSettings = () => {
-    navigation.goBack
-    console.log("Settings button")
+    navigation.goBack;
+    console.log("Settings button");
   };
 
   render() {
@@ -127,10 +127,9 @@ export class MainStack extends React.Component {
             headerRight: () => (
               <Icon
                 reverse
-                name= 'ios-settings'
-                type='ionicon'
-                color='#517fa4'
-                // onPress={this.handleSettings}
+                name="ios-settings"
+                type="ionicon"
+                color="#517fa4"
               />
             ),
           })}
@@ -151,8 +150,21 @@ export class MainStack extends React.Component {
         />
         <Stack.Screen name="Manage Journey" component={ManageJourneyScreen} />
         <Stack.Screen name="Manage Quest" component={ManageQuestScreen} />
+        <Stack.Screen name="addBuddy" component={addBuddy} />
+        <Stack.Screen name="seeBuddyRequest" component={seeBuddyRequest} />
       </Stack.Navigator>
     );
+  }
+}
+
+export class OtherStack extends React.Component {
+  render() {
+    return (
+      <Stackk.Navigator>
+        <Stack.Screen name="Daily" component={DailyQuestScreen}/>
+        <Stackk.Screen name="Playground" component={Playground}/>
+      </Stackk.Navigator>
+    )
   }
 }
 
@@ -168,6 +180,10 @@ function getHeaderTitle(route) {
       return "Daily Quest";
     case "Friends":
       return "Friends";
+    case "addBuddy":
+      return "addBuddy";
+    case "seeBuddyRequest":
+      return "seeBuddyRequest";
     case "Profile":
       return "Profile";
   }

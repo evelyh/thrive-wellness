@@ -13,7 +13,14 @@ urlpatterns = [
          name="api-user-set-notification-time"),
     path('get_user_meta/', get_user_meta,
          name="api-user-set-notification-time"),
-         
+
+     path('emailVerification/<uidb64>/<token>', activate, name='emailActivate'),
+
+     path('send_buddy_request/', send_buddy_request, name="api-send-buddy-request"),
+     path('accept_buddy_request/', accept_buddy_request, name="api-accept-buddy-request"),
+     path('reject_buddy_request/', reject_buddy_request, name="api-reject-buddy-request"), 
+     path('fetch_buddy_request/', fetch_buddy_request, name="api-fetch-buddy-request"), 
+     path('fetch_buddy/', fetch_buddy, name="api-fetch-buddy"), 
 path('reset_password/',
      auth_views.PasswordResetView.as_view(template_name="users/password_reset.html", html_email_template_name="users/password_reset_email.html"),
      name="reset_password"),

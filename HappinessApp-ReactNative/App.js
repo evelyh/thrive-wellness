@@ -14,11 +14,7 @@ export default class App extends React.Component {
     welcomeFinished: false,
   };
 
-  onFinishWelcome = () => {
-    this.setState({
-      welcomeFinished: true,
-    });
-  };
+
   render() {
     const { welcomeFinished } = this.state;
     console.log("BRUH MOMENT INBOUND");
@@ -31,12 +27,8 @@ export default class App extends React.Component {
               context.isLoading ? (
                 <SplashScreen />
               ) : context.isAuthenticated ? (
-                welcomeFinished ? (
-                  <MainStack />
-                ) : (
-                  <WelcomeScreen finishWelcome={this.onFinishWelcome} />
-                )
-              ) : (
+                <MainStack/>)
+                 : (
                 <LoginStackNavigator />
               )
             }
