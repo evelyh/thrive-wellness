@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from .models import *
 from .serializers import *
-from .forms import ImageForm
+# from .forms import ImageForm
 
 #
 # port = 465  # For SSL
@@ -167,9 +167,9 @@ def submit_journeys(request):
                 q["user_name"] = request.data.get("user_name")
         qserializer = SubmittedQuestSerializer(data=questsss, many=True)
         if jserializer.is_valid() and qserializer.is_valid():
-            jserializer.save()
-            new_journey = SubmittedJourney.objects.get(name=jserializer.validated_data.get("name"),
-                                                       description=jserializer.validated_data.get("description"))
+            new_journey = jserializer.save()
+            # new_journey = SubmittedJourney.objects.get(name=jserializer.validated_data.get("name"),
+            #                                            description=jserializer.validated_data.get("description"))
             new_id = new_journey.pk
             for q in questsss:
                 q["journey"] = new_journey.pk
@@ -214,14 +214,24 @@ def update_user_quest(request, qid):
         serializer.save()
         q = SubmittedQuest.objects.get(pk=qid)
         approved = q.approved
+
+        # check if this quest has an associated journey
         japproved = True
+        have_journey = False
         if q.journey is not None:
             japproved = q.journey.approved
+            have_journey = True
+
         if approved and japproved:
             # add quest to Quest table
-            new_quest = Quest(name=q.name, description=q.description, journey=q.journey,
-                              order=q.order, media=q.media, survey_question=q.survey_question)
+            new_quest = Quest(name=q.name, description=q.description,
+                              media=q.media, survey_question=q.survey_question)
             new_quest.save()
+            # create new JourneyQuest if the quest is associated with a joureny
+            if have_journey:
+                new_journeyquest = JourneyQuests(journey_id=q.journey.pk, quest_id=new_quest.pk, order=q.order)
+                new_journeyquest.save()
+
             serializer = QuestSerializer(new_quest)
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         serializer = SubmittedQuestSerializer(q)
@@ -238,18 +248,31 @@ def update_user_journey(request, jid):
         serializer.save()
         j = SubmittedJourney.objects.get(pk=jid)
         approved = j.approved
+
+        # publish journey if it is approved
         if approved:
+            quest_pk_lst = []
+
             # add journey to Journey table
-            quest_lst = []
             new_journey = Journey(name=j.name, description=j.description, media=j.media)
             new_journey.save()
+
+            # add associated quests to Quest table and create associated JourneyQuest objects
             for q in j.submitted_quests.all():
                 q.approved = True
                 q.save()
-                new_quest = Quest(name=q.name, description=q.description, journey_id=new_journey.pk,
-                                  order=q.order, media=q.media, survey_question=q.survey_question)
+                new_quest = Quest(name=q.name, description=q.description,
+                                  media=q.media, survey_question=q.survey_question)
                 new_quest.save()
-                quest_lst.append(new_quest)
+
+                quest_pk_lst.append(new_quest.pk)
+                new_journey_quest = JourneyQuests(journey_id=new_journey.pk, quest_id=new_quest.pk,
+                                                  order=q.order)
+                new_journey_quest.save()
+
+            new_journey.quests.set(quest_pk_lst)  # add quests to new_journey and save
+            new_journey.save()
+
             serializer = JourneySerializer(new_journey)
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         serializer = SubmittedJourneySerializer(j)
