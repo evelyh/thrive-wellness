@@ -32,7 +32,7 @@ export default class DailyQuestScreen extends React.Component {
     const incomplete = await this.context.getIncompleteJourney();
     console.log(incomplete);
     if(incomplete !== null){
-      if(incomplete.length==1){
+      if(incomplete.length == 1){
         const journeyProgress = await this.context.getJourneyProgress(incomplete[0].id);
         this.setState({
           incompleteJourney: [{
@@ -43,21 +43,48 @@ export default class DailyQuestScreen extends React.Component {
             quests: incomplete[0].quests
           }]
         });
-        console.log(this.state.incompleteJourney);
         this.setState({
           completedQuests: journeyProgress.completed,
         });
       }
-      if(incomplete.length == 2){
 
+      if(incomplete.length == 2){
+        const journeyProgress1 = await this.context.getJourneyProgress(incomplete[0].id);
+        const journeyProgress2 = await this.context.getJourneyProgress(incomplete[1].id);
+        this.setState({
+          incompleteJourney: [
+            {
+              description: incomplete[0].description,
+              id: incomplete[0].id,
+              media: incomplete[0].media,
+              name: incomplete[0].name,
+              quests: incomplete[0].quests
+            },
+            {
+            description: incomplete[1].description,
+            id: incomplete[1].id,
+            media: incomplete[1].media,
+            name: incomplete[1].name,
+            quests: incomplete[1].quests
+          }]
+        });
+        console.log(this.state.incompleteJourney);
+        this.setState({
+          completedQuests: journeyProgress1.completed.concat(journeyProgress2.completed),
+        });
       }
     }
   };
 
   handleJourneyTap = (quest) => {
     console.log(quest);
-    const { navigate } = this.props.navigation;
-    navigate("Quest", { quest });
+    // const { navigate } = this.props.navigation;
+    // navigate("Quest", { quest });
+    this.props.navigation.navigate("Quest", {
+      quest: quest,
+      journey: this.props.journey
+      }
+      );
   };
 
   componentDidMount() {
@@ -109,8 +136,6 @@ export default class DailyQuestScreen extends React.Component {
 
   render() {
     //const { name } = this.props.route.params; // Get name from params which comes from the navigate function from LogIn.js
-    const { quests } = this.state.incompleteJourney;
-    console.log(this.state.incompleteJourney.length);
     if(this.state.incompleteJourney.length === 0){
     //if (Object.keys(this.state.journey).length == 0) {
       return (
@@ -119,7 +144,7 @@ export default class DailyQuestScreen extends React.Component {
           <View style={ButtonStyles.no_quest_home_buttons}>
             <Button
               mode="contained"
-              onPress={() => this.props.navigation.navigate("Playground", {})}
+              onPress={() => this.props.navigation.navigate("Playground", {})} 
             >
               Go to quest playground
             </Button>
@@ -127,6 +152,8 @@ export default class DailyQuestScreen extends React.Component {
         </SafeAreaView>
       );
     }
+    const { quests } = this.state.incompleteJourney[0];
+    
     return (
       <SafeAreaView style={styles.container}>
         <View
@@ -139,17 +166,41 @@ export default class DailyQuestScreen extends React.Component {
           }}
         >
           <Title style={QuestListStyles.title}>Your current journey is:</Title>
-          <Title style={QuestListStyles.title}>{this.state.incompleteJourney.name}</Title>
+          {this.state.incompleteJourney.length >= 1 &&
+          <Title style={QuestListStyles.title}>{this.state.incompleteJourney[0].name}</Title>
+          }
+          {this.state.incompleteJourney.length == 2 &&
+          <Title style={QuestListStyles.title}>{this.state.incompleteJourney[1].name}</Title>
+          }
+          
         </View>
-        <View style={{flex:1}}>
-          <FlatList
-            nestedScrollEnabled
-            data={quests}
-            keyExtractor={(item) => item.name}
-            renderItem={this.renderItem}
-          />
-        </View>
+        {this.state.incompleteJourney.length == 1 &&
+          <View style={{flex:1}}>
+            <FlatList
+              nestedScrollEnabled
+              data={quests}
+              keyExtractor={(item) => item.name}
+              renderItem={this.renderItem}
+            />
+          </View>
+        }
+        {this.state.incompleteJourney.length == 2 &&
+          <View style={{flex:1}}>
+            <FlatList
+              nestedScrollEnabled
+              data={quests.concat(this.state.incompleteJourney[1].quests)}
+              keyExtractor={(item) => item.name}
+              renderItem={this.renderItem}
+            />
+          </View>
+        }
         <View style={ButtonStyles.home_primary_buttons}>
+        <Button
+            mode="contained"
+            onPress={() => this.props.navigation.navigate("NotFeelingit", {})}
+          >
+            Not feeling it?
+          </Button>
           <Button
             mode="contained"
             onPress={() => this.props.navigation.navigate("Playground", {})}

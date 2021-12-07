@@ -44,7 +44,9 @@ export default class QuestFeedbackScreen extends React.Component {
     const { quest } = this.props.route.params
     const { journey } = this.props.route.params
     const { answer, feelingRating, questRating, surveyAnswer} = this.state
-    await this.context.completeQuest(journey.id, quest.id, answer, feelingRating, questRating, surveyAnswer);
+    if (journey != null) {
+      await this.context.completeQuest(journey.id, quest.id, answer, feelingRating, questRating, surveyAnswer);
+    }
     this.props.navigation.navigate("Home")
   }
 
