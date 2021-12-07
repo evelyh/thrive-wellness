@@ -18,13 +18,14 @@ export default class DailyQuestScreen extends React.Component {
   state = {
     journey: {}, 
     completedQuests: [],
-    incompleteJourney: {
-      description: "",
-      id: null,
-      media: null,
-      name: "",
-      quests: []
-    } // This is the journey in progress
+    incompleteJourney:[], // This is a list of journeys in progress
+    // incompleteJourney: {
+    //   description: "",
+    //   id: null,
+    //   media: null,
+    //   name: "",
+    //   quests: []
+    // } 
   };
 
   getJourneys = async () => {
