@@ -144,6 +144,8 @@ export class NetworkContextProvider extends React.Component {
       } else {
         console.log("Authentication Failed!");
         this.WrongPasswordAlert();
+        this.fetchBuddy();
+        this.fetchBuddyRequest();
       }
     } catch (e) {
       this.displayNoConnectionAlert();
