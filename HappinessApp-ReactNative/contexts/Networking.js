@@ -15,6 +15,8 @@ export const NetworkContext = React.createContext({
   loadToken: () => {},
   // Cached data and methods to retrieve it
   journeys: [],
+  buddies: "",
+  buddy_requests: "",
   userInfo: {
     firstname: "",
     lastname: "",
@@ -29,11 +31,17 @@ export const NetworkContext = React.createContext({
   // Methods to complete a quest
   completeQuest: () => {},
 
+  // BuddyRequest
+  sendBuddyRequest: () => {},
+  acceptBuddyRequest: () => {},
+  rejectBuddyRequest: () => {},
+
   // Alerts
   displayNoConnectionAlert: () => {},
 });
 
-const url = "https://intezzz.pythonanywhere.com/";
+//const url = "https://intezzz.pythonanywhere.com/";
+const url = "http://192.168.0.128:8050";
 
 export class NetworkContextProvider extends React.Component {
   state = {
@@ -41,8 +49,11 @@ export class NetworkContextProvider extends React.Component {
     isAuthenticated: false,
     isLoading: true,
     isAdmin: false,
+    username: "",
 
     journeys: [],
+    buddies: [],
+    buddy_requests: [],
     userInfo: {
       firstname: "",
       lastname: "",
@@ -72,16 +83,17 @@ export class NetworkContextProvider extends React.Component {
     try {
       let fetchResponse = await fetch(url + "/api/auth/register/", data);
       let respJson = await fetchResponse.json();
-      if (respJson.token) {
-        this.setState({
-          token: respJson.token,
-          isAuthenticated: true,
-        });
-        await this.setToken(respJson.token);
-        this.checkIfAdmin();
-        this.getUserMeta();
-        registerForPushNotificationsAsync();
-      }
+      this.registerSuccessAlert();
+      // if (respJson.token) {
+      //   this.setState({
+      //     token: respJson.token,
+      //     isAuthenticated: true,
+      //   });
+      //   await this.setToken(respJson.token);
+      //   this.checkIfAdmin();
+      //   this.getUserMeta();
+      //   registerForPushNotificationsAsync();
+      // }
     } catch (e) {
       console.log(e);
       this.registerFailAlert();
@@ -111,6 +123,7 @@ export class NetworkContextProvider extends React.Component {
         this.setState({
           token: respJson.token,
           isAuthenticated: true,
+          username: login,
         });
         await this.setToken(respJson.token);
         this.checkIfAdmin();
@@ -131,6 +144,9 @@ export class NetworkContextProvider extends React.Component {
       token: null,
       isAuthenticated: false,
       isAdmin: false,
+      username: "",
+      buddies: [],
+      buddy_requests: [],
     });
 
     await this.removeToken();
@@ -320,6 +336,133 @@ export class NetworkContextProvider extends React.Component {
     }
   };
 
+  sendBuddyRequest = async (buddy) => {
+    const data = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: null,
+      },
+      body: JSON.stringify({
+        from: this.state.username,
+        to: buddy,
+      }),
+    };
+    if (buddy == this.state.username) {
+      this.SameNameAlert();
+    } else {
+      try {
+        let fetchResponse = await fetch(
+          url + "/api/auth/send_buddy_request/",
+          data
+        );
+        let respJson = await fetchResponse.json();
+        this.buddyRequestSuccessAlert();
+      } catch (e) {
+        console.log(e);
+        this.registerFailAlert();
+      }
+    }
+  };
+
+  acceptBuddyRequest = async (buddy) => {
+    const data = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: null,
+      },
+      body: JSON.stringify({
+        from: buddy,
+        to: this.state.username,
+      }),
+    };
+    try {
+      let fetchResponse = await fetch(
+        url + "/api/auth/accept_buddy_request/",
+        data
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  rejectBuddyRequest = async (buddy) => {
+    const data = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: null,
+      },
+      body: JSON.stringify({
+        from: buddy,
+        to: this.state.username,
+      }),
+    };
+    try {
+      let fetchResponse = await fetch(
+        url + "/api/auth/reject_buddy_request/",
+        data
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  fetchBuddyRequest = async () => {
+    const data = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: null,
+      },
+      body: JSON.stringify({
+        user: this.state.username,
+      }),
+    };
+    try {
+      fetch(url + "/api/auth/fetch_buddy_request/", data)
+        .then((response) => response.json())
+        .then((data) => {
+          this.setState({
+            buddy_requests: data.requests,
+          });
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  fetchBuddy = async () => {
+    const data = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: null,
+      },
+      body: JSON.stringify({
+        user: this.state.username,
+      }),
+    };
+    //this.setState({ buddies: "" });
+    try {
+      fetch(url + "/api/auth/fetch_buddy/", data)
+        .then((response) => response.json())
+        .then((data) => {
+          this.setState({
+            buddies: data.requests,
+          });
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   // Alerts
   displayNoConnectionAlert = () => {
     Alert.alert("Connection Error", "Failed to connect to the server", [
@@ -339,10 +482,49 @@ export class NetworkContextProvider extends React.Component {
     ]);
   };
 
+  registerSuccessAlert = () => {
+    Alert.alert(
+      "Registration Successful",
+      "Please check your email inbox for a confirmation email",
+      [
+        {
+          text: "Close",
+          style: "cancel",
+        },
+      ]
+    );
+  };
+
   registerFailAlert = () => {
     Alert.alert(
       "Registration Unsuccessful",
       "An account is already registered with your email and/or username",
+      [
+        {
+          text: "Close",
+          style: "cancel",
+        },
+      ]
+    );
+  };
+
+  buddyRequestSuccessAlert = () => {
+    Alert.alert(
+      "Buddy Request Successful",
+      "An accountability buddy request has been sent!",
+      [
+        {
+          text: "Close",
+          style: "cancel",
+        },
+      ]
+    );
+  };
+
+  SameNameAlert = () => {
+    Alert.alert(
+      "Buddy Request Unsuccessful",
+      "You can't send a buddy request to yourself",
       [
         {
           text: "Close",
@@ -364,12 +546,18 @@ export class NetworkContextProvider extends React.Component {
           signUp: this.signUp,
           signIn: this.signIn,
           signOut: this.signOut,
+          sendBuddyRequest: this.sendBuddyRequest,
+          acceptBuddyRequest: this.acceptBuddyRequest,
+          rejectBuddyRequest: this.rejectBuddyRequest,
           loadToken: this.loadToken,
           // Cached data and methods to retrieve them
           journeys: this.state.journeys,
           userInfo: this.state.userInfo,
 
           getJourneys: this.getJourneys,
+
+          buddies: this.state.buddies,
+          buddy_requests: this.state.buddy_requests,
 
           // Methods to retrieve non-cached data
           getJourneyInfo: this.getJourneyInfo,
@@ -382,6 +570,11 @@ export class NetworkContextProvider extends React.Component {
           displayNoConnectionAlert: this.displayNoConnectionAlert,
           WrongPasswordAlert: this.WrongPasswordAlert,
           registerFailAlert: this.registerFailAlert,
+          registerSuccessAlert: this.registerSuccessAlert,
+          buddyRequestSuccessAlert: this.buddyRequestSuccessAlert,
+          SameNameAlert: this.SameNameAlert,
+          fetchBuddyRequest: this.fetchBuddyRequest,
+          fetchBuddy: this.fetchBuddy,
         }}
       >
         {this.props.children}

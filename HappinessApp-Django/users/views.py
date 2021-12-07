@@ -78,6 +78,89 @@ def get_preferred_notification_time(request):
     return Response(
         {"time": UserMeta.objects.get(user=request.user).pref_alert_time})
 
+@api_view(['POST'])
+@permission_classes([])
+def send_buddy_request(request):
+    f = request.data["from"]
+    t = request.data["to"]
+    fu = User.objects.get(username=f)
+    for friend in fu.buddy.all():
+        if friend.username == t:
+            return Response({"response" : 'Already buddy!'})
+    if User.objects.filter(username=t):
+        tu = User.objects.get(username=t)
+        if tu != fu:
+            if Buddy_Request.objects.filter(from_user=fu, to_user=tu):
+                return Response({"response" : 'Buddy request already sent!'})
+            elif Buddy_Request.objects.filter(from_user=tu, to_user=fu):
+                buddy_request = Buddy_Request.objects.get(from_user=tu, to_user=fu)
+                fu.buddy.add(tu)
+                tu.buddy.add(fu)
+                buddy_request.delete()
+                return Response({"response" : 'Buddies!'})
+            else:
+                buddy_request = Buddy_Request(from_user=fu, to_user=tu)
+                buddy_request.save()
+                return Response({"response" : 'Buddy request sent!'})
+        else:
+            return Response({"response" : 'Same User'})
+    else:
+        return Response({"response" : 'No such user'})
+
+@api_view(['POST'])
+@permission_classes([])
+def accept_buddy_request(request):
+    f = request.data["from"]
+    t = request.data["to"]
+    fu = User.objects.get(username=f)
+    tu = User.objects.get(username=t)
+    buddy_request = Buddy_Request.objects.get(from_user=fu, to_user=tu)
+    fu.buddy.add(tu)
+    tu.buddy.add(fu)
+    buddy_request.delete()
+    if Buddy_Request.objects.filter(from_user=tu, to_user=fu):
+        buddy_request = Buddy_Request.objects.get(from_user=tu, to_user=fu)  
+        buddy_request.delete()
+    return Response({"response" : 'Buddy Request Accepted!'})
+
+@api_view(['POST'])
+@permission_classes([])
+def reject_buddy_request(request):
+    f = request.data["from"]
+    t = request.data["to"]
+    fu = User.objects.get(username=f)
+    tu = User.objects.get(username=t)
+    buddy_request = Buddy_Request.objects.get(from_user=fu, to_user=tu)
+    buddy_request.delete()
+    return Response({"response" : 'Buddy Request Rejected!'})
+
+
+@api_view(['POST'])
+@permission_classes([])
+def fetch_buddy_request(request):
+    u = request.data["user"]
+    user = User.objects.get(username=u)
+    
+    brs = Buddy_Request.objects.filter(to_user=user)
+    buddy_requests = []
+
+    for br in brs:
+        buddy_requests.append(br.from_user.username)
+
+    return Response({"requests": buddy_requests})
+
+@api_view(['POST'])
+@permission_classes([])
+def fetch_buddy(request):
+    username = request.data["user"]
+    
+    user = User.objects.get(username=username)
+    possible = user.buddy.all()
+    buddies = []
+    for bud in possible:
+        buddies.append(bud.username)
+
+    return Response({"requests": buddies})
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
