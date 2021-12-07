@@ -96,13 +96,13 @@ export default class DailyQuestScreen extends React.Component {
   };
   handlePlayground = () =>{
     this.setState({
-      showPlayground: false,
+      showPlayground: true,
     })
   }
 
   handleBack =() =>{
     this.setState({
-      showPlayground: true,
+      showPlayground: false,
     })
   }
 
@@ -252,42 +252,6 @@ export default class DailyQuestScreen extends React.Component {
     }
   }
 }
-
-  const MIStyles = StyleSheet.create({
-    MIContainer: {
-      flex: 1,
-      alignItems: "center",
-      backgroundColor: "#ffffdc",
-    },
-    MITextContainer: {
-      marginHorizontal: 10,
-      marginTop: 10,
-    },
-    MIDescriptionText: {
-      fontSize: 20,
-      textAlign: "center",
-    },
-    MIPicture: {
-      width: "100%",
-      height: 200,
-    },
-    MIPictureContainer: {
-      flexDirection: "row",
-      justifyContent: "center",
-      margin: 10,
-    },
-    MIButtonContainer: {
-      // justifyContent: "center",
-      marginBottom: 15,
-      flex: 1,
-      justifyContent: "flex-end",
-    },
-    MIButton: {
-      borderWidth: 1,
-      borderRadius: 10,
-      borderColor: "blue",
-    },
-  });
 
 const styles = StyleSheet.create({
   container: {
