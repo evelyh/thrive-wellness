@@ -171,13 +171,11 @@ def incomplete_journey(request):
 @api_view(['DELETE'])
 def drop_journey(request, jid):
     user = request.user
-    journey = Journey.objects.get(id=jid)
-
-    qset = Progress.objects.filter(user=user)
-    if qset:
-        for quest in qset:
-            if quest.journey.id == jid:
-                Progress.objects.get(id=quest.id).delete()
+    pset = Progress.objects.filter(user=user)
+    if pset:
+        for progress in pset:
+            if progress.journey.id == jid:
+                Progress.objects.get(id=progress.id).delete()
     else:
-        return Response({"Error": "No journey"})
-    return Response({"Success": "Success"})
+        return Response({"success": "Failure"})
+    return Response({"success": "Success"})

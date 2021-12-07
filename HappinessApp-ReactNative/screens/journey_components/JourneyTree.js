@@ -147,9 +147,8 @@ class JourneyTreeComponent extends Component {
                 <Text style={MIStyles.MIDescriptionText}>
                     {journey.description}
                 </Text>
-
             </View>
-              <FlatList
+            <FlatList
               nestedScrollEnabled
               data={journey.quests}
               keyExtractor={(item) => item.name}

@@ -91,7 +91,7 @@ export class MainStackNavigator extends React.Component {
           name="Daily"
           component={DailyQuestScreen}
           options={{
-            title: "My Journey",
+            title: "Daily Quest",
           }}
         />
         <Tab.Screen name="Friends" component={Friends} />

@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 import { NetworkContext } from "../contexts/Networking";
+import DropJourneyComponent from './DropJourney';
 export default class DailyQuestScreen extends React.Component {
   static contextType = NetworkContext;
 
@@ -19,6 +20,7 @@ export default class DailyQuestScreen extends React.Component {
     journey: {}, 
     completedQuests: [],
     incompleteJourney:[], // This is a list of journeys in progress
+    showIcons: true
     // incompleteJourney: {
     //   description: "",
     //   id: null,
@@ -87,6 +89,19 @@ export default class DailyQuestScreen extends React.Component {
       );
   };
 
+   // This is when the user hits the back button on the DropJourneyComponent
+   handleBack = () => {
+    this.setState({ showIcons: true });
+    this.setState({ showPopup: false });
+  };
+
+  // This function will be used when user clicks on Drop on the Journey Popup to drop a journey
+  handleJourneyConfirm = () => {
+    this.setState({ showIcons: false }); // Change from showing the icons to showing the tree
+    // this.setState({ selectedJourney: journey });
+    // console.log(journey)
+  };
+
   componentDidMount() {
     this._unsubscribe = this.props.navigation.addListener("focus", () => {
       this.getJourneys();
@@ -136,15 +151,74 @@ export default class DailyQuestScreen extends React.Component {
 
   render() {
     //const { name } = this.props.route.params; // Get name from params which comes from the navigate function from LogIn.js
-    if(this.state.incompleteJourney.length === 0){
-    //if (Object.keys(this.state.journey).length == 0) {
+    if(this.state.showIcons){
+      if(this.state.incompleteJourney.length === 0){
+        return (
+          <SafeAreaView style={styles.container}>
+            <Title style={QuestListStyles.title}>No Quest</Title>
+            <View style={ButtonStyles.no_quest_home_buttons}>
+              <Button
+                mode="contained"
+                onPress={() => this.props.navigation.navigate("Playground", {})} 
+              >
+                Go to quest playground
+              </Button>
+            </View>
+          </SafeAreaView>
+        );
+      }
+      const { quests } = this.state.incompleteJourney[0];
+      
       return (
         <SafeAreaView style={styles.container}>
-          <Title style={QuestListStyles.title}>No Quest</Title>
-          <View style={ButtonStyles.no_quest_home_buttons}>
+          <View
+            style={{
+              margin: 5,
+              backgroundColor: "#ffffff",
+              borderWidth: 2,
+              borderColor: "#b5bdbb",
+              borderRadius: 5,
+            }}
+          >
+            <Title style={QuestListStyles.title}>Your current journey is:</Title>
+            {this.state.incompleteJourney.length >= 1 &&
+            <Title style={QuestListStyles.title}>{this.state.incompleteJourney[0].name}</Title>
+            }
+            {this.state.incompleteJourney.length == 2 &&
+            <Title style={QuestListStyles.title}>{this.state.incompleteJourney[1].name}</Title>
+            }
+            
+          </View>
+          {this.state.incompleteJourney.length == 1 &&
+            <View style={{flex:1}}>
+              <FlatList
+                nestedScrollEnabled
+                data={quests}
+                keyExtractor={(item) => item.name}
+                renderItem={this.renderItem}
+              />
+            </View>
+          }
+          {this.state.incompleteJourney.length == 2 &&
+            <View style={{flex:1}}>
+              <FlatList
+                nestedScrollEnabled
+                data={quests.concat(this.state.incompleteJourney[1].quests)}
+                keyExtractor={(item) => item.name}
+                renderItem={this.renderItem}
+              />
+            </View>
+          }
+          <View style={ButtonStyles.home_primary_buttons}>
+          <Button
+              mode="contained"
+              onPress={() => this.handleJourneyConfirm()}
+            >
+              Not feeling it?
+            </Button>
             <Button
               mode="contained"
-              onPress={() => this.props.navigation.navigate("Playground", {})} 
+              onPress={() => this.props.navigation.navigate("Playground", {})}
             >
               Go to quest playground
             </Button>
@@ -152,64 +226,16 @@ export default class DailyQuestScreen extends React.Component {
         </SafeAreaView>
       );
     }
-    const { quests } = this.state.incompleteJourney[0];
+    else{
+      return (
+        <DropJourneyComponent
+          // journey={selectedJourney}
+          navigation={this.props.navigation}
+          onBack={this.handleBack}
+        />
+      );
+    }
     
-    return (
-      <SafeAreaView style={styles.container}>
-        <View
-          style={{
-            margin: 5,
-            backgroundColor: "#ffffff",
-            borderWidth: 2,
-            borderColor: "#b5bdbb",
-            borderRadius: 5,
-          }}
-        >
-          <Title style={QuestListStyles.title}>Your current journey is:</Title>
-          {this.state.incompleteJourney.length >= 1 &&
-          <Title style={QuestListStyles.title}>{this.state.incompleteJourney[0].name}</Title>
-          }
-          {this.state.incompleteJourney.length == 2 &&
-          <Title style={QuestListStyles.title}>{this.state.incompleteJourney[1].name}</Title>
-          }
-          
-        </View>
-        {this.state.incompleteJourney.length == 1 &&
-          <View style={{flex:1}}>
-            <FlatList
-              nestedScrollEnabled
-              data={quests}
-              keyExtractor={(item) => item.name}
-              renderItem={this.renderItem}
-            />
-          </View>
-        }
-        {this.state.incompleteJourney.length == 2 &&
-          <View style={{flex:1}}>
-            <FlatList
-              nestedScrollEnabled
-              data={quests.concat(this.state.incompleteJourney[1].quests)}
-              keyExtractor={(item) => item.name}
-              renderItem={this.renderItem}
-            />
-          </View>
-        }
-        <View style={ButtonStyles.home_primary_buttons}>
-        <Button
-            mode="contained"
-            onPress={() => this.props.navigation.navigate("NotFeelingit", {})}
-          >
-            Not feeling it?
-          </Button>
-          <Button
-            mode="contained"
-            onPress={() => this.props.navigation.navigate("Playground", {})}
-          >
-            Go to quest playground
-          </Button>
-        </View>
-      </SafeAreaView>
-    );
   }
 }
 
