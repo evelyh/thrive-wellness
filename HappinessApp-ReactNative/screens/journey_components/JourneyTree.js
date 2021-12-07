@@ -98,7 +98,7 @@ class JourneyTreeComponent extends Component {
         style={{ margin: 0, padding: 0, justifyContent: "flex-end" }}
       >
         <Button
-          labelStyle={{ fontSize: 16, color: "#63915e", fontFamily:"Arial" }}
+          labelStyle={{ fontSize: 16, color: "#63915e"}}
           onPress={this.checkThird}
         >
           Start Quest
@@ -158,7 +158,7 @@ class JourneyTreeComponent extends Component {
             mode="contained"
             style={{ alignSelf: "center", backgroundColor: "#C9DBC5" }}
             contentStyle={{ minHeight: 50 }}
-            labelStyle={{ fontSize: 18, color: "#486b45", fontFamily:"Arial" }}
+            labelStyle={{ fontSize: 18, color: "#486b45"}}
             onPress={() => this.props.onBack()}
           >
             Back To Journey List
