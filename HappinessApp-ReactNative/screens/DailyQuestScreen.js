@@ -96,13 +96,13 @@ export default class DailyQuestScreen extends React.Component {
   };
   handlePlayground = () =>{
     this.setState({
-      showPlayground: true,
+      showPlayground: false,
     })
   }
 
   handleBack =() =>{
     this.setState({
-      showPlayground: false,
+      showPlayground: true,
     })
   }
 
@@ -183,15 +183,7 @@ export default class DailyQuestScreen extends React.Component {
       
       return (
         <SafeAreaView style={styles.container}>
-          <View
-            style={{
-              margin: 5,
-              backgroundColor: "#ffffff",
-              borderWidth: 2,
-              borderColor: "#b5bdbb",
-              borderRadius: 5,
-            }}
-          >
+          <View>
             <Title style={QuestListStyles.title}>Your current journey is:</Title>
             {this.state.incompleteJourney.length >= 1 &&
             <Title style={QuestListStyles.title}>{this.state.incompleteJourney[0].name}</Title>
@@ -199,10 +191,9 @@ export default class DailyQuestScreen extends React.Component {
             {this.state.incompleteJourney.length == 2 &&
             <Title style={QuestListStyles.title}>{this.state.incompleteJourney[1].name}</Title>
             }
-            
-          </View>
+          </View >
           {this.state.incompleteJourney.length == 1 &&
-            <View style={{flex:1}}>
+            <View style={MIStyles.MIContainer}>
               <FlatList
                 nestedScrollEnabled
                 data={quests}
@@ -212,7 +203,7 @@ export default class DailyQuestScreen extends React.Component {
             </View>
           }
           {this.state.incompleteJourney.length == 2 &&
-            <View style={{flex:1}}>
+            <View style={MIStyles.MIContainer}>
               <FlatList
                 nestedScrollEnabled
                 data={quests.concat(this.state.incompleteJourney[1].quests)}
@@ -228,7 +219,7 @@ export default class DailyQuestScreen extends React.Component {
               style={{ alignSelf: "center", backgroundColor: "#C9DBC5" }}
               labelStyle={{ fontSize: 18, color: "#486b45"}}
             >
-              Not feeling it?
+              Drop a journey
             </Button>
             <Button
               mode="contained"
@@ -241,26 +232,61 @@ export default class DailyQuestScreen extends React.Component {
           </View>
         </SafeAreaView>
       );
-    }else{
+    }if(!this.state.showPlayground){
       return (
         <Playground
         navigation={this.props.navigation}
         onBack={this.handleBack}
         allQuests={this.state.allQuests}
         />
-      )}
-    }
-    else{
-      return (
-        <DropJourneyComponent
-          // journey={selectedJourney}
-          navigation={this.props.navigation}
-          onBack={this.handleBackDrop}
-        />
-      );
+      )}if(!this.state.showIcons){
+        return (
+          <DropJourneyComponent
+            navigation={this.props.navigation}
+            onBack={this.handleBackDrop}
+            incompleteJourney={this.state.incompleteJourney}
+          />
+        );
+      }
     }
     
   }
+
+  const MIStyles = StyleSheet.create({
+    MIContainer: {
+      flex: 1,
+      alignItems: "center",
+      backgroundColor: "#ffffdc",
+    },
+    MITextContainer: {
+      marginHorizontal: 10,
+      marginTop: 10,
+    },
+    MIDescriptionText: {
+      fontSize: 20,
+      textAlign: "center",
+    },
+    MIPicture: {
+      width: "100%",
+      height: 200,
+    },
+    MIPictureContainer: {
+      flexDirection: "row",
+      justifyContent: "center",
+      margin: 10,
+    },
+    MIButtonContainer: {
+      // justifyContent: "center",
+      marginBottom: 15,
+      flex: 1,
+      justifyContent: "flex-end",
+    },
+    MIButton: {
+      borderWidth: 1,
+      borderRadius: 10,
+      borderColor: "blue",
+    },
+  });
 
 const styles = StyleSheet.create({
   container: {

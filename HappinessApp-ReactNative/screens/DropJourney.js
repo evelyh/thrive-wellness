@@ -13,47 +13,6 @@ import {
 class DropJourneyComponent extends Component {
     static contextType = NetworkContext;
 
-    state = {
-        // A list of journeys that are in progress
-        incompleteJourney: [],
-    };
-
-    getJourneys = async () => {
-        const incomplete = await this.context.getIncompleteJourney();
-        console.log(incomplete);
-        if(incomplete !== null){
-            if(incomplete.length == 1){
-            this.setState({
-                incompleteJourney: [{
-                description: incomplete[0].description,
-                id: incomplete[0].id,
-                media: incomplete[0].media,
-                name: incomplete[0].name,
-                quests: incomplete[0].quests
-                }]
-            });
-            }
-            if(incomplete.length == 2){
-            this.setState({
-                incompleteJourney: [
-                {
-                    description: incomplete[0].description,
-                    id: incomplete[0].id,
-                    media: incomplete[0].media,
-                    name: incomplete[0].name,
-                    quests: incomplete[0].quests
-                },
-                {
-                description: incomplete[1].description,
-                id: incomplete[1].id,
-                media: incomplete[1].media,
-                name: incomplete[1].name,
-                quests: incomplete[1].quests
-                }]
-            });
-            }
-        }
-    };
 
     handleJourneyDrop = async(item) => {
         const resp = await this.context.dropJourney(item.id);
@@ -78,7 +37,7 @@ class DropJourneyComponent extends Component {
 
     componentDidMount() {
         this._unsubscribe = this.props.navigation.addListener("focus", () => {
-          this.getJourneys();
+
         });
     }
 
@@ -120,7 +79,7 @@ class DropJourneyComponent extends Component {
                     </Text>
                     <FlatList
                         nestedScrollEnabled
-                        data={this.state.incompleteJourney}
+                        data={this.props.incompleteJourney}
                         keyExtractor={(item) => item.name}
                         renderItem={this.renderItem}
                     />

@@ -61,7 +61,7 @@ export default class Playground extends React.Component{
                 contentStyle={{ minHeight: 50 }}
                 labelStyle={{ fontSize: 18, color: "#486b45"}}
                 onPress={() => this.props.onBack()}>
-                    Back to Daily Quest screen
+                    Back to Daily Quest
                 </Button>
             </View>
             </SafeAreaView>
