@@ -23,17 +23,17 @@ class JourneyTreeComponent extends Component {
     updated: false,
   };
 
-  handleJourneyTap = (quest, journey) => {
-    console.log(quest);
-    this.props.navigation.navigate("Quest", {q: quest, j: journey});
-  };
+  // handleJourneyTap = (quest, journey) => {
+  //   console.log(quest);
+  //   this.props.navigation.navigate("Quest", {q: quest, j: journey});
+  // };
 
-  onSelect = (quest, journey) => {
-    setTimeout(() => {
-      this.setState({ updated: false });
-    }, 2000);
-    this.props.navigation.navigate("Quest", { q: quest, j: journey });
-  };
+  // onSelect = (quest, journey) => {
+  //   setTimeout(() => {
+  //     this.setState({ updated: false });
+  //   }, 2000);
+  //   this.props.navigation.navigate("Quest", { q: quest, j: journey });
+  // };
 
   getQuestProgress = async () => {
     const { journey } = this.props;
@@ -149,15 +149,12 @@ class JourneyTreeComponent extends Component {
                 </Text>
 
             </View>
-            {this.state.completedQuests !== 'undefined' &&
-            this.state.completedQuests.length > 0 && (
               <FlatList
               nestedScrollEnabled
               data={journey.quests}
               keyExtractor={(item) => item.name}
               renderItem={this.renderItem}
-            />)
-            }
+            />
             
           <Button
             mode="contained"

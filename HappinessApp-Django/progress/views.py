@@ -43,7 +43,7 @@ def check_third_journey(request, jid):
         if len(jlist) == 2 and jid not in jlist:
             return Response({"success": "Failure"})
     return Response({"success": "Success"})
-
+    
 @api_view(['POST'])
 def complete_quest(request, qid):
     user = request.user

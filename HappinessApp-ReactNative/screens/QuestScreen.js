@@ -39,16 +39,16 @@ export default class QuestScreen extends React.Component {
             source={{uri: 'http://localhost:8000/'+ quest.media, }}
             />
           )}
-          {quest.media == null && journey.media &&(
-            <Image
-              style={styles.image}
-              source={{uri: 'http://localhost:8000/'+ journey.media, }}
-            />
-          )}
           {quest.media == null && (journey == null || journey.media == null) &&(
             <Image
             style={styles.image}
             source={require('../assets/placeholder_journey_image.png')}
+            />
+          )}
+          {quest.media == null && journey && journey.media &&(
+            <Image
+              style={styles.image}
+              source={{uri: 'http://localhost:8000/'+ journey.media, }}
             />
           )}
           {quest.video != '' && (
