@@ -22,7 +22,7 @@ export default class DailyQuestScreen extends React.Component {
     completedQuests: [],
     incompleteJourney:[], // This is a list of journeys in progress
     showPlayground: false,
-    showIcons: false,
+    showIcons: true,
   };
 
   getJourneys = async () => {
@@ -163,7 +163,7 @@ export default class DailyQuestScreen extends React.Component {
 
   render() {
     //const { name } = this.props.route.params; // Get name from params which comes from the navigate function from LogIn.js
-    if(this.state.showIcons && this.state.showPlayground){
+    if(this.state.showIcons && !this.state.showPlayground){
       if(this.state.incompleteJourney.length === 0){
         return (
           <SafeAreaView style={styles.container}>
@@ -171,7 +171,9 @@ export default class DailyQuestScreen extends React.Component {
             <View style={ButtonStyles.no_quest_home_buttons}>
               <Button
                 mode="contained"
-                onPress={() => this.handlePlayground()} 
+                onPress={() => this.handlePlayground()}
+                style={{ alignSelf: "center", backgroundColor: "#C9DBC5" }}
+                labelStyle={{ fontSize: 18, color: "#486b45"}} 
               >
                 Go to quest playground
               </Button>
@@ -219,7 +221,7 @@ export default class DailyQuestScreen extends React.Component {
               style={{ alignSelf: "center", backgroundColor: "#C9DBC5" }}
               labelStyle={{ fontSize: 18, color: "#486b45"}}
             >
-              Drop a journey
+              Drop A Journey
             </Button>
             <Button
               mode="contained"
@@ -232,25 +234,24 @@ export default class DailyQuestScreen extends React.Component {
           </View>
         </SafeAreaView>
       );
-    }if(!this.state.showPlayground){
+    }else if(this.state.showPlayground){
       return (
         <Playground
         navigation={this.props.navigation}
         onBack={this.handleBack}
         allQuests={this.state.allQuests}
         />
-      )}if(!this.state.showIcons){
-        return (
-          <DropJourneyComponent
-            navigation={this.props.navigation}
-            onBack={this.handleBackDrop}
-            incompleteJourney={this.state.incompleteJourney}
-          />
-        );
-      }
+    )}else if(!this.state.showIcons){
+      return (
+        <DropJourneyComponent
+          incompleteJourney={this.state.incompleteJourney}
+          navigation={this.props.navigation}
+          onBack={this.handleBackDrop}
+        />
+      );
     }
-    
   }
+}
 
   const MIStyles = StyleSheet.create({
     MIContainer: {
@@ -361,8 +362,45 @@ const cardStyles = StyleSheet.create({
     margin: 10,
     marginHorizontal: 10,
     padding: 10,
-    shadowRadius: 4,
+    shadowRadius: 15,
     backgroundColor: "#edf7f5",
     elevation: 4,
+    minWidth: "90%",
+  },
+});
+
+const MIStyles = StyleSheet.create({
+  MIContainer: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#ffffdc",
+  },
+  MITextContainer: {
+    marginHorizontal: 10,
+    marginTop: 10,
+  },
+  MIDescriptionText: {
+    fontSize: 20,
+    textAlign: "center",
+  },
+  MIPicture: {
+    width: "100%",
+    height: 200,
+  },
+  MIPictureContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    margin: 10,
+  },
+  MIButtonContainer: {
+    // justifyContent: "center",
+    marginBottom: 15,
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  MIButton: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "blue",
   },
 });
