@@ -55,7 +55,7 @@ def register(request):
         send_mail(mail_subject, message, 'bellwoodspw@gmail.com', [to_email])
         return Response({"response" : 'Please confirm your email address to complete the registration'})
     else:
-        return
+        return Response({"response" : 'Unsuccessful'})
   
 
 def activate(request, uidb64, token):
@@ -87,7 +87,7 @@ def send_buddy_request(request):
     for friend in fu.buddy.all():
         if friend.username == t:
             return Response({"response" : 'Already buddy!'})
-    if User.objects.filter(username=t):
+    if User.objects.filter(username=t).count() > 0:
         tu = User.objects.get(username=t)
         if tu != fu:
             if Buddy_Request.objects.filter(from_user=fu, to_user=tu):
