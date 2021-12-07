@@ -90,6 +90,13 @@ def quest(request, qid):
 
 @api_view(['GET'])
 @permission_classes(())
+def all_quests(request):
+    quests = Quest.objects.all()
+    data = QuestSerializer(instance=quests, many=True).data
+    return Response(data)
+
+@api_view(['GET'])
+@permission_classes(())
 def re_order(request, jid):
     j = Journey.objects.get(id=jid)
     lst = j.quests.all()

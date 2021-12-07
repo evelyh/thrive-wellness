@@ -56,11 +56,6 @@ class JourneyTreeComponent extends Component {
   }
 
   componentDidMount = async () => {
-    // const { journey } = this.props;
-    // const journeyProgress = await this.context.getJourneyProgress(journey.id);
-    // this.setState({
-    //   completedQuests: journeyProgress.completed,
-    // });
     this._unsubscribe = this.props.navigation.addListener("focus", () =>
       this.getQuestProgress()
     );

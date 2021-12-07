@@ -7,6 +7,7 @@ urlpatterns = [
      path('<int:jid>/quests/', views.quests, name="api-quests"),
      path('<int:jid>/quests/<int:qid>/', views.quest,
          name="api-quest"),
-     path('<int:jid>/reorder-quests', views.re_order,
+     path('<int:jid>/reorder-quests/', views.re_order,
          name="api-re-order"),
+     path('allquests/', views.all_quests, name="api-all-quests"),
 ]

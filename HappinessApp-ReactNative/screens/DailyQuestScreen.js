@@ -1,6 +1,7 @@
 import "react-native-gesture-handler";
 import React from "react";
 import JourneyCardComponent from "./journey_components/JourneyCard";
+import PlaygroundComponent from "./"
 import {
   StyleSheet,
   Text,
@@ -134,8 +135,9 @@ export default class DailyQuestScreen extends React.Component {
           <Button
             mode="contained"
             onPress={() => this.props.navigation.navigate("Playground", {})}
+            style={{height: 50}}
           >
-            Not feeling it? Go to quest playground
+            Go to quest playground
           </Button>
         </View>
       </SafeAreaView>
