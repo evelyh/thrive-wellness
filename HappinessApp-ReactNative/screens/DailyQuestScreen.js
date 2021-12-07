@@ -1,7 +1,5 @@
 import "react-native-gesture-handler";
 import React from "react";
-import JourneyCardComponent from "./journey_components/JourneyCard";
-import PlaygroundComponent from "./"
 import {
   StyleSheet,
   Text,

@@ -1,14 +1,53 @@
-import React from "react";
-import { SafeAreaView } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import React, { Component } from "react";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  SafeAreaView,
+} from "react-native";
 import { NetworkContext } from "../contexts/Networking";
 
-class PlaygroundComponent extends Component{
+export default class Playground extends React.Component{
     static contextType = NetworkContext;
 
     state = {
         quests: [],
     };
+
+
+  handleJourneyTap = (quest, journey) => {
+    console.log(quest);
+    this.props.navigation.navigate("Quest", {q: quest, j: journey});
+  };
+
+  onSelect = (quest, journey) => {
+    setTimeout(() => {
+      this.setState({ updated: false });
+    }, 2000);
+    this.props.navigation.navigate("Quest", { q: quest, j: journey });
+  };
+
+  getQuestProgress = async () => {
+    const { journey } = this.props;
+    console.log(journey);
+    const journeyProgress = await this.context.getJourneyProgress(journey.id);
+    console.log(journeyProgress);
+    this.setState({
+      completedQuests: journeyProgress.completed,
+    });
+  };
+
+  doQuest = async(item) =>{
+    const resp = await this.context.checkThirdJourney(this.props.journey.id);
+    if (resp != null){
+      this.props.navigation.navigate("Quest", {
+      quest: item,
+      journey: this.props.journey
+      }
+      );
+    };
+  }
+
 
     getQuests = async() => {
         const response = await this.context.getAllQuests();
@@ -57,7 +96,7 @@ class PlaygroundComponent extends Component{
             <View style={MIStyles.MIContainer}>
                 <FlatList
                 nestedScrollEnabled
-                data={}
+                data={this.quests}
                 keyExtractor = {(item) => item.name}
                 renderItem={this.renderItem}
                 ></FlatList>
@@ -202,5 +241,3 @@ const styles = StyleSheet.create({
       minWidth: "90%",
     },
   });
-  
-  export default PlaygroundComponent;
