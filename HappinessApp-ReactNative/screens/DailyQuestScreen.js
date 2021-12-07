@@ -31,21 +31,27 @@ export default class DailyQuestScreen extends React.Component {
 
   getJourneys = async () => {
     const incomplete = await this.context.getIncompleteJourney();
-    if(incomplete != null){
-      const journeyProgress = await this.context.getJourneyProgress(incomplete.id);
-      this.setState({
-        incompleteJourney: {
-          description: incomplete.description,
-          id: incomplete.id,
-          media: incomplete.media,
-          name: incomplete.name,
-          quests: incomplete.quests
-        }
-      });
-      console.log(this.state.incompleteJourney);
-      this.setState({
-        completedQuests: journeyProgress.completed,
-      });
+    console.log(incomplete);
+    if(incomplete !== null){
+      if(incomplete.length==1){
+        const journeyProgress = await this.context.getJourneyProgress(incomplete[0].id);
+        this.setState({
+          incompleteJourney: [{
+            description: incomplete[0].description,
+            id: incomplete[0].id,
+            media: incomplete[0].media,
+            name: incomplete[0].name,
+            quests: incomplete[0].quests
+          }]
+        });
+        console.log(this.state.incompleteJourney);
+        this.setState({
+          completedQuests: journeyProgress.completed,
+        });
+      }
+      if(incomplete.length == 2){
+
+      }
     }
   };
 
@@ -105,9 +111,22 @@ export default class DailyQuestScreen extends React.Component {
   render() {
     //const { name } = this.props.route.params; // Get name from params which comes from the navigate function from LogIn.js
     const { quests } = this.state.incompleteJourney;
-    if(this.state.incompleteJourney.name == ""){
+    console.log(this.state.incompleteJourney.length);
+    if(this.state.incompleteJourney.length === 0){
     //if (Object.keys(this.state.journey).length == 0) {
-      return <Title style={QuestListStyles.title}>No Quest</Title>;
+      return (
+        <SafeAreaView style={styles.container}>
+          <Title style={QuestListStyles.title}>No Quest</Title>
+          <View style={ButtonStyles.no_quest_home_buttons}>
+            <Button
+              mode="contained"
+              onPress={() => this.props.navigation.navigate("Playground", {})}
+            >
+              Go to quest playground
+            </Button>
+          </View>
+        </SafeAreaView>
+      );
     }
     return (
       <SafeAreaView style={styles.container}>
@@ -224,6 +243,13 @@ const ButtonStyles = StyleSheet.create({
     marginVertical: 10,
     width: "80%",
     alignSelf: "center",
+  },
+  no_quest_home_buttons: {
+    marginVertical: 10,
+    width: "80%",
+    alignSelf: "center",
+    position: "absolute",
+    bottom: 10,
   },
 });
 

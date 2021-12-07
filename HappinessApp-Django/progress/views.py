@@ -17,8 +17,8 @@ def progress(request, jid):
     completed_quests = []
     skipped_quests = []
 
-    for quest in quests:
-        qset = Progress.objects.filter(user=user, quest=quest, journey=journey)
+    for quest in q:
+        qset = Progress.objects.filter(user=user, quest=quest)
         if qset:
             cquest = qset.first()
             if cquest.progress == 1:
@@ -114,16 +114,19 @@ def incomplete_journey(request):
     incomplete_journey = []
     # complete_journey = []
 
-    incompleted = []
     #completed journeys
     completed = []
     for journey in journeys:
-        quests = journey.quests.all()
-        q = QuestSerializer(quests, many=True).data
+        q = journey.quests.all()
+        # quests = []
+        # for qid in q:
+        #     quests.append(Quest.objects.get(id = qid))
+        
+        quests = QuestSerializer(q, many=True).data
         data = JourneySerializer(instance=journey).data
-        data['quests'] = q
+        data['quests'] = quests
         incomplete = False
-        for quest in quests:
+        for quest in q:
             qset = Progress.objects.filter(user=user, quest=quest, journey=journey)
             if not qset:
                 incomplete = True
@@ -138,18 +141,24 @@ def incomplete_journey(request):
         # complete_journey.append(data)
 
     # incompleted journeys
+    incompleted = []
     for j in journeys:
         if(j not in completed):
             incompleted.append(j)
 
     for j in incompleted:
         progress = False
-        quests = journey.quests.all()
-        quest = QuestSerializer(quests, many=True).data
-        data = JourneySerializer(instance=journey).data
-        data['quests'] = quest
-        for q in quests:
-            qset = Progress.objects.filter(user=user, quest=q, journey=data)
+        q = j.quests.all()
+        quests = QuestSerializer(q, many=True).data
+        data = JourneySerializer(instance=j).data
+        data['quests'] = quests
+
+        # quests = []
+        # for qid in q:
+        #     quests.append(Quest.objects.get(id = qid))
+
+        for quest in q:
+            qset = Progress.objects.filter(user=user, quest=quest, journey=j)
             if qset:
                 progress = True
                 break

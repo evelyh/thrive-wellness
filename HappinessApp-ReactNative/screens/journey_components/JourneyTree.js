@@ -23,20 +23,21 @@ class JourneyTreeComponent extends Component {
     updated: false,
   };
 
-  // handleJourneyTap = (quest, journey) => {
-  //   console.log(quest);
-  //   this.props.navigation.navigate("Quest", {q: quest, j: journey});
-  // };
+  handleJourneyTap = (quest, journey) => {
+    console.log(quest);
+    this.props.navigation.navigate("Quest", {q: quest, j: journey});
+  };
 
-  // onSelect = (quest, journey) => {
-  //   setTimeout(() => {
-  //     this.setState({ updated: false });
-  //   }, 2000);
-  //   this.props.navigation.navigate("Quest", { q: quest, j: journey });
-  // };
+  onSelect = (quest, journey) => {
+    setTimeout(() => {
+      this.setState({ updated: false });
+    }, 2000);
+    this.props.navigation.navigate("Quest", { q: quest, j: journey });
+  };
 
   getQuestProgress = async () => {
     const { journey } = this.props;
+    console.log(journey);
     const journeyProgress = await this.context.getJourneyProgress(journey.id);
     console.log(journeyProgress);
     this.setState({
@@ -56,6 +57,11 @@ class JourneyTreeComponent extends Component {
   }
 
   componentDidMount = async () => {
+    const { journey } = this.props;
+    const journeyProgress = await this.context.getJourneyProgress(journey.id);
+    this.setState({
+      completedQuests: journeyProgress.completed,
+    });
     this._unsubscribe = this.props.navigation.addListener("focus", () =>
       this.getQuestProgress()
     );
@@ -143,12 +149,16 @@ class JourneyTreeComponent extends Component {
                 </Text>
 
             </View>
-            <FlatList
-						nestedScrollEnabled
-            data={journey.quests}
-            keyExtractor={(item) => item.name}
-            renderItem={this.renderItem}
-          />
+            {this.state.completedQuests !== 'undefined' &&
+            this.state.completedQuests.length > 0 && (
+              <FlatList
+              nestedScrollEnabled
+              data={journey.quests}
+              keyExtractor={(item) => item.name}
+              renderItem={this.renderItem}
+            />)
+            }
+            
           <Button
             mode="contained"
             style={{ alignSelf: "center", backgroundColor: "#C9DBC5" }}
