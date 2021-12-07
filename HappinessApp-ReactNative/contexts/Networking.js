@@ -83,20 +83,13 @@ export class NetworkContextProvider extends React.Component {
     try {
       let fetchResponse = await fetch(url + "/api/auth/register/", data);
       let respJson = await fetchResponse.json();
-      this.registerSuccessAlert();
-      // if (respJson.token) {
-      //   this.setState({
-      //     token: respJson.token,
-      //     isAuthenticated: true,
-      //   });
-      //   await this.setToken(respJson.token);
-      //   this.checkIfAdmin();
-      //   this.getUserMeta();
-      //   registerForPushNotificationsAsync();
-      // }
+      if (respJson.response == "Unsuccessful") {
+        this.registerFailAlert();
+      } else {
+        this.registerSuccessAlert();
+      }
     } catch (e) {
       console.log(e);
-      this.registerFailAlert();
     }
   };
 
@@ -358,10 +351,19 @@ export class NetworkContextProvider extends React.Component {
           data
         );
         let respJson = await fetchResponse.json();
-        this.buddyRequestSuccessAlert();
+        if (respJson.response == "Buddy request sent!") {
+          this.buddyRequestSuccessAlert();
+        } else if (respJson.response == "Same User") {
+          this.SameNameAlert();
+        } else if (respJson.response == "Already buddy!") {
+          this.alreadyBuddyRequestSuccessAlert();
+        } else if (respJson.response == "No such user") {
+          this.noUserAlert();
+        } else if (respJson.response == "Buddies") {
+          this.nowBuddiesAlert();
+        }
       } catch (e) {
         console.log(e);
-        this.registerFailAlert();
       }
     }
   };
@@ -521,6 +523,37 @@ export class NetworkContextProvider extends React.Component {
     );
   };
 
+  alreadyBuddyRequestSuccessAlert = () => {
+    Alert.alert("Already Buddies", "You two are already buddies!", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
+  noUserAlert = () => {
+    Alert.alert("Buddy Request Unsuccessful", "The user does not exist", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
+  nowBuddiesAlert = () => {
+    Alert.alert(
+      "Buddy Request Successful",
+      "Your buddy also sent you a buddy request so you two are officially buddy!",
+      [
+        {
+          text: "Close",
+          style: "cancel",
+        },
+      ]
+    );
+  };
+
   SameNameAlert = () => {
     Alert.alert(
       "Buddy Request Unsuccessful",
@@ -573,6 +606,9 @@ export class NetworkContextProvider extends React.Component {
           registerSuccessAlert: this.registerSuccessAlert,
           buddyRequestSuccessAlert: this.buddyRequestSuccessAlert,
           SameNameAlert: this.SameNameAlert,
+          nowBuddiesAlert: this.nowBuddiesAlert,
+          noUserAlert: this.noUserAlert,
+          alreadyBuddyRequestSuccessAlert: this.alreadyBuddyRequestSuccessAlert,
           fetchBuddyRequest: this.fetchBuddyRequest,
           fetchBuddy: this.fetchBuddy,
         }}
