@@ -13,6 +13,10 @@ import {
 class DropJourneyComponent extends Component {
     static contextType = NetworkContext;
 
+    state = {
+      incompleteJourney: this.props.incompleteJourney,
+    };
+
 
     handleJourneyDrop = async(item) => {
         const resp = await this.context.dropJourney(item.id);
@@ -76,12 +80,13 @@ class DropJourneyComponent extends Component {
                     <Text style={styles.Heading}>
                         Current Journeys
                     </Text>
-                    <FlatList
-                        nestedScrollEnabled
-                        data={this.props.incompleteJourney}
-                        keyExtractor={(item) => item.name}
-                        renderItem={this.renderItem}
+                      <FlatList
+                      nestedScrollEnabled
+                      data={this.props.incompleteJourney}
+                      keyExtractor={(item) => item.name}
+                      renderItem={this.renderItem}
                     />
+                    
                     <Button
                         mode="contained"
                         style={{ alignSelf: "center", backgroundColor: "#C9DBC5" }}

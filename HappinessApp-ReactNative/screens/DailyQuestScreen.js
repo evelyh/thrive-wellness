@@ -71,6 +71,11 @@ export default class DailyQuestScreen extends React.Component {
         });
       }
     }
+    if(incomplete.length == 0){
+      this.setState({
+        incompleteJourney: []
+      });
+    }
   };
 
   handleJourneyTap = (quest) => {
@@ -164,7 +169,7 @@ export default class DailyQuestScreen extends React.Component {
   render() {
     //const { name } = this.props.route.params; // Get name from params which comes from the navigate function from LogIn.js
     if(this.state.showIcons && !this.state.showPlayground){
-      if(this.state.incompleteJourney.length === 0){
+      if(this.state.incompleteJourney.length == 0){
         return (
           <SafeAreaView style={styles.container}>
             <Title style={QuestListStyles.title}>No Quest</Title>
@@ -190,9 +195,6 @@ export default class DailyQuestScreen extends React.Component {
             {this.state.incompleteJourney.length >= 1 &&
             <Title style={QuestListStyles.title}>{this.state.incompleteJourney[0].name}</Title>
             }
-            {this.state.incompleteJourney.length == 2 &&
-            <Title style={QuestListStyles.title}>{this.state.incompleteJourney[1].name}</Title>
-            }
           </View >
           {this.state.incompleteJourney.length == 1 &&
             <View style={MIStyles.MIContainer}>
@@ -208,12 +210,28 @@ export default class DailyQuestScreen extends React.Component {
             <View style={MIStyles.MIContainer}>
               <FlatList
                 nestedScrollEnabled
-                data={quests.concat(this.state.incompleteJourney[1].quests)}
+                data={quests}
                 keyExtractor={(item) => item.name}
                 renderItem={this.renderItem}
               />
             </View>
           }
+          <View>
+            {this.state.incompleteJourney.length == 2 &&
+            <Title style={QuestListStyles.title}>{this.state.incompleteJourney[1].name}</Title>
+            }
+          </View>
+          {this.state.incompleteJourney.length == 2 &&
+            <View style={MIStyles.MIContainer}>
+              <FlatList
+                nestedScrollEnabled
+                data={this.state.incompleteJourney[1].quests}
+                keyExtractor={(item) => item.name}
+                renderItem={this.renderItem}
+              />
+            </View>
+          }
+          
           <View style={ButtonStyles.home_primary_buttons}>
           <Button
               mode="contained"
