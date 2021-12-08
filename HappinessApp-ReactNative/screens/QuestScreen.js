@@ -31,7 +31,7 @@ export default class QuestScreen extends React.Component {
     const{ journey } = this.props.route.params;
 
     return (
-      <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container}>
         <View style={styles.view1}>
         {quest.media && (
             <Image
@@ -39,16 +39,16 @@ export default class QuestScreen extends React.Component {
             source={{uri: 'http://localhost:8000/'+ quest.media, }}
             />
           )}
-          {quest.media == null && journey.media &&(
-            <Image
-              style={styles.image}
-              source={{uri: 'http://localhost:8000/'+ journey.media, }}
-            />
-          )}
           {quest.media == null && (journey == null || journey.media == null) &&(
             <Image
             style={styles.image}
             source={require('../assets/placeholder_journey_image.png')}
+            />
+          )}
+          {quest.media == null && journey && journey.media &&(
+            <Image
+              style={styles.image}
+              source={{uri: 'http://localhost:8000/'+ journey.media, }}
             />
           )}
           {quest.video != '' && (
@@ -89,6 +89,7 @@ export default class QuestScreen extends React.Component {
               this.props.navigation.navigate("Feedback", {
                 answer: this.state.answer,
                 quest: quest,
+                journey: journey,
               });
             }}
           >

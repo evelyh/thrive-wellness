@@ -13,4 +13,7 @@ urlpatterns = [
     path('submit-quests', views.submit_quests, name="api-submit-quests"),
     path('submit-journeys/<int:jid>', views.update_user_journey, name="api-update-user-journey"),
     path('submit-quests/<int:qid>', views.update_user_quest, name="api-update-user-quest"),
+    path('<int:jid>/reorder-quests/', views.re_order,
+         name="api-re-order"),
+    path('allquests/', views.all_quests, name="api-all-quests"),
 ]

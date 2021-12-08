@@ -14,14 +14,9 @@ export const NetworkContext = React.createContext({
   signOut: () => {},
   loadToken: () => {},
   // Cached data and methods to retrieve it
-  incompleteJourney: {
-    description: "",
-    id: null,
-    media: null,
-    name: "",
-    quests: []
-  },
   journeys: [],
+  buddies: "",
+  buddy_requests: "",
   userInfo: {
     firstname: "",
     lastname: "",
@@ -36,6 +31,15 @@ export const NetworkContext = React.createContext({
 
   // Methods to complete a quest
   completeQuest: () => {},
+  checkThirdJourney: () => {},
+  dropJourney: () => {},
+
+  getAllQuests: () => {},
+  
+  // BuddyRequest
+  sendBuddyRequest: () => {},
+  acceptBuddyRequest: () => {},
+  rejectBuddyRequest: () => {},
 
   // submit a journey or quest
   uploadJourney: () => {},
@@ -46,7 +50,9 @@ export const NetworkContext = React.createContext({
   displayInvalidInfoAlert: () => {},
 });
 
-const url = "http://localhost:8000";
+
+const url = "https://intezzz.pythonanywhere.com/";
+
 
 export class NetworkContextProvider extends React.Component {
   state = {
@@ -54,7 +60,7 @@ export class NetworkContextProvider extends React.Component {
     isAuthenticated: false,
     isLoading: true,
     isAdmin: false,
-
+    username: "",
     journeys: [],
     incompleteJourney: {
       description: "",
@@ -63,6 +69,10 @@ export class NetworkContextProvider extends React.Component {
       name: "",
       quests: []
     },
+
+    buddies: [],
+    buddy_requests: [],
+
     userInfo: {
       firstname: "",
       lastname: "",
@@ -92,19 +102,20 @@ export class NetworkContextProvider extends React.Component {
     try {
       let fetchResponse = await fetch(url + "/api/auth/register/", data);
       let respJson = await fetchResponse.json();
-      if (respJson.token) {
-        this.setState({
-          token: respJson.token,
-          isAuthenticated: true,
-        });
-        await this.setToken(respJson.token);
-        this.checkIfAdmin();
-        this.getUserMeta();
-        registerForPushNotificationsAsync();
-      }
+      this.registerSuccessAlert();
+      // if (respJson.token) {
+      //   this.setState({
+      //     token: respJson.token,
+      //     isAuthenticated: true,
+      //   });
+      //   await this.setToken(respJson.token);
+      //   this.checkIfAdmin();
+      //   this.getUserMeta();
+      //   registerForPushNotificationsAsync();
+      // }
     } catch (e) {
       console.log(e);
-      this.displayNoConnectionAlert();
+      this.registerFailAlert();
     }
   };
 
@@ -131,6 +142,7 @@ export class NetworkContextProvider extends React.Component {
         this.setState({
           token: respJson.token,
           isAuthenticated: true,
+          username: login,
         });
         await this.setToken(respJson.token);
         this.checkIfAdmin();
@@ -138,6 +150,7 @@ export class NetworkContextProvider extends React.Component {
         registerForPushNotificationsAsync();
       } else {
         console.log("Authentication Failed!");
+        this.WrongPasswordAlert();
       }
     } catch (e) {
       this.displayNoConnectionAlert();
@@ -150,6 +163,9 @@ export class NetworkContextProvider extends React.Component {
       token: null,
       isAuthenticated: false,
       isAdmin: false,
+      username: "",
+      buddies: [],
+      buddy_requests: [],
     });
 
     await this.removeToken();
@@ -272,15 +288,15 @@ export class NetworkContextProvider extends React.Component {
     let fetchResponse = await fetch(url + "/api/progress/incompleteJourney/", data);
     if(fetchResponse == null) {return null;}
     let respJson = await fetchResponse.json();
-    this.setState({
-      incompleteJourney: {
-        description: respJson.description,
-        id: respJson.id,
-        media: respJson.media,
-        name: respJson.name,
-        quests: respJson.quests
-      }
-    });
+    // this.setState({
+    //   incompleteJourney: {
+    //     description: respJson.description,
+    //     id: respJson.id,
+    //     media: respJson.media,
+    //     name: respJson.name,
+    //     quests: respJson.quests
+    //   }
+    // });
     return respJson;
   } catch (e) {
     console.log(e);
@@ -351,7 +367,12 @@ export class NetworkContextProvider extends React.Component {
         data
       );
       const respJson = await fetchResponse.json();
-      return respJson;
+      this.displayDropJourneyAlert();
+      if (respJson.success == "Success") {
+        return respJson;
+      }else{
+        return null;
+      }
     } catch (e) {
       console.log(e);
       this.displayNoConnectionAlert();
@@ -361,6 +382,7 @@ export class NetworkContextProvider extends React.Component {
 
   // Set a particular quest to be complete with given id
   completeQuest = async (
+    journeyId,
     questId,
     answer,
     feelingRating,
@@ -375,6 +397,7 @@ export class NetworkContextProvider extends React.Component {
         Authorization: "Token " + this.state.token,
       },
       body: JSON.stringify({
+        jid: journeyId,
         answer: answer,
         feeling_rating: feelingRating,
         quest_rating: questRating,
@@ -440,6 +463,79 @@ export class NetworkContextProvider extends React.Component {
     }
   };
 
+  
+  checkThirdJourney = async (jid) => {
+    const data = {
+      method: "GET",
+      headers:{
+        Authorization: "Token " + this.state.token,
+      }
+    };
+    try{
+      let fetchResponse = await fetch(
+        url + "/api/progress/checkThirdJourney/" + jid + "/", data
+      );
+      const respJson = await fetchResponse.json();
+      if(respJson.success == "Failure"){
+        this.displayThirdJourneyAlert();
+        return null;
+      }
+      return respJson;
+    } catch(e){
+      console.log(e);
+      this.displayNoConnectionAlert();
+      return null;
+    }
+  };
+
+  getAllQuests = async () => {
+    const data = {
+      method: "GET",
+    };
+    try{
+      let fetchResponse = await fetch(
+        url + "/api/journeys/allquests/", data
+      );
+      const respJson = await fetchResponse.json();
+      return respJson;
+    } catch(e){
+      console.log(e);
+      this.displayNoConnectionAlert();
+      return null;
+      };
+  };
+
+  sendBuddyRequest = async (buddy) => {
+    const data = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+         Authorization: null,
+      },
+      body: JSON.stringify({
+        from: this.state.username,
+        to: buddy,
+      }),
+    };
+    if (buddy == this.state.username) {
+      this.SameNameAlert();
+    } else {
+      try {
+        let fetchResponse = await fetch(
+          url + "/api/auth/send_buddy_request/",
+          data
+        );
+        let respJson = await fetchResponse.json();
+        this.buddyRequestSuccessAlert();
+      } catch (e) {
+        console.log(e);
+        this.registerFailAlert();
+      }
+    }
+  };
+
+
   // submit quest
   submitQuest = async (
       quests,
@@ -475,6 +571,102 @@ export class NetworkContextProvider extends React.Component {
       console.log(e);
       this.displayInvalidInfoAlert();
       return [];
+    }
+  };
+
+  acceptBuddyRequest = async (buddy) => {
+    const data = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: null,
+      },
+      body: JSON.stringify({
+        from: buddy,
+        to: this.state.username,
+      }),
+    };
+    try {
+      let fetchResponse = await fetch(
+        url + "/api/auth/accept_buddy_request/",
+        data
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  rejectBuddyRequest = async (buddy) => {
+    const data = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: null,
+      },
+      body: JSON.stringify({
+        from: buddy,
+        to: this.state.username,
+      }),
+    };
+    try {
+      let fetchResponse = await fetch(
+        url + "/api/auth/reject_buddy_request/",
+        data
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  fetchBuddyRequest = async () => {
+    const data = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: null,
+      },
+      body: JSON.stringify({
+        user: this.state.username,
+      }),
+    };
+    try {
+      fetch(url + "/api/auth/fetch_buddy_request/", data)
+        .then((response) => response.json())
+        .then((data) => {
+          this.setState({
+            buddy_requests: data.requests,
+          });
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  fetchBuddy = async () => {
+    const data = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: null,
+      },
+      body: JSON.stringify({
+        user: this.state.username,
+      }),
+    };
+    try {
+      fetch(url + "/api/auth/fetch_buddy/", data)
+        .then((response) => response.json())
+        .then((data) => {
+          this.setState({
+            buddies: data.requests,
+          });
+        });
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -516,6 +708,17 @@ export class NetworkContextProvider extends React.Component {
     ]);
   };
 
+      
+  WrongPasswordAlert = () => {
+    Alert.alert("Login Unsuccessful", "Wrong Username and/or Password", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
+
   displayNoDailyQuestAlert = () => {
     Alert.alert("No Daily Quests", "Please start a new journey", [
       {
@@ -525,6 +728,77 @@ export class NetworkContextProvider extends React.Component {
     ]);
   };
 
+  displayThirdJourneyAlert = () => {
+    Alert.alert("Third Journey", "You've already had two journeys in progress, please finish them before you start a new one",
+    [
+      {
+      text: "Close",
+      style: "cancel",
+      },
+    ]);
+  }
+
+  displayDropJourneyAlert = () => {
+    Alert.alert("Drop Journey", "Successfully",
+    [
+      {
+      text: "Close",
+      style: "cancel",
+      },
+    ]);
+  }
+
+  registerSuccessAlert = () => {
+    Alert.alert(
+      "Registration Successful",
+      "Please check your email inbox for a confirmation email",
+      [
+        {
+          text: "Close",
+          style: "cancel",
+        },
+      ]
+    );
+  };
+
+  registerFailAlert = () => {
+    Alert.alert(
+      "Registration Unsuccessful",
+      "An account is already registered with your email and/or username",
+      [
+        {
+          text: "Close",
+          style: "cancel",
+        },
+      ]
+    );
+  };
+
+  buddyRequestSuccessAlert = () => {
+    Alert.alert(
+      "Buddy Request Successful",
+      "An accountability buddy request has been sent!",
+      [
+        {
+          text: "Close",
+          style: "cancel",
+        },
+      ]
+    );
+  };
+
+  SameNameAlert = () => {
+    Alert.alert(
+      "Buddy Request Unsuccessful",
+      "You can't send a buddy request to yourself",
+      [
+        {
+          text: "Close",
+          style: "cancel",
+        },
+      ]
+    );
+  };
 
   render() {
     return (
@@ -538,6 +812,9 @@ export class NetworkContextProvider extends React.Component {
           signUp: this.signUp,
           signIn: this.signIn,
           signOut: this.signOut,
+          sendBuddyRequest: this.sendBuddyRequest,
+          acceptBuddyRequest: this.acceptBuddyRequest,
+          rejectBuddyRequest: this.rejectBuddyRequest,
           loadToken: this.loadToken,
           // Cached data and methods to retrieve them
           journeys: this.state.journeys,
@@ -545,6 +822,10 @@ export class NetworkContextProvider extends React.Component {
 
           getJourneys: this.getJourneys,
           getIncompleteJourney: this.getIncompleteJourney,
+
+          buddies: this.state.buddies,
+          buddy_requests: this.state.buddy_requests,
+
           // Methods to retrieve non-cached data
           getJourneyInfo: this.getJourneyInfo,
           getJourneyProgress: this.getJourneyProgress,
@@ -552,6 +833,9 @@ export class NetworkContextProvider extends React.Component {
 
           // Method to complete quest
           completeQuest: this.completeQuest,
+          checkThirdJourney: this.checkThirdJourney,
+          getAllQuests: this.getAllQuests,
+          dropJourney: this.dropJourney,
 
           // methods to submit user-defined quest / journey
           uploadJourney: this.uploadJourney,
@@ -560,6 +844,15 @@ export class NetworkContextProvider extends React.Component {
           // Alerts
           displayNoConnectionAlert: this.displayNoConnectionAlert,
           displayInvalidInfoAlert: this.displayInvalidInfoAlert,
+          displayDropJourneyAlert: this.displayDropJourneyAlert,
+          WrongPasswordAlert: this.WrongPasswordAlert,
+          registerFailAlert: this.registerFailAlert,
+          registerSuccessAlert: this.registerSuccessAlert,
+          buddyRequestSuccessAlert: this.buddyRequestSuccessAlert,
+          SameNameAlert: this.SameNameAlert,
+      
+          fetchBuddyRequest: this.fetchBuddyRequest,
+          fetchBuddy: this.fetchBuddy,
         }}
       >
         {this.props.children}
