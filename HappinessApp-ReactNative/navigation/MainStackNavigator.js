@@ -86,7 +86,7 @@ export class MainStackNavigator extends React.Component {
         })}
       >
           <Tab.Screen
-              name="Create your own"
+              name="Submit"
               component={SubmitQuest}
               options={{
                   title: "Create your own",
