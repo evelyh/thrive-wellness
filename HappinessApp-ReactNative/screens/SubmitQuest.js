@@ -5,7 +5,7 @@ import {
   View,
   Text,
   Image,
-  SafeAreaView, TextInput, ScrollView, TouchableOpacity,
+  SafeAreaView, TextInput, ScrollView, TouchableOpacity, Alert,
 } from "react-native";
 
 import { NetworkContext } from "../contexts/Networking";
@@ -68,7 +68,18 @@ export default class SubmitQuest extends React.Component {
     }
   }
 
+  displayInstructionAlert = () => {
+    Alert.alert("Create your own journeys and quests!", "You can submit journeys and quests you design here! " +
+        "Your suggested quests and journeys will be evaluated by admin, and they will contact you if needed.", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
   render() {
+    this.displayInstructionAlert();
     return(
       <SafeAreaView style={styles.container}>
         <ScrollView>

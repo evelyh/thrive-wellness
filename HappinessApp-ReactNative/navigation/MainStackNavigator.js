@@ -87,12 +87,11 @@ export class MainStackNavigator extends React.Component {
           },
         })}
       >
-
-        <Tab.Screen
+          <Tab.Screen
               name="Submit"
               component={SubmitQuest}
               options={{
-                  title: "Submit Quests",
+                  title: "Create your own",
               }}
           />
         <Tab.Screen name="Journey" component={JourneyScreen} />
