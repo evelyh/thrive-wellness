@@ -37,6 +37,7 @@ class JourneyTreeComponent extends Component {
 
   getQuestProgress = async () => {
     const { journey } = this.props;
+    console.log(journey);
     const journeyProgress = await this.context.getJourneyProgress(journey.id);
     console.log(journeyProgress);
     this.setState({
@@ -44,13 +45,24 @@ class JourneyTreeComponent extends Component {
     });
   };
 
+  doQuest = async(item) =>{
+    const resp = await this.context.checkThirdJourney(this.props.journey.id);
+    if (resp != null){
+      this.props.navigation.navigate("Quest", {
+      quest: item,
+      journey: this.props.journey
+      }
+      );
+    };
+  }
+
   componentDidMount = async () => {
-    // const { journey } = this.props;
-    // const journeyProgress = await this.context.getJourneyProgress(journey.id);
-    // this.setState({
-    //   completedQuests: journeyProgress.completed,
-    // });
-    this._unsubscribe = this.props.navigation.addListener("didFocus", () =>
+    const { journey } = this.props;
+    const journeyProgress = await this.context.getJourneyProgress(journey.id);
+    this.setState({
+      completedQuests: journeyProgress.completed,
+    });
+    this._unsubscribe = this.props.navigation.addListener("focus", () =>
       this.getQuestProgress()
     );
   };
@@ -87,13 +99,8 @@ class JourneyTreeComponent extends Component {
         style={{ margin: 0, padding: 0, justifyContent: "flex-end" }}
       >
         <Button
-          labelStyle={{ fontSize: 16 }}
-          onPress={() => {
-            this.props.navigation.navigate("Quest", {
-              quest: item,
-              journey: this.props.journey
-            });
-          }}
+          labelStyle={{ fontSize: 16, color: "#63915e"}}
+          onPress={() => this.doQuest(item)}
         >
           Start Quest
         </Button>
@@ -140,19 +147,19 @@ class JourneyTreeComponent extends Component {
                 <Text style={MIStyles.MIDescriptionText}>
                     {journey.description}
                 </Text>
-
             </View>
             <FlatList
-						nestedScrollEnabled
-            data={journey.quests}
-            keyExtractor={(item) => item.name}
-            renderItem={this.renderItem}
-          />
+              nestedScrollEnabled
+              data={journey.quests}
+              keyExtractor={(item) => item.name}
+              renderItem={this.renderItem}
+            />
+            
           <Button
             mode="contained"
-            style={{ alignSelf: "center" }}
+            style={{ alignSelf: "center", backgroundColor: "#C9DBC5" }}
             contentStyle={{ minHeight: 50 }}
-            labelStyle={{ fontSize: 18 }}
+            labelStyle={{ fontSize: 18, color: "#486b45"}}
             onPress={() => this.props.onBack()}
           >
             Back To Journey List

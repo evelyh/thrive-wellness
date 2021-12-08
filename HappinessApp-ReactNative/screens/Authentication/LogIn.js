@@ -106,6 +106,7 @@ export default class SignIn extends React.Component {
   };
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.inputContainer}>
@@ -140,6 +141,13 @@ export default class SignIn extends React.Component {
               }
             />
             <Text style={styles.label}>Remember Me</Text>
+          </View>
+          <View style={styles.buttoncontainer}>
+            <Button
+              style={styles.button}
+              title="Register for a new account"
+              onPress={() => navigate("SignUp1")}
+            />
           </View>
           <Button
             style={styles.button}
@@ -200,6 +208,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: 20,
     marginTop: 10,
+  },
+  buttoncontainer: {
+    margin: 30,
   },
   checkbox: {
     alignSelf: "center",

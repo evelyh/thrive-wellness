@@ -14,11 +14,11 @@ export default class LoginStackNavigator extends React.Component {
   render() {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="Authentication" component={Authentication} />
+        {/* <Stack.Screen name="Authentication" component={Authentication} /> */}
+        <Stack.Screen name="LogIn" component={LogIn} />
         <Stack.Screen name="SignUp1" component={SignUp1} />
         <Stack.Screen name="SignUp2" component={SignUp2} />
-        <Stack.Screen name="LogIn" component={LogIn} />
-        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        {/* <Stack.Screen name="ForgotPassword" component={ForgotPassword} /> */}
       </Stack.Navigator>
     );
   }
