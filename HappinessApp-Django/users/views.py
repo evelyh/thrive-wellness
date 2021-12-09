@@ -34,7 +34,7 @@ def create_token(sender, instance=None, created=False, **kwargs):
 def register(request):
     em = request.data["email"]
     um = request.data["username"]
-    if User.objects.filter(email__iexact=em, username__iexact=um).count() == 0:
+    if User.objects.filter(username=um).count() == 0 and User.objects.filter(email=em).count() == 0:
         user = User.objects.create_user(request.data["username"],
                                     request.data["email"],
                                     request.data["password"])
