@@ -436,9 +436,6 @@ export class NetworkContextProvider extends React.Component {
         quests: quests
       }),
     };
-    console.log(emaill)
-    console.log(namae)
-    console.log(data)
     try{
       let fetchResponse = await fetch(
           url + "/api/journeys/submit-journeys", data

@@ -26,6 +26,7 @@ export default class SubmitQuest extends React.Component {
       q1: {},
       q2: {},
       q3: {},
+      alert: 0,
     }
   }
 
@@ -60,10 +61,12 @@ export default class SubmitQuest extends React.Component {
     const { journey_name, journey_description, email, name, only_quest, quests} = this.state
     if (only_quest){
       await this.context.submitQuest(quests, name, email);
+      this.state.alert = 0
       this.props.navigation.navigate("Home")
     }
     else{
       await this.context.uploadJourney(journey_name, journey_description, quests, email, name);
+      this.state.alert = 0
       this.props.navigation.navigate("Home")
     }
   }
@@ -79,7 +82,10 @@ export default class SubmitQuest extends React.Component {
   };
 
   render() {
-    this.displayInstructionAlert();
+    if (this.state.alert === 0){
+      this.displayInstructionAlert()
+      this.state.alert += 1;
+    }
     return(
       <SafeAreaView style={styles.container}>
         <ScrollView>
