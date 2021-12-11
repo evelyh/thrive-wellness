@@ -19,6 +19,6 @@ class Progress(models.Model):
     # 1 is completed, 0 is skipped
 
     class Meta:
-        unique_together = (('user', 'quest', 'complete_time'),)
+        unique_together = (('user', 'quest', 'journey'),)
 
 

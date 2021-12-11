@@ -22,11 +22,11 @@ export default class Playground extends React.Component{
         <Card.Content>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Title style={{ fontSize: 25, flex: 7 }}>{item.name}</Title>
-          <Title style={{ fontSize: 20, flex: 1 }}>1 ★ </Title>
+          <Title style={{ fontSize: 20, flex: 1 }}>{item.difficulty} ★ </Title>
         </View>
         <View style={{ flexDirection: "row" }}>
           <Paragraph style={{ fontWeight: "bold" }}>Estimated Time: </Paragraph>
-          <Paragraph>1 Minutes </Paragraph>
+          <Paragraph>{item.estimated_time} Minutes </Paragraph>
         </View>
 
         <Paragraph style={{ fontWeight: "bold" }}>Instructions:</Paragraph>

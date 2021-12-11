@@ -10,6 +10,7 @@ import {
   Linking,
 } from "react-native";
 import { QuestListItem } from "../JourneyManagement/ManageJourneyScreen";
+import DropJourneyComponent from "../DropJourney";
 import { NetworkContext } from "../../contexts/Networking";
 import {Ionicons} from "@expo/vector-icons";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
@@ -21,19 +22,9 @@ class JourneyTreeComponent extends Component {
   state = {
     completedQuests: [],
     updated: false,
+    showDrop: false,
+    incompleteJourney: [],
   };
-
-  // handleJourneyTap = (quest, journey) => {
-  //   console.log(quest);
-  //   this.props.navigation.navigate("Quest", {q: quest, j: journey});
-  // };
-
-  // onSelect = (quest, journey) => {
-  //   setTimeout(() => {
-  //     this.setState({ updated: false });
-  //   }, 2000);
-  //   this.props.navigation.navigate("Quest", { q: quest, j: journey });
-  // };
 
   getQuestProgress = async () => {
     const { journey } = this.props;
@@ -47,6 +38,12 @@ class JourneyTreeComponent extends Component {
 
   doQuest = async(item) =>{
     const resp = await this.context.checkThirdJourney(this.props.journey.id);
+    // if(resp == null){
+    //   this.setState({
+    //     showDrop: true,
+    //   })
+    // }
+    console.log(resp);
     if (resp != null){
       this.props.navigation.navigate("Quest", {
       quest: item,
@@ -56,11 +53,17 @@ class JourneyTreeComponent extends Component {
     };
   }
 
+  handleBackDrop = () => {
+    this.setState({ showDrop: false });
+  };
+
   componentDidMount = async () => {
     const { journey } = this.props;
     const journeyProgress = await this.context.getJourneyProgress(journey.id);
+    const incomplete = await this.context.getIncompleteJourney();
     this.setState({
       completedQuests: journeyProgress.completed,
+      incompleteJourney: incomplete,
     });
     this._unsubscribe = this.props.navigation.addListener("focus", () =>
       this.getQuestProgress()
@@ -85,11 +88,11 @@ class JourneyTreeComponent extends Component {
       <Card.Content>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Title style={{ fontSize: 25, flex: 7 }}>{item.name}</Title>
-          <Title style={{ fontSize: 20, flex: 1 }}>1 ★ </Title>
+          <Title style={{ fontSize: 20, flex: 1 }}>{item.difficulty} ★ </Title>
         </View>
         <View style={{ flexDirection: "row" }}>
           <Paragraph style={{ fontWeight: "bold" }}>Estimated Time: </Paragraph>
-          <Paragraph>1 Minutes </Paragraph>
+          <Paragraph>{item.estimated_time} Minutes </Paragraph>
         </View>
 
         <Paragraph style={{ fontWeight: "bold" }}>Instructions:</Paragraph>
@@ -112,8 +115,16 @@ class JourneyTreeComponent extends Component {
     const { journey } = this.props; // Get journey object from parent
     const { name, quests } = journey; // Get name and quest from journey object
     const { completedQuests } = this.state; // Get completed quests from state
-
-    return (
+    // if(this.state.showDrop){
+    //   return (
+    //     <DropJourneyComponent
+    //       incompleteJourney={this.state.incompleteJourney}
+    //       navigation={this.props.navigation}
+    //       onBack={this.handleBackDrop}
+    //     />
+    //   );
+    // }else{
+      return (
       // Loop through and display each individual quest from journey object
       <SafeAreaView style={styles.container}>
       <View style={MIStyles.MIContainer}>

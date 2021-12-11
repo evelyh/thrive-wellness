@@ -26,6 +26,17 @@ export default class DailyQuestScreen extends React.Component {
     completeNum: [],
   };
 
+  shuffle = (sourceArray) => {
+    for (var i = 0; i < sourceArray.length - 1; i++) {
+        var j = i + Math.floor(Math.random() * (sourceArray.length - i));
+
+        var temp = sourceArray[j];
+        sourceArray[j] = sourceArray[i];
+        sourceArray[i] = temp;
+    }
+    return sourceArray;
+  }
+
   getJourneys = async () => {
     const incomplete = await this.context.getIncompleteJourney();
     console.log(incomplete);
@@ -116,9 +127,13 @@ export default class DailyQuestScreen extends React.Component {
 
   getAllQuests = async() =>{
     const response = await this.context.getAllQuests();
+    const shuff = this.shuffle(response);
+    if(shuff.length > 10){
+      shuff = shuff.slice(9);
+    }
     this.setState({
-      allQuests: response
-  })
+      allQuests: shuff
+  });
   }
 
   componentDidMount() {
@@ -146,11 +161,11 @@ export default class DailyQuestScreen extends React.Component {
       <Card.Content>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Title style={{ fontSize: 25, flex: 7 }}>{item.name}</Title>
-          <Title style={{ fontSize: 20, flex: 1 }}>1 ★ </Title>
+          <Title style={{ fontSize: 20, flex: 1 }}>{item.difficulty} ★ </Title>
         </View>
         <View style={{ flexDirection: "row" }}>
           <Paragraph style={{ fontWeight: "bold" }}>Estimated Time: </Paragraph>
-          <Paragraph>1 Minutes </Paragraph>
+          <Paragraph>{item.estimated_time} Minutes </Paragraph>
         </View>
 
         <Paragraph style={{ fontWeight: "bold" }}>Instructions:</Paragraph>
@@ -247,7 +262,7 @@ export default class DailyQuestScreen extends React.Component {
               style={{ alignSelf: "center", backgroundColor: "#C9DBC5" }}
               labelStyle={{ fontSize: 18, color: "#486b45"}}
             >
-              Drop A Journey
+              Manage your Journeys
             </Button>
             <Button
               mode="contained"
@@ -255,7 +270,7 @@ export default class DailyQuestScreen extends React.Component {
               style={{ alignSelf: "center", backgroundColor: "#C9DBC5" }}
               labelStyle={{ fontSize: 18, color: "#486b45"}}
             >
-              Go to quest playground
+              Go to Quest playground
             </Button>
           </View>
         </SafeAreaView>
