@@ -9,8 +9,8 @@ class Quest(models.Model):
     media = models.ImageField(upload_to='assets', blank=True)
     video = models.URLField(max_length=200, blank=True)
     survey_question = models.TextField(null=True, blank=True)
-    estimated_time = models.PositiveIntegerField(null=True, blank=True)
-    difficulty = models.PositiveIntegerField(null=True, blank=True)
+    estimated_time = models.IntegerField(null=True, blank=True)
+    difficulty = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.name
