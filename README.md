@@ -1,50 +1,38 @@
-Below is the README.md from the 2020 Team 4's [repository](https://github.com/Good-T/team-project-4-bellwoods-strategic-capital), which will serve as the starter code for our app. The other team's repo which we can also take inspiration and code from (especially for UI) is [here](https://github.com/csc301-fall-2020/team-project-2-bellwoods-strategic-capital).
-
-# Happyness App
-
-## Requirements to run:
-* Node installed on your machine 
-* Expo-cli installed on your machine (install with: `npm i -g expo-cli`)
-* Expo client installed on your phone (available on App Store and Play Market)
-
-## Running our app on your phone:
-* Navigate to directory: `HappinessApp-ReactNative/`
-* Run `npm install`
-* Run `npm start`
-* Scan the QR code on your expo app
+# Thrive
 
 ## Development requirements
+* Node
+* Expo-cli by `npm i -g expo-cli`
+* Python3
+* Navigate to directory: `HappinessApp-Django/`
+* `pip3 install -r requirement.txt`
 
-Requirements: 
-* Node installed on your machine 
-* Expo-cli installed on your machine (install with: `npm i -g expo-cli`)
-* Expo client installed on your phone (available on App Store and Play Market)
-* Python3 installed on your machine
-* Download python libraries:
-    * Navigate to `HappinessApp-Django/`
-    * Run `pip3 install -r requirements.txt`
+## Steps to run the app on a phone simulator:
+* Install an iOS/Android simulator
+* Navigate to directory: `HappinessApp-ReactNative/`
+* `npm install`
+* `npm start`
+* Open the simulator through the poped webpage
 
 ## Code structure 
-
 The codebase is organized in 2 main directories.
 
 ### Backend
 
 **HappinessApp-Django** Containes the django based backend code.
 
-Django files are organized following a django standart conventions.
+Django files are organized following a django standard convention.
 
 The django application is hosted on the AWS server at http://3.15.239.159:8000
 
-In order to connect to the development server, you will need the Server SSH Key. 
-Robbie at Bellwoods Strategic Capital will provide you with it.
-Once you have the key, run the following in order to connect:
-
-`ssh -i ServerKey.pem ubuntu@3.15.239.159`
+To run a local host,
+* `python3 manage.py makemigrations`
+* `python3 manage.py migrate`
+* `python3 manage.py runserver`
 
 ### Frontend
 
-**HappinessApp-React** Containes the React Native front end code.
+**HappinessApp-ReactNative** Containes the React Native front end code.
 
 React Native app is organized following a React Native standart conventions.
 
