@@ -14,6 +14,4 @@ urlpatterns = [
          name="api-progress-incompleteJourney"),
     path('dropJourney/<int:jid>/', views.drop_journey,
          name="api-progress-dropJourney"),
-    path('checkThirdJourney/<int:jid>/', views.check_third_journey,
-          name="api-progress-checkthird")
 ]

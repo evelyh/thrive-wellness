@@ -52,7 +52,7 @@ export const NetworkContext = React.createContext({
 
 
 const url = "https://intezzz.pythonanywhere.com/";
-
+// const url = "http://localhost:8000";
 
 export class NetworkContextProvider extends React.Component {
   state = {
@@ -468,10 +468,14 @@ export class NetworkContextProvider extends React.Component {
     };
     try{
       let fetchResponse = await fetch(
-        url + "/api/progress/checkThirdJourney/" + jid + "/", data
+        url + "/api/progress/incompleteJourney/", data
       );
       const respJson = await fetchResponse.json();
-      if(respJson.success == "Failure"){
+      const respLis = [];
+      for(let i = 0; i < respJson.length; i++){
+        respLis.push(respJson[i].id);
+      }
+      if(respLis.length == 2 && !(respLis.includes(jid)) ){
         this.displayThirdJourneyAlert();
         return null;
       }
@@ -741,6 +745,8 @@ export class NetworkContextProvider extends React.Component {
       text: "Close",
       style: "cancel",
       },
+      {text:"Drop a journey"
+      }
     ]);
   }
 

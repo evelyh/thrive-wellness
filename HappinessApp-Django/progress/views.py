@@ -29,20 +29,6 @@ def progress(request, jid):
                     QuestSerializer(instance=cquest.quest).data)
 
     return Response({"completed": completed_quests, "skipped": skipped_quests})
-
-
-@api_view(['GET'])
-def check_third_journey(request, jid):
-    user = request.user
-    pset = Progress.objects.filter(user=user)
-    if pset:
-        jlist = []
-        for progress in pset:
-            if progress.journey.id not in jlist:
-                jlist.append(progress.journey.id)
-        if len(jlist) == 2 and jid not in jlist:
-            return Response({"success": "Failure"})
-    return Response({"success": "Success"})
     
 @api_view(['POST'])
 def complete_quest(request, qid):

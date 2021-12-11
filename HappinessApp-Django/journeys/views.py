@@ -1,4 +1,3 @@
-from decouple import config
 from django.shortcuts import redirect, render
 from rest_framework import status
 
@@ -16,7 +15,7 @@ from .serializers import *
 # receiver_email = config('email')
 # password = config('password')
 from django.core.mail import send_mail
-receiver_email = config('email')
+receiver_email = 'bellwoodspw@gmail.com'
 
 
 # Create your views here.

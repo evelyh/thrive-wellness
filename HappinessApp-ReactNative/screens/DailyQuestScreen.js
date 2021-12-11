@@ -23,6 +23,7 @@ export default class DailyQuestScreen extends React.Component {
     incompleteJourney:[], // This is a list of journeys in progress
     showPlayground: false,
     showIcons: true,
+    completeNum: [],
   };
 
   getJourneys = async () => {
@@ -42,6 +43,7 @@ export default class DailyQuestScreen extends React.Component {
         });
         this.setState({
           completedQuests: journeyProgress.completed,
+          completeNum: [journeyProgress.completed.length],
         });
       }
 
@@ -68,6 +70,7 @@ export default class DailyQuestScreen extends React.Component {
         console.log(this.state.incompleteJourney);
         this.setState({
           completedQuests: journeyProgress1.completed.concat(journeyProgress2.completed),
+          completeNum: [journeyProgress1.completed.length, journeyProgress2.completed.length],
         });
       }
     }
@@ -191,9 +194,11 @@ export default class DailyQuestScreen extends React.Component {
       return (
         <SafeAreaView style={styles.container}>
           <View>
-            <Title style={QuestListStyles.title}>Your current journey is:</Title>
             {this.state.incompleteJourney.length >= 1 &&
             <Title style={QuestListStyles.title}>{this.state.incompleteJourney[0].name}</Title>
+            }
+            {this.state.incompleteJourney.length >= 1 &&
+            <Title style={QuestListStyles.title}>You finished {this.state.completeNum[0]} of {this.state.incompleteJourney[0].quests.length} quests</Title>
             }
           </View >
           {this.state.incompleteJourney.length == 1 &&
@@ -219,6 +224,9 @@ export default class DailyQuestScreen extends React.Component {
           <View>
             {this.state.incompleteJourney.length == 2 &&
             <Title style={QuestListStyles.title}>{this.state.incompleteJourney[1].name}</Title>
+            }
+            {this.state.incompleteJourney.length == 2 &&
+            <Title style={QuestListStyles.title}>You finished {this.state.completeNum[1]} of {this.state.incompleteJourney[1].quests.length} quests</Title>
             }
           </View>
           {this.state.incompleteJourney.length == 2 &&
@@ -316,7 +324,7 @@ const QuestListStyles = StyleSheet.create({
   },
   title: {
     color: "black",
-    fontSize: 24,
+    fontSize: 21,
     margin: 5,
     alignSelf: "center",
     textAlign: "center",
