@@ -8,12 +8,6 @@ from .models import *
 from .serializers import *
 # from .forms import ImageForm
 
-#
-# port = 465  # For SSL
-# smtp_server = "smtp.gmail.com"
-# sender_email = config('email')
-# receiver_email = config('email')
-# password = config('password')
 from django.core.mail import send_mail
 receiver_email = 'bellwoodspw@gmail.com'
 
@@ -214,6 +208,7 @@ def submit_quests(request):
 @permission_classes(())
 def update_user_quest(request, qid):
     q = SubmittedQuest.objects.get(pk=qid)
+    og_approved = q.approved
     serializer = SubmittedQuestSerializer(q, data=request.data, partial=True)
     if serializer.is_valid():
         serializer.save()
@@ -227,7 +222,7 @@ def update_user_quest(request, qid):
             japproved = q.journey.approved
             have_journey = True
 
-        if approved and japproved:
+        if approved and japproved and og_approved:
             # add quest to Quest table
             new_quest = Quest(name=q.name, description=q.description,
                               media=q.media, survey_question=q.survey_question)
@@ -248,6 +243,7 @@ def update_user_quest(request, qid):
 @permission_classes(())
 def update_user_journey(request, jid):
     j = SubmittedJourney.objects.get(pk=jid)
+    og_approved = j.approved
     serializer = SubmittedJourneySerializer(j, data=request.data, partial=True)
     if serializer.is_valid():
         serializer.save()
@@ -255,7 +251,7 @@ def update_user_journey(request, jid):
         approved = j.approved
 
         # publish journey if it is approved
-        if approved:
+        if approved and og_approved:
             quest_pk_lst = []
 
             # add journey to Journey table
