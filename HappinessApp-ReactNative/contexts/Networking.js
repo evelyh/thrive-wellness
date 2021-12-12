@@ -51,8 +51,7 @@ export const NetworkContext = React.createContext({
 });
 
 
-const url = "https://intezzz.pythonanywhere.com/";
-// const url = "http://localhost:8000";
+const url = "https://thriveapp.pythonanywhere.com/";
 
 export class NetworkContextProvider extends React.Component {
   state = {

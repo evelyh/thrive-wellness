@@ -154,7 +154,7 @@ export default class SignIn extends React.Component {
             title="Forgot Username or Password?"
             onPress={() =>
               Linking.openURL(
-                "https://intezzz.pythonanywhere.com/api/auth/reset_password/"
+                "https://thriveapp.pythonanywhere.com/api/auth/reset_password/"
               )
             }
           />
