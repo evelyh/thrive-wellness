@@ -36,7 +36,7 @@ export default class QuestScreen extends React.Component {
         {quest.media && (
             <Image
             style={styles.image}
-            source={{uri: 'http://localhost:8000/'+ quest.media, }}
+            source={{uri: 'https://thriveapp.pythonanywhere.com/'+ quest.media, }}
             />
           )}
           {quest.media == null && (journey == null || journey.media == null) &&(
@@ -48,7 +48,7 @@ export default class QuestScreen extends React.Component {
           {quest.media == null && journey && journey.media &&(
             <Image
               style={styles.image}
-              source={{uri: 'http://localhost:8000/'+ journey.media, }}
+              source={{uri: 'https://thriveapp.pythonanywhere.com/'+ journey.media, }}
             />
           )}
           {quest.video != '' && (

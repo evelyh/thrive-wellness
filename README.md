@@ -86,3 +86,10 @@ to fix some of errors and alerts popping up.
 (Things like "No connection alert" is currently pops up for all kind of errors)
 
 
+## Appendix for lines of code in frontend that involve the backend server URL
+
+HappinessApp-ReactNative/contexts/Networking.js  line 54
+HappinessApp-ReactNative/screens/Authentication/LogIn.js line 157
+HappinessApp-ReactNative/screens/journey_components/JourneyTree.js line 135
+HappinessApp-ReactNative/screens/QuestScreen.js line 39, 51
+HappinessApp-Django/HappinessAppApi/settings.py line 32

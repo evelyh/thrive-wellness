@@ -132,7 +132,7 @@ class JourneyTreeComponent extends Component {
             {journey.media &&(
                 <Image
                 style={styles.image}
-                source={{uri: 'http://localhost:8000/'+ journey.media, }}
+                source={{uri: 'https://thriveapp.pythonanywhere.com/'+ journey.media, }}
                 />
               )}
               {journey.media == null &&(

@@ -26,11 +26,10 @@ SECRET_KEY = '0m*z5_$ap6o(-v)byql$v5l)(+5nl22=j!dhp80_hv*0287ro%'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '100.65.60.241',
     'localhost',
     '3.15.239.159',
     '127.0.0.1',
-    'https://intezzz.pythonanywhere.com/',
+    'https://thriveapp.pythonanywhere.com/',
 ]
 
 # Application definition
