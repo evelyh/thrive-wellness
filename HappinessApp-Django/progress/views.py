@@ -34,15 +34,16 @@ def progress(request, jid):
 def complete_quest(request, qid):
     user = request.user
     quest = Quest.objects.get(id=qid)
-    journey = Journey.objects.get(id=int(request.data['jid']))
     qset = Progress.objects.filter(quest=quest, user=user)
     if qset:
         prog = qset.first()
         prog.progress = 1
         prog.save()
-    else:
+    try:
+        journey = Journey.objects.get(id=int(request.data['jid']))
         Progress(quest=quest, journey=journey, user=user, progress=1).save()
-
+    except:
+        pass
     QuestFeedback(user=request.user, quest=quest, answer=request.data["answer"],
                   feeling_rating=request.data["feeling_rating"],
                   quest_rating=request.data["quest_rating"],
