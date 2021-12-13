@@ -94,11 +94,29 @@ export default class DailyQuestScreen extends React.Component {
 
   handleJourneyTap = (quest) => {
     console.log(quest);
+    var len1 = [];
+    for (var i = 0; i < this.state.incompleteJourney[0].quests.length; i++){
+      len1.push(this.state.incompleteJourney[0].quests[i].id);
+    }
+    if(this.state.incompleteJourney.length == 2){
+      var len2 = [];
+      for (var i = 0; i < this.state.incompleteJourney[1].quests.length; i++){
+        len2.push(this.state.incompleteJourney[1].quests[i].id);
+      }
+    }
+    if(len1.includes(quest.id)){
     this.props.navigation.navigate("Quest", {
       quest: quest,
-      journey: this.props.journey
+      journey: this.state.incompleteJourney[0],
       }
+    );
+    }else if(len2 && len2.includes(quest.id)){
+      this.props.navigation.navigate("Quest", {
+        quest: quest,
+        journey: this.state.incompleteJourney[1],
+        }
       );
+    }
   };
 
    // This is when the user hits the back button on the DropJourneyComponent
