@@ -16,6 +16,7 @@ export const NetworkContext = React.createContext({
   // Cached data and methods to retrieve it
   journeys: [],
   buddies: "",
+  registerSuccess: "",
   buddy_requests: "",
   userInfo: {
     firstname: "",
@@ -60,6 +61,7 @@ export class NetworkContextProvider extends React.Component {
     isLoading: true,
     isAdmin: false,
     username: "",
+    registerSuccess: "",
     journeys: [],
     incompleteJourney: {
       description: "",
@@ -103,8 +105,14 @@ export class NetworkContextProvider extends React.Component {
       let respJson = await fetchResponse.json();
       if (respJson.response == "Unsuccessful") {
         this.registerFailAlert();
+        this.setState({
+          registerSuccess: "f",
+        });
       } else {
         this.registerSuccessAlert();
+        this.setState({
+          registerSuccess: "t",
+        });
       }
     } catch (e) {
       console.log(e);
@@ -861,6 +869,8 @@ export class NetworkContextProvider extends React.Component {
 
           getJourneys: this.getJourneys,
           getIncompleteJourney: this.getIncompleteJourney,
+      
+          registerSuccess: this.state.registerSuccess,
 
           buddies: this.state.buddies,
           buddy_requests: this.state.buddy_requests,
