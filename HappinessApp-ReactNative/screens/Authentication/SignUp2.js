@@ -33,6 +33,7 @@ export default class SignUp2 extends React.Component {
       displayAgeInputWarning: false, // display text above input if
       // age entered is invalid (less then 0...)
       displayShortAlert: false,
+      registerSuccess: "",
     };
   }
 
@@ -81,7 +82,7 @@ export default class SignUp2 extends React.Component {
   // Check if email is correct format
   // check if phone number is correct format
   // etc
-  checkNewUserData = () => {
+  checkNewUserData = async () => {
     const { username, firstName, lastName, password, email, age, sex } =
       this.state;
 
@@ -96,7 +97,7 @@ export default class SignUp2 extends React.Component {
       return;
     }
 
-    this.context.signUp(
+    await this.context.signUp(
       username,
       password,
       email,
@@ -105,6 +106,17 @@ export default class SignUp2 extends React.Component {
       age,
       sex
     );
+
+    this.setState({
+      registerSuccess: this.context.registerSuccess,
+    });
+
+    if (this.state.registerSuccess === "t") {
+      this.props.navigation.navigate("LogIn", {
+        username: this.state.username,
+        password: "",
+      });
+    }
   };
 
   displayEmptyFieldsAlert = () => {
