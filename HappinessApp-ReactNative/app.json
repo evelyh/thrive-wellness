@@ -4,7 +4,7 @@
     "slug": "thrive",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/heart.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -22,7 +22,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "A Happiness App",
+    "description": "Thrive",
     "android": {
       "package": "com.bellwoods.HappinessApp",
       "versionCode": 1
