@@ -4,15 +4,14 @@
 * Node
 * Expo-cli by `npm i -g expo-cli`
 * Python3
-* Navigate to directory: `HappinessApp-Django/`
-* `pip3 install -r requirement.txt`
+* Navigate to directory: `HappinessApp-Django/` and run `pip3 install -r requirement.txt`
 
-## Steps to run the app on a phone simulator:
+## Steps to run the app on a phone simulator
 * Install an iOS/Android simulator
 * Navigate to directory: `HappinessApp-ReactNative/`
 * `npm install`
 * `npm start`
-* Open the simulator through the poped webpage
+* Open the simulator through the popped webpage
 
 ## Code structure 
 The codebase is organized in 2 main directories.
@@ -23,12 +22,19 @@ The codebase is organized in 2 main directories.
 
 Django files are organized following a django standard convention.
 
-The django application is hosted on the AWS server at http://3.15.239.159:8000
+The django application is hosted on the PythonAnywhere server at https://thriveapp.pythonanywhere.com
 
 To run a local host,
 * `python3 manage.py makemigrations`
 * `python3 manage.py migrate`
 * `python3 manage.py runserver`
+
+To update code in the server,
+- import new code to the repo [deploy-pythonanywhere](https://github.com/bellwoods/deploy-pythonanywhere) in the bellwoods GitHub account. Do not include any migrations or database files.
+- Login to [PythonAnywhere](https://pythonanywhere.com)
+- Open console
+- `cd ~/deploy2`
+- `git pull` with the bellwoods GitHub account
 
 ### Frontend
 
@@ -74,16 +80,24 @@ For Android, ... (research necessary).
 
 Here are some notes on continuing the development. These mainly include next steps, and what need to be implemented later.
 
-1. The authentication token retrieved form the backend right now is stored in the AsyncStorage. This is generally not the best practice. The authorization token needs to be stored in the platform specific storage for tokens (For example KeyChain for the iOS).
+### From 1st team
+1. **[Prioritized]** Files under HappinessApp-ReactNative/screens/JourneyManagement folder are for frontend administration of journeys and quests. They will only be used when logged in via admin account on the app. Currently we only support CRUD actions of assets in the backend through Django admin portal, so we wouldn't want admin to use this function, and the files are not updated with current models of journeys and quests. It will be up to you if you want to delete these files totally, or update them to let admin do such tasks on the app.
 
-2. The notification system must be organized and deployed under a uniqie Email Expo account.
+2. The authentication token retrieved form the backend right now is stored in the AsyncStorage. This is generally not the best practice. The authorization token needs to be stored in the platform specific storage for tokens (For example KeyChain for the iOS).
 
-3. The notification system needs to store the Notification Token in the backend. Backend is responsible for sending the notifications. More info here https://docs.expo.io/push-notifications/sending-notifications/
+3. The notification system must be organized and deployed under a uniqie Email Expo account.
 
-4. The calls to the backend need a proper error checking and error feedback to user. 
-The management of the information cache and order of calls to the backend needs some improvements in order
-to fix some of errors and alerts popping up.
-(Things like "No connection alert" is currently pops up for all kind of errors)
+4. The notification system needs to store the Notification Token in the backend. Backend is responsible for sending the notifications. More info here https://docs.expo.io/push-notifications/sending-notifications/
+
+### From 2nd team
+1. "Third Journey" alert is not able to redirect to the "Manage your journeys" page
+2. "Approved" automation through Django admin portal^
+3. Implementing embedded video instead of redirecting link for videos accompanying journeys and quests
+4. Expansion to accountability buddy feature
+5. Data extraction & analysis from user feedback/response/data
+6. Notification system
+
+^ Currenly, automation is written in `/journeys/views.py`, however changes made through Django Admin Portal does not use code written here. An admin utility(`/admin-utility.py`) is created to allow automation for admin. Refer to Admin guide for more details
 
 
 ## Appendix for lines of code in frontend that involve the backend server URL
