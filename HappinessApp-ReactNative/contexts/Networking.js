@@ -397,8 +397,8 @@ export class NetworkContextProvider extends React.Component {
       );
       const respJson = await fetchResponse.json();
       const respJ = await response.json();
+      this.displayDropJourneyAlert();
       if (respJson.success == "Success" && respJ.response == "Success") {
-        this.displayDropJourneyAlert();
         return respJson;
       }else{
         return null;
