@@ -8,7 +8,7 @@ urlpatterns = [
          name="api-progress-completeQuest"),
     path('skipQuest/<int:qid>/', views.complete_quest,
          name="api-progress-skipQuest"),
-    path('getCompletedJourneys/', views.completed_journeys,
+    path('checkCompleteJourney/<int:jid>/', views.check_complete_journey,
          name="api-progress-getCompletedJourneys"),
     path('incompleteJourney/', views.incomplete_journey,
          name="api-progress-incompleteJourney"),

@@ -2,7 +2,7 @@ from datetime import time
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from journeys.models import Journey
 
 # Create your models here.
 
@@ -12,6 +12,7 @@ class User(AbstractUser):
     email = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     buddy = models.ManyToManyField("User", blank=True, null=True)
+    active_journeys = models.ManyToManyField(Journey, related_name="journey", blank=True, null=True)
 
 
 class UserMeta(models.Model):
