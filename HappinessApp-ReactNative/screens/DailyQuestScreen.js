@@ -20,6 +20,7 @@ export default class DailyQuestScreen extends React.Component {
     journey: {}, 
     allQuests: [],
     completedQuests: [],
+    incompleteQuests: [],
     incompleteJourney:[], // This is a list of journeys in progress
     showPlayground: false,
     showIcons: true,
@@ -46,7 +47,7 @@ export default class DailyQuestScreen extends React.Component {
           this.context.finishJourney(active[i].id);
         }
       };
-      const incomplete = await this.context.getActiveJourneys();
+      var incomplete = await this.context.getActiveJourneys();
       if(incomplete.length == 1){
         const journeyProgress = await this.context.getJourneyProgress(incomplete[0].id);
         this.setState({
@@ -59,9 +60,23 @@ export default class DailyQuestScreen extends React.Component {
           }]
         });
         this.setState({
-          completedQuests: journeyProgress.completed,
+          completedQuests: [journeyProgress.completed],
           completeNum: [journeyProgress.completed.length],
         });
+        const completeIds = [];
+        for(var n=0;n<this.state.completedQuests[0].length;n++){
+          completeIds.push(this.state.completedQuests[0][n].id);
+        }
+        const incompleteQuests = [];
+        for(var i=0; i<this.state.incompleteJourney[0].quests.length; i++){
+          if(!(completeIds.includes(this.state.incompleteJourney[0].quests[i].id))){
+            incompleteQuests.push(incomplete[0].quests[i]);
+          }
+        };
+        this.setState({
+          incompleteQuests: [incompleteQuests],
+        });
+        console.log(this.state.incompleteJourney[0]);
       }
 
       if(incomplete.length == 2){
@@ -85,20 +100,42 @@ export default class DailyQuestScreen extends React.Component {
           }]
         });
         this.setState({
-          completedQuests: journeyProgress1.completed.concat(journeyProgress2.completed),
+          completedQuests: [journeyProgress1.completed, journeyProgress2.completed],
           completeNum: [journeyProgress1.completed.length, journeyProgress2.completed.length],
         });
+        const completeIds1 = [];
+        for(var n=0;n<this.state.completedQuests[0].length;n++){
+          completeIds1.push(this.state.completedQuests[0][n].id);
+        }
+        const incompleteQuests1 = [];
+        for(var i=0; i<this.state.incompleteJourney[0].quests.length; i++){
+          if(!(completeIds1.includes(this.state.incompleteJourney[0].quests[i].id))){
+            incompleteQuests1.push(this.state.incompleteJourney[0].quests[i]);
+          };
+        };
+        const completeIds2 = [];
+        for(var m=0;n<this.state.completedQuests[1].length;m++){
+          completeIds2.push(this.state.completedQuests[1][m].id);
+        }
+        const incompleteQuests2 = [];
+        for(var j=0; j<this.state.incompleteJourney[1].quests.length; j++){
+          if(!(completeIds2.includes(this.state.incompleteJourney[1].quests[j].id))){
+            incompleteQuests2.push(this.state.incompleteJourney[1].quests[j]);
+          }
+        };
+        this.setState({
+          incompleteQuests: [incompleteQuests1, incompleteQuests2],
+        });
+      };
       }
       if(incomplete.length == 0){
         this.setState({
           incompleteJourney: []
         });
       }
-    }
   };
 
   handleJourneyTap = (quest) => {
-    console.log(quest);
     var len1 = [];
     for (var i = 0; i < this.state.incompleteJourney[0].quests.length; i++){
       len1.push(this.state.incompleteJourney[0].quests[i].id);
@@ -134,7 +171,6 @@ export default class DailyQuestScreen extends React.Component {
   handleJourneyConfirm = () => {
     this.setState({ showIcons: false }); // Change from showing the icons to showing the tree
     // this.setState({ selectedJourney: journey });
-    // console.log(journey)
   };
   handlePlayground = () =>{
     this.setState({
@@ -177,14 +213,14 @@ export default class DailyQuestScreen extends React.Component {
         this.state.completedQuests.findIndex(
           (completedQuest) => completedQuest.id === item.id
         ) != -1
-          ? { backgroundColor: "#6ff2b1" }
+          ? { backgroundColor: "#b4d6c5" }
           : { backgroundColor: "#edf7f5" },
       ]}
     >
       <Card.Content>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Title style={{ fontSize: 25, flex: 7 }}>{item.name}</Title>
-          <Title style={{ fontSize: 20, flex: 1 }}>{item.difficulty} ★ </Title>
+          <Title style={{ fontSize: 20, flex: 7 }}>{item.name}</Title>
+          <Title style={{ fontSize: 17, flex: 1 }}>{item.difficulty} ★ </Title>
         </View>
         <View style={{ flexDirection: "row" }}>
           <Paragraph style={{ fontWeight: "bold" }}>Estimated Time: </Paragraph>
@@ -192,13 +228,13 @@ export default class DailyQuestScreen extends React.Component {
         </View>
 
         <Paragraph style={{ fontWeight: "bold" }}>Instructions:</Paragraph>
-        <Paragraph numberOfLines={4}>{item.description}</Paragraph>
+        <Paragraph numberOfLines={2}>{item.description}</Paragraph>
       </Card.Content>
       <Card.Actions
         style={{ margin: 0, padding: 0, justifyContent: "flex-end" }}
       >
         <Button
-          labelStyle={{ fontSize: 16 , color: "#63915e"}}
+          labelStyle={{ fontSize: 16 , color: "#486b45"}}
           onPress={() => this.handleJourneyTap(item)}
         >
           Start Quest
@@ -213,7 +249,7 @@ export default class DailyQuestScreen extends React.Component {
       if(this.state.incompleteJourney.length == 0){
         return (
           <SafeAreaView style={styles.container}>
-            <Title style={QuestListStyles.title}>No Quest</Title>
+            <Title style={QuestListStyles.title}>No Journey In Progress</Title>
             <View style={ButtonStyles.no_quest_home_buttons}>
               <Button
                 mode="contained"
@@ -227,7 +263,6 @@ export default class DailyQuestScreen extends React.Component {
           </SafeAreaView>
         );
       }
-      const { quests } = this.state.incompleteJourney[0];
       
       return (
         <SafeAreaView style={styles.container}>
@@ -239,26 +274,14 @@ export default class DailyQuestScreen extends React.Component {
             <Title style={QuestListStyles.title}>You finished {this.state.completeNum[0]} of {this.state.incompleteJourney[0].quests.length} quests</Title>
             }
           </View >
-          {this.state.incompleteJourney.length == 1 &&
+            {this.state.incompleteJourney.length >= 1 &&
             <View style={MIStyles.MIContainer}>
               <FlatList
                 nestedScrollEnabled
-                data={quests}
-                keyExtractor={(item) => item.name}
+                data={this.state.incompleteQuests[0]}
                 renderItem={this.renderItem}
               />
-            </View>
-          }
-          {this.state.incompleteJourney.length == 2 &&
-            <View style={MIStyles.MIContainer}>
-              <FlatList
-                nestedScrollEnabled
-                data={quests}
-                keyExtractor={(item) => item.name}
-                renderItem={this.renderItem}
-              />
-            </View>
-          }
+            </View>}
           <View>
             {this.state.incompleteJourney.length == 2 &&
             <Title style={QuestListStyles.title}>{this.state.incompleteJourney[1].name}</Title>
@@ -271,8 +294,7 @@ export default class DailyQuestScreen extends React.Component {
             <View style={MIStyles.MIContainer}>
               <FlatList
                 nestedScrollEnabled
-                data={this.state.incompleteJourney[1].quests}
-                keyExtractor={(item) => item.name}
+                data={this.state.incompleteQuests[1]}
                 renderItem={this.renderItem}
               />
             </View>
@@ -388,9 +410,8 @@ const ButtonStyles = StyleSheet.create({
 const cardStyles = StyleSheet.create({
   cardContainer: {
     margin: 10,
-    marginHorizontal: 10,
-    padding: 10,
-    shadowRadius: 15,
+    padding: 5,
+    shadowRadius: 10,
     backgroundColor: "#edf7f5",
     elevation: 4,
     minWidth: "90%",

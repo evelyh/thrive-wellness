@@ -29,9 +29,7 @@ class JourneyTreeComponent extends Component {
 
   getQuestProgress = async () => {
     const { journey } = this.props;
-    console.log(journey);
     const journeyProgress = await this.context.getJourneyProgress(journey.id);
-    console.log(journeyProgress);
     this.setState({
       completedQuests: journeyProgress.completed,
     });
@@ -39,7 +37,6 @@ class JourneyTreeComponent extends Component {
 
   startJourney = async(item) =>{
     const resp = await this.context.checkThirdJourney(this.props.journey.id);
-    console.log(resp);
     if (resp != null){
       this.context.activateJourney(this.props.journey.id);
     };
