@@ -397,8 +397,8 @@ export class NetworkContextProvider extends React.Component {
       );
       const respJson = await fetchResponse.json();
       const respJ = await response.json();
+      this.displayDropJourneyAlert();
       if (respJson.success == "Success" && respJ.response == "Success") {
-        this.displayDropJourneyAlert();
         return respJson;
       }else{
         return null;
@@ -497,6 +497,7 @@ export class NetworkContextProvider extends React.Component {
       if(respJ.response == "true"){
         this.displayCompleteJourneyAlert();
       }
+      this.displayCompleteQuestAlert();
       return respJson;
     } catch (e) {
       console.log(e);
@@ -835,7 +836,16 @@ export class NetworkContextProvider extends React.Component {
   };
 
   displayCompleteJourneyAlert = () => {
-    Alert.alert("Congratulations", "You've finished this journey!", [
+    Alert.alert("Congratulations", "You've finished this journey! Feel free to go to Journey Market to start another one.", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
+  displayCompleteQuestAlert = () => {
+    Alert.alert("Congratulations", "You've finished today's quest!", [
       {
         text: "Close",
         style: "cancel",
@@ -844,7 +854,7 @@ export class NetworkContextProvider extends React.Component {
   };
 
   displayNoDailyQuestAlert = () => {
-    Alert.alert("No Daily Quests", "Please activate a new journey", [
+    Alert.alert("No Daily Quests", "Please start a new journey", [
       {
         text: "Close",
         style: "cancel",
@@ -865,7 +875,7 @@ export class NetworkContextProvider extends React.Component {
   }
 
   displayActivateJourneyAlert = () => {
-    Alert.alert("Journey Started", "You've successfully started this journey. Now you can go to daily quest page to start a quest.",
+    Alert.alert("Journey Started", "You've successfully started this journey. Now you can start a quest on Daily Quest page.",
     [
       {text: "Close",
        style: "cancel",
@@ -1018,6 +1028,7 @@ export class NetworkContextProvider extends React.Component {
           displayNoConnectionAlert: this.displayNoConnectionAlert,
           displayInvalidInfoAlert: this.displayInvalidInfoAlert,
           displayCompleteJourneyAlert: this.displayCompleteJourneyAlert,
+          displayCompleteQuestAlert: this.displayCompleteQuestAlert,
           displayActivateJourneyAlert: this.displayActivateJourneyAlert,
           displayDropJourneyAlert: this.displayDropJourneyAlert,
           WrongPasswordAlert: this.WrongPasswordAlert,

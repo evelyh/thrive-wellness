@@ -18,7 +18,7 @@ def progress(request, jid):
     skipped_quests = []
 
     for quest in q:
-        qset = Progress.objects.filter(user=user, quest=quest)
+        qset = Progress.objects.filter(user=user, quest=quest, journey=journey)
         if qset:
             cquest = qset.first()
             if cquest.progress == 1:

@@ -71,7 +71,6 @@ export default class JourneyScreen extends React.Component {
   handleJourneyConfirm = (journey) => {
     this.setState({ showIcons: false }); // Change from showing the icons to showing the tree
     this.setState({ selectedJourney: journey });
-    console.log(journey)
   };
 
   // Handle whether we show the modal popup for JourneyPopupComponent

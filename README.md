@@ -81,21 +81,22 @@ For Android, ... (research necessary).
 Here are some notes on continuing the development. These mainly include next steps, and what need to be implemented later.
 
 ### From 1st team
-1. **[Prioritized]** Files under HappinessApp-ReactNative/screens/JourneyManagement folder are for frontend administration of journeys and quests. They will only be used when logged in via admin account on the app. Currently we only support CRUD actions of assets in the backend through Django admin portal, so we wouldn't want admin to use this function, and the files are not updated with current models of journeys and quests. It will be up to you if you want to delete these files totally, or update them to let admin do such tasks on the app.
 
-2. The authentication token retrieved form the backend right now is stored in the AsyncStorage. This is generally not the best practice. The authorization token needs to be stored in the platform specific storage for tokens (For example KeyChain for the iOS).
+1. The authentication token retrieved form the backend right now is stored in the AsyncStorage. This is generally not the best practice. The authorization token needs to be stored in the platform specific storage for tokens (For example KeyChain for the iOS).
 
-3. The notification system must be organized and deployed under a uniqie Email Expo account.
+2. The notification system must be organized and deployed under a uniqie Email Expo account.
 
-4. The notification system needs to store the Notification Token in the backend. Backend is responsible for sending the notifications. More info here https://docs.expo.io/push-notifications/sending-notifications/
+3. The notification system needs to store the Notification Token in the backend. Backend is responsible for sending the notifications. More info here https://docs.expo.io/push-notifications/sending-notifications/
 
 ### From 2nd team
 1. "Third Journey" alert is not able to redirect to the "Manage your journeys" page
 2. "Approved" automation through Django admin portal^
 3. Implementing embedded video instead of redirecting link for videos accompanying journeys and quests
-4. Expansion to accountability buddy feature
+4. Chat and comment feature extension of current accountability buddy system
 5. Data extraction & analysis from user feedback/response/data
 6. Notification system
+7. Files under HappinessApp-ReactNative/screens/JourneyManagement are for management of journeys and quests directly using the app via admin account (which we don't suggest admin to do it right now). They were written by the 1st team, and not updated with current models.
+8. One quest added multiple times in a same journey causes problem, and the app will not actually allow this quest to appear more than one time.
 
 ^ Currenly, automation is written in `/journeys/views.py`, however changes made through Django Admin Portal does not use code written here. An admin utility(`/admin-utility.py`) is created to allow automation for admin. Refer to Admin guide for more details
 
