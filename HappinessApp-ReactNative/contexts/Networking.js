@@ -836,7 +836,7 @@ export class NetworkContextProvider extends React.Component {
   };
 
   displayCompleteJourneyAlert = () => {
-    Alert.alert("Congratulations", "You've finished this journey!", [
+    Alert.alert("Congratulations", "You've finished this journey! Feel free to go to Journey Market to start another one.", [
       {
         text: "Close",
         style: "cancel",
