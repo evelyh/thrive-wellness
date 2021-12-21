@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   SafeAreaView,
+  ScrollView,
   Image,
   Linking,
 } from "react-native";
@@ -145,11 +146,11 @@ class JourneyTreeComponent extends Component {
               }})}
               />)}
             </View>
-            <View style={MIStyles.MITextContainer}>
+            <ScrollView style={MIStyles.MITextContainer}>
                 <Text style={MIStyles.MIDescriptionText}>
                     {journey.description}
                 </Text>
-            </View>
+            </ScrollView>
             {/* <FlatList
               nestedScrollEnabled
               data={journey.quests}
@@ -287,6 +288,7 @@ const MIStyles = StyleSheet.create({
   },
   MITextContainer: {
     marginHorizontal: 10,
+    marginBottom: 130,
     marginTop: 10,
   },
   MIDescriptionText: {
