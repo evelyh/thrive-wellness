@@ -68,31 +68,20 @@ def skip_quest(request, qid):
     return Response({"Success": "Success"})
 
 @api_view(['GET'])
-def completed_journeys(request):
+def check_complete_journey(request, jid):
     user = request.user
-    journeys = Journey.objects.all()
-    completed = []
-
-    for journey in journeys:
-        q = journey.quests.all()
-        quests = QuestSerializer(q, many=True).data
-        data = JourneySerializer(instance=journey).data
-        data['quests'] = quests
-        incomplete = False
-        for quest in quests:
-            qset = Progress.objects.filter(user=user, quest=quest, journey=journey)
-            if not qset:
-                incomplete = True
-                break
-            progress_obj = qset.first()
-            if progress_obj.progress != 1:
-                incomplete = True
-                break
-        if incomplete:
-            continue
-        completed.append(data)
-
-    return Response(completed)
+    journey = Journey.objects.get(id=jid)
+    q = journey.quests.all()
+    complete = True
+    for quest in q:
+        qset = Progress.objects.filter(user=user, quest=quest, journey=journey)
+        if not qset:
+            complete = False
+            break
+    if complete:
+        return Response({"response": "true"})
+    else:
+        return Response({"response": "false"})
 
 @api_view(['GET'])
 def incomplete_journey(request):

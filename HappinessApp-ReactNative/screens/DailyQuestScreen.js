@@ -38,9 +38,15 @@ export default class DailyQuestScreen extends React.Component {
   }
 
   getJourneys = async () => {
-    const incomplete = await this.context.getIncompleteJourney();
-    console.log(incomplete);
-    if(incomplete !== null){
+    const active = await this.context.getActiveJourneys();
+    if(active !== null){
+      for(var i=0; i<active.length; i++){
+        const result = await this.context.checkCompleteJourney(active[i].id);
+        if(result.response == "true"){
+          this.context.finishJourney(active[i].id);
+        }
+      };
+      const incomplete = await this.context.getActiveJourneys();
       if(incomplete.length == 1){
         const journeyProgress = await this.context.getJourneyProgress(incomplete[0].id);
         this.setState({
@@ -78,17 +84,16 @@ export default class DailyQuestScreen extends React.Component {
             quests: incomplete[1].quests
           }]
         });
-        console.log(this.state.incompleteJourney);
         this.setState({
           completedQuests: journeyProgress1.completed.concat(journeyProgress2.completed),
           completeNum: [journeyProgress1.completed.length, journeyProgress2.completed.length],
         });
       }
-    }
-    if(incomplete.length == 0){
-      this.setState({
-        incompleteJourney: []
-      });
+      if(incomplete.length == 0){
+        this.setState({
+          incompleteJourney: []
+        });
+      }
     }
   };
 

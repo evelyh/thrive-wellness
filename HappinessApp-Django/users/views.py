@@ -21,6 +21,7 @@ from .tokens import account_activation_token
 from django.template.loader import render_to_string
 # Create your views here.
 from users.serializers import UserMetaSerializer
+from journeys.serializers import *
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -195,3 +196,32 @@ def get_user_meta(request):
 def is_admin(request):
     # return Response({"status": request.user.is_staff})
     return Response({"status": request.user.is_staff})
+
+
+@api_view(['POST', 'DELETE'])
+@permission_classes((IsAuthenticated,))
+def active_journeys(request, jid):
+    # username = request.user.username
+    user = request.user
+    if request.method == "POST":
+        user.active_journeys.add(Journey.objects.get(id=jid))
+        return Response({"response": 'Success'})
+    elif request.method == "DELETE":
+        user.active_journeys.remove(Journey.objects.get(id=jid))
+        return Response({"response": 'Success'})
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def get_active_journeys(request):
+    user = request.user
+    if request.method == "GET":
+        lst = user.active_journeys.all()
+        jsonObj = []
+        for j in lst:
+            quests = j.quests.all()
+            Qserializer = QuestSerializer(quests, many=True)
+            data = JourneySerializer(instance=j).data
+            data['quests'] = Qserializer.data
+            jsonObj.append(data)
+        return Response(jsonObj)

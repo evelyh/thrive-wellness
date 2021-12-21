@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   SafeAreaView,
+  ScrollView,
   Image,
   Linking,
 } from "react-native";
@@ -36,20 +37,11 @@ class JourneyTreeComponent extends Component {
     });
   };
 
-  doQuest = async(item) =>{
+  startJourney = async(item) =>{
     const resp = await this.context.checkThirdJourney(this.props.journey.id);
-    // if(resp == null){
-    //   this.setState({
-    //     showDrop: true,
-    //   })
-    // }
     console.log(resp);
     if (resp != null){
-      this.props.navigation.navigate("Quest", {
-      quest: item,
-      journey: this.props.journey
-      }
-      );
+      this.context.activateJourney(this.props.journey.id);
     };
   }
 
@@ -154,18 +146,27 @@ class JourneyTreeComponent extends Component {
               }})}
               />)}
             </View>
-            <View style={MIStyles.MITextContainer}>
+            <ScrollView style={MIStyles.MITextContainer}>
                 <Text style={MIStyles.MIDescriptionText}>
                     {journey.description}
                 </Text>
-            </View>
-            <FlatList
+            </ScrollView>
+            {/* <FlatList
               nestedScrollEnabled
               data={journey.quests}
               keyExtractor={(item) => item.name}
               renderItem={this.renderItem}
-            />
-            
+            /> */}
+          <View style={ButtonStyles.no_quest_home_buttons}>
+          <Button
+            mode="contained"
+            style={{ alignSelf: "center", backgroundColor: "#C9DBC5" }}
+            contentStyle={{ minHeight: 50 }}
+            labelStyle={{ fontSize: 18, color: "#486b45"}}
+            onPress={() => this.startJourney()}
+          >
+            Start this journey
+          </Button>
           <Button
             mode="contained"
             style={{ alignSelf: "center", backgroundColor: "#C9DBC5" }}
@@ -175,6 +176,7 @@ class JourneyTreeComponent extends Component {
           >
             Back To Journey List
           </Button>
+          </View>
         </View>
       </SafeAreaView>
     );
@@ -262,6 +264,22 @@ const styles = StyleSheet.create({
   },
 });
 
+const ButtonStyles = StyleSheet.create({
+  home_primary_buttons: {
+    //flex: 1,
+    marginVertical: 10,
+    width: "80%",
+    alignSelf: "center",
+  },
+  no_quest_home_buttons: {
+    marginVertical: 10,
+    width: "80%",
+    alignSelf: "center",
+    position: "absolute",
+    bottom: 10,
+  },
+});
+
 const MIStyles = StyleSheet.create({
   MIContainer: {
     flex: 1,
@@ -270,6 +288,7 @@ const MIStyles = StyleSheet.create({
   },
   MITextContainer: {
     marginHorizontal: 10,
+    marginBottom: 130,
     marginTop: 10,
   },
   MIDescriptionText: {

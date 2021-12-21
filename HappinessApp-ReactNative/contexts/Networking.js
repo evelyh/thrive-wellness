@@ -16,6 +16,7 @@ export const NetworkContext = React.createContext({
   // Cached data and methods to retrieve it
   journeys: [],
   buddies: "",
+  registerSuccess: "",
   buddy_requests: "",
   userInfo: {
     firstname: "",
@@ -30,11 +31,14 @@ export const NetworkContext = React.createContext({
   getJourneyProgress: () => {},
 
   // Methods to complete a quest
+  activateJourney: () => {},
   completeQuest: () => {},
   checkThirdJourney: () => {},
   dropJourney: () => {},
-
+  getActiveJourneys: () => {},
+  checkCompleteJourney: () => {},
   getAllQuests: () => {},
+  finishJourney: () => {},
   
   // BuddyRequest
   sendBuddyRequest: () => {},
@@ -60,6 +64,7 @@ export class NetworkContextProvider extends React.Component {
     isLoading: true,
     isAdmin: false,
     username: "",
+    registerSuccess: "",
     journeys: [],
     incompleteJourney: {
       description: "",
@@ -103,8 +108,14 @@ export class NetworkContextProvider extends React.Component {
       let respJson = await fetchResponse.json();
       if (respJson.response == "Unsuccessful") {
         this.registerFailAlert();
+        this.setState({
+          registerSuccess: "f",
+        });
       } else {
         this.registerSuccessAlert();
+        this.setState({
+          registerSuccess: "t",
+        });
       }
     } catch (e) {
       console.log(e);
@@ -347,6 +358,27 @@ export class NetworkContextProvider extends React.Component {
     }
   };
 
+  activateJourney = async (journeyId) => {
+    const data = {
+      method: "POST",
+      headers:{
+        Authorization: "Token " + this.state.token,
+      },
+    };
+    try{
+      let fetchResponse = await fetch(
+        url + "/api/auth/active_journeys/" + journeyId + "/", data
+      );
+      const respJson = await fetchResponse.json();
+      this.displayActivateJourneyAlert();
+      return respJson;
+    }catch(e){
+      console.log(e);
+      this.displayNoConnectionAlert();
+      return []
+    }
+  };
+
   // Drop a journey based on the given jid
   dropJourney = async (journeyId) => {
     const data = {
@@ -360,9 +392,13 @@ export class NetworkContextProvider extends React.Component {
         url + "/api/progress/dropJourney/" + journeyId + "/",
         data
       );
+      let response = await fetch(
+        url + "/api/auth/active_journeys/" + journeyId + "/", data
+      );
       const respJson = await fetchResponse.json();
-      this.displayDropJourneyAlert();
-      if (respJson.success == "Success") {
+      const respJ = await response.json();
+      if (respJson.success == "Success" && respJ.response == "Success") {
+        this.displayDropJourneyAlert();
         return respJson;
       }else{
         return null;
@@ -372,6 +408,50 @@ export class NetworkContextProvider extends React.Component {
       this.displayNoConnectionAlert();
       return [];
     }
+  };
+
+  finishJourney = async (journeyId) => {
+    const data = {
+      method: "DELETE",
+      headers: {
+        Authorization: "Token " + this.state.token,
+      },
+    };
+    try {
+      let response = await fetch(
+        url + "/api/auth/active_journeys/" + journeyId + "/", data
+      );
+      const respJ = await response.json();
+      if (respJ.response == "Success") {
+        return respJ;
+      }else{
+        return null;
+      }
+    } catch (e) {
+      console.log(e);
+      this.displayNoConnectionAlert();
+      return [];
+    }
+  };
+
+  getActiveJourneys = async () => {
+    const data = {
+      method: "GET",
+      headers: {
+        Authorization: "Token " + this.state.token,
+      },
+    };
+    try{
+      let fetchResponse = await fetch(
+        url + "/api/auth/get_active_journeys/", data
+      );
+      const respJson = await fetchResponse.json();
+      return respJson;
+    }catch(e){
+      console.log(e);
+      this.displayNoConnectionAlert();
+      return []
+    };
   };
 
   // Set a particular quest to be complete with given id
@@ -398,12 +478,25 @@ export class NetworkContextProvider extends React.Component {
         survey_answer: surveyAnswer,
       }),
     };
+    const datata = {
+      method: "GET",
+      headers: {
+        Authorization: "Token " + this.state.token,
+      }, 
+    }
     try {
       let fetchResponse = await fetch(
         url + "/api/progress/completeQuest/" + questId + "/",
         data
       );
       const respJson = await fetchResponse.json();
+      let fetchresp = await fetch(
+        url + "/api/progress/checkCompleteJourney/" + journeyId + "/", datata
+      );
+      const respJ = await fetchresp.json();
+      if(respJ.response == "true"){
+        this.displayCompleteJourneyAlert();
+      }
       return respJson;
     } catch (e) {
       console.log(e);
@@ -454,6 +547,23 @@ export class NetworkContextProvider extends React.Component {
     }
   };
 
+  checkCompleteJourney = async(jid) => {
+    const data = {
+      method: "GET",
+      headers:{
+        Authorization: "Token " + this.state.token,
+      }
+    };
+    try{
+      let fetchResponse = await fetch(url + "/api/progress/checkCompleteJourney/" + jid + "/", data);
+      const respJson = await fetchResponse.json();
+      return respJson;
+    }catch(e){
+      console.log(e);
+      this.displayNoConnectionAlert();
+      return null;
+    };
+  };
   
   checkThirdJourney = async (jid) => {
     const data = {
@@ -464,14 +574,14 @@ export class NetworkContextProvider extends React.Component {
     };
     try{
       let fetchResponse = await fetch(
-        url + "/api/progress/incompleteJourney/", data
+        url + "/api/auth/get_active_journeys/", data
       );
       const respJson = await fetchResponse.json();
       const respLis = [];
       for(let i = 0; i < respJson.length; i++){
         respLis.push(respJson[i].id);
       }
-      if(respLis.length == 2 && !(respLis.includes(jid)) ){
+      if(respLis.length >= 2 && !(respLis.includes(jid)) ){
         this.displayThirdJourneyAlert();
         return null;
       }
@@ -724,9 +834,17 @@ export class NetworkContextProvider extends React.Component {
     ]);
   };
 
+  displayCompleteJourneyAlert = () => {
+    Alert.alert("Congratulations", "You've finished this journey!", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
 
   displayNoDailyQuestAlert = () => {
-    Alert.alert("No Daily Quests", "Please start a new journey", [
+    Alert.alert("No Daily Quests", "Please activate a new journey", [
       {
         text: "Close",
         style: "cancel",
@@ -735,7 +853,7 @@ export class NetworkContextProvider extends React.Component {
   };
 
   displayThirdJourneyAlert = () => {
-    Alert.alert("Third Journey", "You've already had two journeys in progress, please finish them before you start a new one",
+    Alert.alert("Third Journey", "You've already had two journeys in progress. Please finish them before you start a new one",
     [
       {
       text: "Close",
@@ -744,6 +862,16 @@ export class NetworkContextProvider extends React.Component {
       {text:"Drop a journey"
       }
     ]);
+  }
+
+  displayActivateJourneyAlert = () => {
+    Alert.alert("Journey Started", "You've successfully started this journey. Now you can go to daily quest page to start a quest.",
+    [
+      {text: "Close",
+       style: "cancel",
+      }
+    ]
+    );
   }
 
   displayDropJourneyAlert = () => {
@@ -861,6 +989,8 @@ export class NetworkContextProvider extends React.Component {
 
           getJourneys: this.getJourneys,
           getIncompleteJourney: this.getIncompleteJourney,
+      
+          registerSuccess: this.state.registerSuccess,
 
           buddies: this.state.buddies,
           buddy_requests: this.state.buddy_requests,
@@ -871,10 +1001,14 @@ export class NetworkContextProvider extends React.Component {
 
 
           // Method to complete quest
+          getActiveJourneys: this.getActiveJourneys,
+          activateJourney: this.activateJourney,
           completeQuest: this.completeQuest,
           checkThirdJourney: this.checkThirdJourney,
           getAllQuests: this.getAllQuests,
           dropJourney: this.dropJourney,
+          checkCompleteJourney: this.checkCompleteJourney,
+          finishJourney: this.finishJourney,
 
           // methods to submit user-defined quest / journey
           uploadJourney: this.uploadJourney,
@@ -883,6 +1017,8 @@ export class NetworkContextProvider extends React.Component {
           // Alerts
           displayNoConnectionAlert: this.displayNoConnectionAlert,
           displayInvalidInfoAlert: this.displayInvalidInfoAlert,
+          displayCompleteJourneyAlert: this.displayCompleteJourneyAlert,
+          displayActivateJourneyAlert: this.displayActivateJourneyAlert,
           displayDropJourneyAlert: this.displayDropJourneyAlert,
           WrongPasswordAlert: this.WrongPasswordAlert,
           registerFailAlert: this.registerFailAlert,
