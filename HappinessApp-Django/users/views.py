@@ -219,9 +219,12 @@ def get_active_journeys(request):
         lst = user.active_journeys.all()
         jsonObj = []
         for j in lst:
-            quests = j.quests.all()
-            Qserializer = QuestSerializer(quests, many=True)
             data = JourneySerializer(instance=j).data
+            quests = []
+            for i in range(1, len(data["quests"])+1):
+                jq = JourneyQuests.objects.get(journey=j, order=i)
+                quests.append(jq.quest)
+            Qserializer = QuestSerializer(quests, many=True)
             data['quests'] = Qserializer.data
             jsonObj.append(data)
         return Response(jsonObj)

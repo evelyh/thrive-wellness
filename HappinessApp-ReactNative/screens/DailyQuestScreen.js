@@ -64,19 +64,21 @@ export default class DailyQuestScreen extends React.Component {
           completeNum: [journeyProgress.completed.length],
         });
         const completeIds = [];
-        for(var n=0;n<this.state.completedQuests[0].length;n++){
-          completeIds.push(this.state.completedQuests[0][n].id);
+        for(var u=0;u<this.state.completedQuests[0].length;u++){
+          completeIds.push(this.state.completedQuests[0][u].id);
         }
-        const incompleteQuests = [];
-        for(var i=0; i<this.state.incompleteJourney[0].quests.length; i++){
-          if(!(completeIds.includes(this.state.incompleteJourney[0].quests[i].id))){
-            incompleteQuests.push(incomplete[0].quests[i]);
+        let incompleteQuests = [];
+        for(var v=0; v<this.state.incompleteJourney[0].quests.length; v++){
+          if(!(completeIds.includes(this.state.incompleteJourney[0].quests[v].id))){
+            incompleteQuests.push(incomplete[0].quests[v]);
           }
         };
+        if(incompleteQuests.length > 2){
+          incompleteQuests = incompleteQuests.slice(0, 2);
+        }
         this.setState({
           incompleteQuests: [incompleteQuests],
         });
-        console.log(this.state.incompleteJourney[0]);
       }
 
       if(incomplete.length == 2){
@@ -107,22 +109,28 @@ export default class DailyQuestScreen extends React.Component {
         for(var n=0;n<this.state.completedQuests[0].length;n++){
           completeIds1.push(this.state.completedQuests[0][n].id);
         }
-        const incompleteQuests1 = [];
+        let incompleteQuests1 = [];
         for(var i=0; i<this.state.incompleteJourney[0].quests.length; i++){
           if(!(completeIds1.includes(this.state.incompleteJourney[0].quests[i].id))){
             incompleteQuests1.push(this.state.incompleteJourney[0].quests[i]);
           };
         };
         const completeIds2 = [];
-        for(var m=0;n<this.state.completedQuests[1].length;m++){
+        for(var m=0;m<this.state.completedQuests[1].length;m++){
           completeIds2.push(this.state.completedQuests[1][m].id);
         }
-        const incompleteQuests2 = [];
+        let incompleteQuests2 = [];
         for(var j=0; j<this.state.incompleteJourney[1].quests.length; j++){
           if(!(completeIds2.includes(this.state.incompleteJourney[1].quests[j].id))){
             incompleteQuests2.push(this.state.incompleteJourney[1].quests[j]);
           }
         };
+        if(incompleteQuests1.length > 2){
+          incompleteQuests1 = incompleteQuests1.slice(0, 2);
+        }
+        if(incompleteQuests2.length > 2){
+          incompleteQuests2 = incompleteQuests2.slice(0, 2);
+        }
         this.setState({
           incompleteQuests: [incompleteQuests1, incompleteQuests2],
         });
@@ -137,13 +145,13 @@ export default class DailyQuestScreen extends React.Component {
 
   handleJourneyTap = (quest) => {
     var len1 = [];
-    for (var i = 0; i < this.state.incompleteJourney[0].quests.length; i++){
-      len1.push(this.state.incompleteJourney[0].quests[i].id);
+    for (var i = 0; i < this.state.incompleteQuests[0].length; i++){
+      len1.push(this.state.incompleteQuests[0][i].id);
     }
     if(this.state.incompleteJourney.length == 2){
       var len2 = [];
-      for (var i = 0; i < this.state.incompleteJourney[1].quests.length; i++){
-        len2.push(this.state.incompleteJourney[1].quests[i].id);
+      for (var i = 0; i < this.state.incompleteQuests[1].length; i++){
+        len2.push(this.state.incompleteQuests[1][i].id);
       }
     }
     if(len1.includes(quest.id)){
@@ -152,7 +160,7 @@ export default class DailyQuestScreen extends React.Component {
       journey: this.state.incompleteJourney[0],
       }
     );
-    }else if(len2 && len2.includes(quest.id)){
+    }else if(len2.includes(quest.id)){
       this.props.navigation.navigate("Quest", {
         quest: quest,
         journey: this.state.incompleteJourney[1],
@@ -186,12 +194,12 @@ export default class DailyQuestScreen extends React.Component {
 
   getAllQuests = async() =>{
     const response = await this.context.getAllQuests();
-    const shuff = this.shuffle(response);
+    let shuff = this.shuffle(response);
     if(shuff.length > 10){
-      var newshuff = shuff.slice(9);
+      shuff = shuff.slice(0, 10);
     }
     this.setState({
-      allQuests: newshuff
+      allQuests: shuff
   });
   }
 

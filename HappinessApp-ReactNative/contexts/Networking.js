@@ -497,6 +497,7 @@ export class NetworkContextProvider extends React.Component {
       if(respJ.response == "true"){
         this.displayCompleteJourneyAlert();
       }
+      this.displayCompleteQuestAlert();
       return respJson;
     } catch (e) {
       console.log(e);
@@ -843,8 +844,17 @@ export class NetworkContextProvider extends React.Component {
     ]);
   };
 
+  displayCompleteQuestAlert = () => {
+    Alert.alert("Congratulations", "You've finished today's quest!", [
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
   displayNoDailyQuestAlert = () => {
-    Alert.alert("No Daily Quests", "Please activate a new journey", [
+    Alert.alert("No Daily Quests", "Please start a new journey", [
       {
         text: "Close",
         style: "cancel",
@@ -865,7 +875,7 @@ export class NetworkContextProvider extends React.Component {
   }
 
   displayActivateJourneyAlert = () => {
-    Alert.alert("Journey Started", "You've successfully started this journey. Now you can go to daily quest page to start a quest.",
+    Alert.alert("Journey Started", "You've successfully started this journey. Now you can start a quest on Daily Quest page.",
     [
       {text: "Close",
        style: "cancel",
@@ -1018,6 +1028,7 @@ export class NetworkContextProvider extends React.Component {
           displayNoConnectionAlert: this.displayNoConnectionAlert,
           displayInvalidInfoAlert: this.displayInvalidInfoAlert,
           displayCompleteJourneyAlert: this.displayCompleteJourneyAlert,
+          displayCompleteQuestAlert: this.displayCompleteQuestAlert,
           displayActivateJourneyAlert: this.displayActivateJourneyAlert,
           displayDropJourneyAlert: this.displayDropJourneyAlert,
           WrongPasswordAlert: this.WrongPasswordAlert,

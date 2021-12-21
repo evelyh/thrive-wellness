@@ -39,7 +39,9 @@ class JourneyTreeComponent extends Component {
     const resp = await this.context.checkThirdJourney(this.props.journey.id);
     if (resp != null){
       this.context.activateJourney(this.props.journey.id);
+      this.props.navigation.navigate("Daily");
     };
+
   }
 
   handleBackDrop = () => {
@@ -143,6 +145,7 @@ class JourneyTreeComponent extends Component {
               }})}
               />)}
             </View>
+            <Title style={{ fontSize: 22}}>{journey.name}</Title>
             <ScrollView style={MIStyles.MITextContainer}>
                 <Text style={MIStyles.MIDescriptionText}>
                     {journey.description}
