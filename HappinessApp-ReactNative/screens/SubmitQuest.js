@@ -100,6 +100,7 @@ export default class SubmitQuest extends React.Component {
             <TextInput
                 style={styles.input}
                 placeholder="Journey Description"
+                multiline
                 autoCapitalize = "none"
                 onChangeText={val => this.onChangeText('journey_description', val)}
             />
@@ -114,6 +115,7 @@ export default class SubmitQuest extends React.Component {
             <TextInput
                 style={styles.input}
                 placeholder="Quest #1 Description*"
+                multiline
                 autoCapitalize = "none"
                 onChangeText={val => this.questOnChangeText('description', val, this.state.q1)}
             />
@@ -126,6 +128,7 @@ export default class SubmitQuest extends React.Component {
             <TextInput
                 style={styles.input}
                 placeholder="Quest #1 Survey Question"
+                multiline
                 autoCapitalize = "none"
                 onChangeText={val => this.questOnChangeText('survey_question', val, this.state.q1)}
             />
@@ -139,6 +142,7 @@ export default class SubmitQuest extends React.Component {
             <TextInput
                 style={styles.input}
                 placeholder="Quest #2 Description"
+                multiline
                 autoCapitalize = "none"
                 onChangeText={val => this.questOnChangeText('description', val, this.state.q2)}
             />
@@ -151,6 +155,7 @@ export default class SubmitQuest extends React.Component {
             <TextInput
                 style={styles.input}
                 placeholder="Quest #2 Survey Question"
+                multiline
                 autoCapitalize = "none"
                 onChangeText={val => this.questOnChangeText('survey_question', val, this.state.q2)}
             />
@@ -164,6 +169,7 @@ export default class SubmitQuest extends React.Component {
             <TextInput
                 style={styles.input}
                 placeholder="Quest #3 Description"
+                multiline
                 autoCapitalize = "none"
                 onChangeText={val => this.questOnChangeText('description', val, this.state.q3)}
             />
@@ -176,6 +182,7 @@ export default class SubmitQuest extends React.Component {
             <TextInput
                 style={styles.input}
                 placeholder="Quest #3 Survey Question"
+                multiline
                 autoCapitalize = "none"
                 onChangeText={val => this.questOnChangeText('survey_question', val, this.state.q3)}
             />
@@ -296,6 +303,8 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 20,
     padding: 5,
-    marginLeft: 20
+    marginLeft: 20,
+    flex: 1,
+    color: "#918573",
   }
 });
