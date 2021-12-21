@@ -147,10 +147,10 @@ export default class DailyQuestScreen extends React.Component {
     const response = await this.context.getAllQuests();
     const shuff = this.shuffle(response);
     if(shuff.length > 10){
-      shuff = shuff.slice(9);
+      var newshuff = shuff.slice(9);
     }
     this.setState({
-      allQuests: shuff
+      allQuests: newshuff
   });
   }
 
