@@ -96,6 +96,7 @@ Here are some notes on continuing the development. These mainly include next ste
 5. Data extraction & analysis from user feedback/response/data
 6. Notification system
 7. Files under HappinessApp-ReactNative/screens/JourneyManagement are for management of journeys and quests directly using the app via admin account (which we don't suggest admin to do it right now). They were written by the 1st team, and not updated with current models.
+8. One quest added multiple times in a same journey causes problem, and the app will not actually allow this quest to appear more than one time.
 
 ^ Currenly, automation is written in `/journeys/views.py`, however changes made through Django Admin Portal does not use code written here. An admin utility(`/admin-utility.py`) is created to allow automation for admin. Refer to Admin guide for more details
 
