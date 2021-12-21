@@ -21,21 +21,22 @@ urlpatterns = [
      path('reject_buddy_request/', reject_buddy_request, name="api-reject-buddy-request"), 
      path('fetch_buddy_request/', fetch_buddy_request, name="api-fetch-buddy-request"), 
      path('fetch_buddy/', fetch_buddy, name="api-fetch-buddy"), 
-path('reset_password/',
+     path('reset_password/',
      auth_views.PasswordResetView.as_view(template_name="users/password_reset.html", html_email_template_name="users/password_reset_email.html"),
      name="reset_password"),
 
-    path('reset_password_sent/', 
+     path('reset_password_sent/', 
         auth_views.PasswordResetDoneView.as_view(template_name="users/password_reset_sent.html"), 
         name="password_reset_done"),
 
-    path('reset/<uidb64>/<token>/',
+     path('reset/<uidb64>/<token>/',
      auth_views.PasswordResetConfirmView.as_view(template_name="users/password_reset_form.html"), 
      name="password_reset_confirm"),
 
-    path('reset_password_complete/', 
+     path('reset_password_complete/', 
         auth_views.PasswordResetCompleteView.as_view(template_name="users/password_reset_done.html"), 
         name="password_reset_complete"),
+     
+     path('active_journeys/<int:jid>/', active_journeys, name="api-active-journeys"),
+     path('get_active_journeys/', get_active_journeys, name="api-get-active-journeys"),
 ]
-
-#python manage.py runserver 0.0.0.0:8050
