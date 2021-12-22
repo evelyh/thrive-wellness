@@ -46,23 +46,6 @@ App is structured using React Navigations: Screens are located in their folder.
 
 The entire app is wrapped around the Networking context. This context is responsible for most of the networking calls to the backend, as well as caching the useful data.
 
-Our app features a notification system (not fully functional yet). In order to utilize it (and silence a possible warning) you need to be logged into the expo account. Otherwise React Native notification will throw error.
-
-Log in by calling command in your terminal: `expo login`
-
-Credentials: (*KEEP PRIVATE*)
-
-Username: `happyuapp`
-
-Password: `happyu5000`
-
-## Publishing on expo
-
-Expo provides convinient testing environment for the local development. In addition to that, expo provides tools for publishing.
-
-Right now, the most recent version of our app is published on expo under the expo `happyuapp` account. Published app has a persistent QR-code which enables convinient method of beta testing. User just need to scan the QR-code once, and later the link will remain under 'recents' title on the Expo app on their phones.
-
-This also enables to push updates with ease. Published update will have the same QR-code and will be available to users immediately.
 
 ### Note
 
@@ -92,14 +75,22 @@ Here are some notes on continuing the development. These mainly include next ste
 1. "Third Journey" alert is not able to redirect to the "Manage your journeys" page
 2. "Approved" automation through Django admin portal^
 3. Implementing embedded video instead of redirecting link for videos accompanying journeys and quests
-4. Chat and comment feature extension of current accountability buddy system
+4. Chat and comment feature extension of current accountability buddy system. Currently the buddy system only allows users to be buddies and there are no other functions that are implemented.
 5. Data extraction & analysis from user feedback/response/data
 6. Notification system
 7. Files under HappinessApp-ReactNative/screens/JourneyManagement are for management of journeys and quests directly using the app via admin account (which we don't suggest admin to do it right now). They were written by the 1st team, and not updated with current models.
-8. One quest added multiple times in a same journey causes problem, and the app will not actually allow this quest to appear more than one time.
+8. Implement time cycle to the application
+9. One quest added multiple times in a same journey causes problem, and the app will not actually allow this quest to appear more than one time.
 
 ^ Currenly, automation is written in `/journeys/views.py`, however changes made through Django Admin Portal does not use code written here. An admin utility(`/admin-utility.py`) is created to allow automation for admin. Refer to Admin guide for more details
 
+## Email
+Currently there an email account is set up on Django backend (bellwoodspw@gmail.com) that handle all email automation. If in the future, this email needs to be changed, it can be changed under settings.py.
+
+The program is able to set up the automation process with this gmail account by Turning ON the "Allow less secure apps" option, if in the future, the automation does not work, make sure this option is turned ON. Click [here](https://support.google.com/accounts/answer/6010255?hl=en#zippy=%2Cif-less-secure-app-access-is-on-for-your-account) to learn more about how to turn on "Allow less secure apps" for the gmail account.
+
+## Google Docs
+There are multiple google documents (Robbie has the URLs) that contained important credential information about the application as well as a user guide. It is highly recommended that you go over those documents. 
 
 ## Appendix for lines of code in frontend that involve the backend server URL
 
