@@ -129,9 +129,9 @@ export default class QuestFeedbackScreen extends React.Component {
           </View>
           {quest.survey_question != "" && (
             <KeyboardAvoidingView style={styles.container3} behavior="padding">
-              <Text style={styles.heading3}>{quest.survey_question}</Text>
+              <Text style={styles.heading4}>{quest.survey_question}</Text>
 
-              <View style={styles.heading3}>
+              <View style={styles.heading4}>
                 <TextInput
                   style={styles.input}
                   placeholder="What do you think?"
@@ -220,7 +220,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#27214D",
     marginLeft: 25,
-    marginTop: 16,
+    marginTop: 10,
+  },
+  heading4: {
+    fontSize: 17,
+    color: "red",
+    marginLeft: 15,
+    marginTop: 1,
   },
 
   line: {
@@ -276,7 +282,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 80,
-    width: 350,
+    width: 365,
     borderWidth: 1,
     backgroundColor: "white",
   },
