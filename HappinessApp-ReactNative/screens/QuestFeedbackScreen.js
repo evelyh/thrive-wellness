@@ -7,11 +7,12 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
+  KeyboardAvoidingView,
   Image,
   ScrollView,
   Alert,
 } from "react-native";
-import Slider from "@react-native-community/slider"
+import Slider from "@react-native-community/slider";
 
 import { NetworkContext } from "../contexts/Networking";
 
@@ -19,63 +20,72 @@ export default class QuestFeedbackScreen extends React.Component {
   static contextType = NetworkContext;
 
   constructor(props) {
-    super(props)
+    super(props);
 
-    const {answer} = this.props.route.params
+    const { answer } = this.props.route.params;
     this.state = {
       answer: answer,
       feelingRating: 5,
       questRating: 5,
-      surveyAnswer: '',
-    }
+      surveyAnswer: "",
+    };
   }
 
   onValueChange = (key, val) => {
     this.setState({
       [key]: val,
-    })
-  }
+    });
+  };
 
   onChangeText = (key, value) => {
-    this.setState({ [key]: value })
-  }
+    this.setState({ [key]: value });
+  };
 
-  onSubmit = async() => {
-    const { quest } = this.props.route.params
-    const { journey } = this.props.route.params
-    const { answer, feelingRating, questRating, surveyAnswer} = this.state
+  onSubmit = async () => {
+    const { quest } = this.props.route.params;
+    const { journey } = this.props.route.params;
+    const { answer, feelingRating, questRating, surveyAnswer } = this.state;
     if (journey != null) {
-      await this.context.completeQuest(journey.id, quest.id, answer, feelingRating, questRating, surveyAnswer);
+      await this.context.completeQuest(
+        journey.id,
+        quest.id,
+        answer,
+        feelingRating,
+        questRating,
+        surveyAnswer
+      );
     }
-    this.props.navigation.navigate("Home")
-  }
+    this.props.navigation.navigate("Home");
+  };
 
   render() {
-    const { quest } = this.props.route.params
+    const { quest } = this.props.route.params;
     return (
       <SafeAreaView style={styles.container}>
-
         <View style={styles.feedbackContainer}>
           <View>
             <Text style={styles.heading2}>Good job!</Text>
-            <View style={styles.line}/>
+            <View style={styles.line} />
             <Text style={styles.heading3}>How did you like this quest?</Text>
-            <View style={styles.line2}/>
+            <View style={styles.line2} />
           </View>
           <View style={styles.mainContainer}>
             <View style={styles.blobContainer}>
               <Text style={styles.blobText}>
-                This app is dynamic and gives different users different Quests and different Journey
-                recommendations. The program becomes tailored to meet your individual needs and
-                circumstances. We gather the information below after each quest to help us customize
-                the program to you. Thank you for taking the time to submit it.
+                This app is dynamic and gives different users different Quests
+                and different Journey recommendations. The program becomes
+                tailored to meet your individual needs and circumstances. We
+                gather the information below after each quest to help us
+                customize the program to you. Thank you for taking the time to
+                submit it.
               </Text>
             </View>
-            <View style={styles.line3}/>
+            <View style={styles.line3} />
             <View style={styles.sliderContentBox}>
               <View style={styles.sliderTextContainer}>
                 <Text style={styles.sliderText}>
-                  Rate your feeling after completing the quest: {this.state.feelingRating}
+                  Rate your feeling after completing the quest:{" "}
+                  {this.state.feelingRating}
                 </Text>
               </View>
               <View style={styles.sliderContainer}>
@@ -85,13 +95,15 @@ export default class QuestFeedbackScreen extends React.Component {
                   maximumValue={10}
                   step={1}
                   value={this.state.feelingRating}
-                  onValueChange={(val) => {this.onValueChange('feelingRating', val)}}
+                  onValueChange={(val) => {
+                    this.onValueChange("feelingRating", val);
+                  }}
                   minimumTrackTintColor="#C9DBC5"
                   maximumTrackTintColor="#FFFFFF"
                 />
               </View>
-            </View> 
-            <View style={styles.line3}/>
+            </View>
+            <View style={styles.line3} />
             <View style={styles.sliderContentBox}>
               <View style={styles.sliderTextContainer}>
                 <Text style={styles.sliderText}>
@@ -105,32 +117,35 @@ export default class QuestFeedbackScreen extends React.Component {
                   maximumValue={10}
                   step={1}
                   value={this.state.questRating}
-                  onValueChange={(val) => {this.onValueChange('questRating', val)}}
+                  onValueChange={(val) => {
+                    this.onValueChange("questRating", val);
+                  }}
                   minimumTrackTintColor="#C9DBC5"
                   maximumTrackTintColor="#FFFFFF"
                 />
               </View>
+              <View style={styles.line3} />
             </View>
           </View>
-          {quest.survey_question != "" &&
-            (<View>
-              <View style={styles.line4}/>
+          {quest.survey_question != "" && (
+            <KeyboardAvoidingView style={styles.container3} behavior="padding">
               <Text style={styles.heading3}>{quest.survey_question}</Text>
+
               <View style={styles.heading3}>
                 <TextInput
-                    style={styles.input}
-                    placeholder="What do you think?"
-                    autoCapitalize="none"
-                    onChangeText={val => this.onChangeText('surveyAnswer', val)}/>
+                  style={styles.input}
+                  placeholder="What do you think?"
+                  multiline
+                  scrollEnabled
+                  autoCapitalize="none"
+                  onChangeText={(val) => this.onChangeText("surveyAnswer", val)}
+                />
               </View>
-            </View>)
-          }
-
+            </KeyboardAvoidingView>
+          )}
         </View>
-        <View>
+        <View></View>
 
-        </View>
-        
         <View style={styles.buttonsView}>
           <TouchableOpacity
             style={styles.journeyButton}
@@ -139,10 +154,8 @@ export default class QuestFeedbackScreen extends React.Component {
             <Text style={styles.text}>Submit</Text>
           </TouchableOpacity>
         </View>
-
       </SafeAreaView>
     );
-    
   }
 }
 
@@ -156,16 +169,17 @@ const styles = StyleSheet.create({
   },
 
   mainContainer: {
+    flex: 2.8,
     marginTop: 15,
-    alignItems: 'center',
+    alignItems: "center",
   },
 
   blobContainer: {
-    width: '92%',
+    width: "92%",
   },
 
   blobText: {
-    fontSize: 16
+    fontSize: 16,
   },
 
   buttonsView: {
@@ -212,48 +226,58 @@ const styles = StyleSheet.create({
   line: {
     backgroundColor: "#F3F3F3",
     height: 1,
-    width: '100%',
+    width: "100%",
     marginTop: 8,
   },
 
   line2: {
     backgroundColor: "#6C9191",
     height: 1,
-    width: '90%',
+    width: "90%",
     marginLeft: 26,
     marginTop: 8,
   },
   line3: {
     backgroundColor: "#778080",
     height: 1,
-    width: '90%',
+    width: "90%",
     marginTop: 13,
   },
   line4: {
     backgroundColor: "#6C9191",
     height: 1,
-    width: '90%',
+    width: "90%",
     marginLeft: 18,
     marginTop: 8,
   },
 
   sliderContentBox: {
     marginTop: 15,
-    width: '100%',
-    alignItems: 'center',
+    width: "100%",
+    alignItems: "center",
   },
   sliderTextContainer: {
-    width: '92%',
+    width: "92%",
   },
   sliderText: {
     fontSize: 16,
   },
   sliderContainer: {
-    width: '100%',
-    alignItems: 'center',
+    width: "100%",
+    alignItems: "center",
   },
   slider: {
-    width: '90%',
-    height: 40
-  }
+    width: "90%",
+    height: 40,
+  },
+  container3: {
+    flex: 1.2,
+    backgroundColor: "#F2F3F4",
+  },
+  input: {
+    height: 80,
+    width: 350,
+    borderWidth: 1,
+    backgroundColor: "white",
+  },
 });
